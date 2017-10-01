@@ -1,6 +1,8 @@
 /*
 The Notebook in java for real development.
 */  
+import com.notebook.*;
+
 
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
@@ -27,6 +29,8 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 
 import javax.swing.text.*;
+
+
 
   
 public class NoteBook {
@@ -240,7 +244,7 @@ public class NoteBook {
         fd.setVisible(true);  
         String strFile = fd.getDirectory() + fd.getFile(); 		
 		String line = null;
-		ProcResult result = new ProcResult();
+		EditDisplay.ProcResult result = new EditDisplay.ProcResult();
         if (strFile != null) {  
             try {  
                 textPane.setText("");
@@ -251,7 +255,7 @@ public class NoteBook {
 						// style = textDoc.getStyle("highlight");
 						// textDoc.insertString(textPane.getDocument().getLength(), line+"\n", style);
 						if (line.length() > 1){
-							result = procString(line);
+							result = EditDisplay.procString(line);
 							//System.out.println(result.dispStr + "  " + result.returnCode);
 						} else {
 							result.dispStr = "";
@@ -275,42 +279,6 @@ public class NoteBook {
         
     } 
 
-	private class ProcResult {
-			int returnCode;
-			String dispStr;    // etc
-		}
-	
-	private ProcResult procString(String content) {
-			ProcResult result = new ProcResult();
-			result.dispStr = content;
-			
-			if (content.substring(0,1).compareTo("[") == 0){
-				result.returnCode = 2;
-				result.dispStr = removeCharAt(result.dispStr,"[");
-				result.dispStr = removeCharAt(result.dispStr,"]");
-			} else {
-				result.returnCode = 1;
-				result.dispStr = "Disp";
-			}
-			
-			return result;
-		
-		}
-		
-	private static String removeCharAt(String s, String h) {
-		int index = s.indexOf(h);
-		String result = s;
-		while (index != -1){
-			if (index != (result.length()-1)){
-				result = result.substring(0,index) + result.substring(index+1);
-			} else {
-				result = result.substring(0,index);
-			}
-		index = result.indexOf(h);
-		}	
-		return result;			
-   }
-	
 	private void menuItemExitActionPerformed(ActionEvent evt) {  
         // TODO add your handling code here:  
        System.exit(0);   // Exit the whole system.
