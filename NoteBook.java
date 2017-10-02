@@ -30,6 +30,9 @@ import java.io.BufferedReader;
 
 import javax.swing.text.*;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 
 
   
@@ -142,6 +145,43 @@ public class NoteBook {
 				frame.setTitle("Test");			
 			  } 
 		} );
+		
+		// Extract the string contents, and open the website page included by '[' ']'
+	textPane.addMouseMotionListener(new MouseAdapter() {
+		@Override
+         public void mouseMoved(MouseEvent e) {
+				int offset = textPane.viewToModel(e.getPoint());
+				try {
+					messagePane.setText(null);
+					int rowStart = Utilities.getRowStart(textPane, offset);
+				   int textLength = textPane.getDocument().getLength();
+				   if (textLength > rowStart) { 
+					   String dispContent1 =  textPane.getText(0, rowStart);
+					   String dispContent2 =  textPane.getText(rowStart, textLength-rowStart);
+					   String displayContent = null;
+					   int index1 = dispContent1.lastIndexOf("\n");
+					   int index2 = dispContent2.indexOf("\n");
+					   if ((index2 != -1) && (index1 != -1)){
+						   displayContent = dispContent1.substring(index1+1) + dispContent2.substring(0, index2);
+						   messageDoc.insertString(0, displayContent, null);
+					   } else if (index2 != -1) {
+						   displayContent = dispContent2.substring(0, index2);
+						   messageDoc.insertString(0, displayContent, null);
+					   } else if (index1 != -1) {
+						   displayContent = dispContent1.substring(index1+1) + dispContent2.substring(0, textLength);
+						   messageDoc.insertString(0, displayContent, null);
+					   } else {
+						   displayContent = dispContent2.substring(0, textLength);
+						   messageDoc.insertString(0, displayContent, null);
+					   }
+				   }
+
+				} catch (BadLocationException e1) {
+             
+				}
+ 
+         }
+      });
 		
 		
 	}
@@ -283,6 +323,8 @@ public class NoteBook {
         // TODO add your handling code here:  
        System.exit(0);   // Exit the whole system.
     }  
+	
+	
 	
 	public static void main(String[] args) {
         new NoteBook();
