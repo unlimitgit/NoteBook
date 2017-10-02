@@ -150,13 +150,14 @@ public class NoteBook {
 			  } 
 		} );
 		
-		// Extract the string contents, and open the website page included by '[' ']'
-	textPane.addMouseMotionListener(new MouseAdapter() {
-         public void mouseMoved(MouseEvent e) {
-			MessageProcess.textPaneMouseMove(e, textPane, messagePane, messageDoc);
+		// Extract the line string with mouse moving action and display in the message panel
+		// Refer to MessageProcess sub module
+		textPane.addMouseMotionListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				MessageProcess.textPaneMouseMove(e, textPane, messagePane, messageDoc);
  
-         }
-      });
+			}
+		});
 		
 		
 	}
