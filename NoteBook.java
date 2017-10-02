@@ -28,7 +28,11 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.BufferedReader;
 
-import javax.swing.text.*;
+import javax.swing.text.Utilities;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -43,8 +47,8 @@ public class NoteBook {
 	boolean textEditable = true;			// The main panel editable or not
 	
 	JFrame frame ;
-	JTextPane textPane;
-	DefaultStyledDocument textDoc;  
+	JTextPane textPane, messagePane;
+	DefaultStyledDocument textDoc, messageDoc;  
 	Style style;
 	JButton buttonSaveEdit, buttonSearch, buttonTest;
 	
@@ -105,8 +109,8 @@ public class NoteBook {
         searchScrollPane.setMinimumSize(new Dimension(10, 10));
 		searchPane.setEditable(false);
 		
-		DefaultStyledDocument messageDoc = new DefaultStyledDocument();
-        JTextPane messagePane = new JTextPane(messageDoc);
+		messageDoc = new DefaultStyledDocument();
+        messagePane = new JTextPane(messageDoc);
 		//messagePane.setPreferredSize(new Dimension(100, 100));
 		messagePane.setBackground(customGray);
 		messagePane.setEditable(false);
@@ -148,37 +152,8 @@ public class NoteBook {
 		
 		// Extract the string contents, and open the website page included by '[' ']'
 	textPane.addMouseMotionListener(new MouseAdapter() {
-		@Override
          public void mouseMoved(MouseEvent e) {
-				int offset = textPane.viewToModel(e.getPoint());
-				try {
-					messagePane.setText(null);
-					int rowStart = Utilities.getRowStart(textPane, offset);
-				   int textLength = textPane.getDocument().getLength();
-				   if (textLength > rowStart) { 
-					   String dispContent1 =  textPane.getText(0, rowStart);
-					   String dispContent2 =  textPane.getText(rowStart, textLength-rowStart);
-					   String displayContent = null;
-					   int index1 = dispContent1.lastIndexOf("\n");
-					   int index2 = dispContent2.indexOf("\n");
-					   if ((index2 != -1) && (index1 != -1)){
-						   displayContent = dispContent1.substring(index1+1) + dispContent2.substring(0, index2);
-						   messageDoc.insertString(0, displayContent, null);
-					   } else if (index2 != -1) {
-						   displayContent = dispContent2.substring(0, index2);
-						   messageDoc.insertString(0, displayContent, null);
-					   } else if (index1 != -1) {
-						   displayContent = dispContent1.substring(index1+1) + dispContent2.substring(0, textLength);
-						   messageDoc.insertString(0, displayContent, null);
-					   } else {
-						   displayContent = dispContent2.substring(0, textLength);
-						   messageDoc.insertString(0, displayContent, null);
-					   }
-				   }
-
-				} catch (BadLocationException e1) {
-             
-				}
+			MessageProcess.textPaneMouseMove(e, textPane, messagePane, messageDoc);
  
          }
       });
