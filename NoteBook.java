@@ -43,14 +43,15 @@ import java.awt.event.MouseEvent;
 public class NoteBook {
 	
 	// Define parameters
-	boolean searchVisible = false;  		// Related to search engine
-	boolean textEditable = true;			// The main panel editable or not
+	// boolean searchVisible = false;  		// Related to search engine
+	// boolean textEditable = true;			// The main panel editable or not
 	
-	JFrame frame ;
-	JTextPane textPane, messagePane;
-	DefaultStyledDocument textDoc, messageDoc;  
-	Style style;
-	JButton buttonSaveEdit, buttonSearch, buttonTest;
+	// JFrame frame ;
+	// JTextPane textPane, GlobalVariables.messagePane;
+	// DefaultStyledDocument textDoc, messageDoc;  
+	// Style style;
+	// JButton buttonSaveEdit, buttonSearch, buttonTest;
+	JButton buttonTest;
 	
 	private NoteBook()  {
 			
@@ -59,27 +60,27 @@ public class NoteBook {
 		
 		// Create frame as main display interface
 		String textFrame = "Notebook with Java";
-		frame = new JFrame(textFrame);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		GlobalVariables.frame = new JFrame(textFrame);
+		GlobalVariables.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon imgIcon = new ImageIcon("icon.jpg");
-		frame.setIconImage(imgIcon.getImage());
+		GlobalVariables.frame.setIconImage(imgIcon.getImage());
 		
 		//Create Menubar
-		JMenuBar menuBar = createMenuBar();
-		frame.setJMenuBar(menuBar);
+		JMenuBar menuBar = MenuEdit.CreateMenuBar();
+		GlobalVariables.frame.setJMenuBar(menuBar);
 		
 		//Create button panel, mainPanel, and message Panel
 		//Refer to readme.docx for further information
 		JPanel buttonPanel = new JPanel();		
 			
 		// Add buttons
-        buttonSaveEdit = new JButton("Save");
-		buttonSearch = new JButton("Enable search");
+        GlobalVariables.buttonSaveEdit = new JButton("Save");
+		GlobalVariables.buttonSearch = new JButton("Enable search");
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-		buttonPanel.add(buttonSaveEdit);
-		buttonPanel.add(buttonSearch);
-		buttonSaveEdit.setAlignmentX(Component.LEFT_ALIGNMENT);
-		buttonSearch.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		buttonPanel.add(GlobalVariables.buttonSaveEdit);
+		buttonPanel.add(GlobalVariables.buttonSearch);
+		GlobalVariables.buttonSaveEdit.setAlignmentX(Component.LEFT_ALIGNMENT);
+		GlobalVariables.buttonSearch.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest = new JButton("Test");
@@ -88,11 +89,11 @@ public class NoteBook {
 		
 		
 		// Add textpane and searchPane
-		textDoc = new DefaultStyledDocument();
-        textPane = new JTextPane(textDoc);
-		style = CreateStyles.CreateStyles(textDoc);
-		textPane.setPreferredSize(new Dimension(800, 100));
-		JScrollPane textScrollPane = new JScrollPane(textPane);
+		GlobalVariables.textDoc = new DefaultStyledDocument();
+        GlobalVariables.textPane = new JTextPane(GlobalVariables.textDoc);
+		GlobalVariables.style = CreateStyles.CreateStyles(GlobalVariables.textDoc);
+		GlobalVariables.textPane.setPreferredSize(new Dimension(800, 100));
+		JScrollPane textScrollPane = new JScrollPane(GlobalVariables.textPane);
         textScrollPane.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textScrollPane.setPreferredSize(new Dimension(250, 155));
@@ -109,52 +110,53 @@ public class NoteBook {
         searchScrollPane.setMinimumSize(new Dimension(10, 10));
 		searchPane.setEditable(false);
 		
-		messageDoc = new DefaultStyledDocument();
-        messagePane = new JTextPane(messageDoc);
+		GlobalVariables.messageDoc = new DefaultStyledDocument();
+        GlobalVariables.messagePane = new JTextPane(GlobalVariables.messageDoc);
 		//messagePane.setPreferredSize(new Dimension(100, 100));
-		messagePane.setBackground(customGray);
-		messagePane.setEditable(false);
+		GlobalVariables.messagePane.setBackground(customGray);
+		GlobalVariables.messagePane.setEditable(false);
 		
 		
-		// Add panels to frame
-	    frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
-		frame.getContentPane().add(textScrollPane, BorderLayout.CENTER);
-		//frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END);
-		frame.getContentPane().add(messagePane, BorderLayout.PAGE_END);
+		// Add panels to GlobalVariables.frame
+	    GlobalVariables.frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
+		GlobalVariables.frame.getContentPane().add(textScrollPane, BorderLayout.CENTER);
+		//GlobalVariables.frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END);
+		GlobalVariables.frame.getContentPane().add(GlobalVariables.messagePane, BorderLayout.PAGE_END);
 		
-		frame.pack();
-        frame.setVisible(true);
+		GlobalVariables.frame.pack();
+        GlobalVariables.frame.setVisible(true);
 		
 		// Enable/disable search result panel, controlled by buttonSearch
-		buttonSearch.addActionListener(new ActionListener(){ 
+		GlobalVariables.buttonSearch.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
-				if (searchVisible){
-					searchVisible = false;
-					buttonSearch.setText("Enable search");
-					frame.getContentPane().remove(searchScrollPane); 
+				if (GlobalVariables.searchVisible){
+					GlobalVariables.searchVisible = false;
+					GlobalVariables.buttonSearch.setText("Enable search");
+					GlobalVariables.frame.getContentPane().remove(searchScrollPane); 
 				} else {
-					searchVisible = true;
-					buttonSearch.setText("Disable search");
-					frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END); 					
+					GlobalVariables.searchVisible = true;
+					GlobalVariables.buttonSearch.setText("Disable search");
+					GlobalVariables.frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END); 					
 				}
 				
-				frame.invalidate();
-                frame.validate();				
+				GlobalVariables.frame.invalidate();
+                GlobalVariables.frame.validate();				
 			  } 
 		} );
 		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
-				frame.setTitle("Test");			
+				GlobalVariables.frame.setTitle("Test");	
+				//System.out.println(GlobalVariables.a );				
 			  } 
 		} );
 		
 		// Extract the line string with mouse moving action and display in the message panel
 		// Refer to MessageProcess sub module
-		textPane.addMouseMotionListener(new MouseAdapter() {
+		GlobalVariables.textPane.addMouseMotionListener(new MouseAdapter() {
 			public void mouseMoved(MouseEvent e) {
-				MessageProcess.textPaneMouseMove(e, textPane, messagePane, messageDoc);
+				MessageProcess.textPaneMouseMove(e);
  
 			}
 		});
@@ -162,6 +164,7 @@ public class NoteBook {
 		
 	}
 	
+	/*
 	public JMenuBar createMenuBar() {
 		// Create Menu
 		JMenuBar menuBar = new JMenuBar();
@@ -265,7 +268,8 @@ public class NoteBook {
 	private void menuItemExitActionPerformed(ActionEvent evt) {  
         // TODO add your handling code here:  
        System.exit(0);   // Exit the whole system.
-    }  
+    } 
+   */	
 	
 	
 	
