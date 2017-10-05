@@ -69,50 +69,16 @@ public class MenuEdit{
 	
 	private static void menuItemLoadActionPerformed(ActionEvent evt) {  
         // TODO add your handling code here: 
-		// Initial parameters
-		GlobalVariables.searchVisible = false; 
-		GlobalVariables.textEditable = false;
-		GlobalVariables.textPane.setEditable(false);
-		GlobalVariables.buttonSaveEdit.setText("Edit");
-				
+	
+		
 		// Open files		
-		FileDialog fd = new FileDialog(GlobalVariables.frame, "Open", FileDialog.LOAD);  
+		FileDialog fd = new FileDialog(GlobalVariables.frame, "Open", FileDialog.LOAD);
+		fd.setFile("*.txt; *.jntk");  // Add file filter
         fd.setVisible(true);  
         String strFile = fd.getDirectory() + fd.getFile(); 
 		GlobalVariables.fileName = strFile; 
-		String line = null;
-		EditDisplay.ProcResult result = new EditDisplay.ProcResult();
-        if (strFile != null) {  
-            try {  
-                GlobalVariables.textPane.setText("");
-				FileReader fileReader = new FileReader(strFile);
-				BufferedReader bufferedReader = new BufferedReader(fileReader); 
-				while((line = bufferedReader.readLine()) != null) {
-						// System.out.println(line.length());
-						// style = textDoc.getStyle("highlight");
-						// textDoc.insertString(textPane.getDocument().getLength(), line+"\n", style);
-						if (line.length() > 1){
-							result = EditDisplay.procString(line);
-							//System.out.println(result.dispStr + "  " + result.returnCode);
-						} else {
-							result.dispStr = "";
-							result.returnCode = 3;
-						}
-						
-						if ( result.returnCode == 2){
-							GlobalVariables.style = GlobalVariables.textDoc.getStyle("bold");
-						} else {
-							GlobalVariables.style = GlobalVariables.textDoc.getStyle("base");
-						}
-						
-						GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
-								
-					}   
-				bufferedReader.close();      
-            } catch (Exception e) {  
-               
-            }  
-        }  
+		GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
+		EditDisplay.loadFileDisplayProc(strFile);
         
     } 
 	

@@ -59,8 +59,7 @@ public class NoteBook {
 		Color customGray = new Color(230, 230, 230); 
 		
 		// Create frame as main display interface
-		String textFrame = "Notebook with Java";
-		GlobalVariables.frame = new JFrame(textFrame);
+		GlobalVariables.frame = new JFrame("Notebook with Java");
 		GlobalVariables.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ImageIcon imgIcon = new ImageIcon("icon.jpg");
 		GlobalVariables.frame.setIconImage(imgIcon.getImage());
@@ -74,8 +73,18 @@ public class NoteBook {
 		JPanel buttonPanel = new JPanel();		
 			
 		// Add buttons
-        GlobalVariables.buttonSaveEdit = new JButton("Save");
-		GlobalVariables.buttonSearch = new JButton("Enable search");
+        GlobalVariables.buttonSaveEdit = new JButton();
+		GlobalVariables.buttonSearch = new JButton();
+		if (GlobalVariables.textEditable) {
+			GlobalVariables.buttonSaveEdit.setText("Save");
+		} else {
+			GlobalVariables.buttonSaveEdit.setText("Edit");
+		}
+		if (GlobalVariables.searchVisible) {
+			GlobalVariables.buttonSearch.setText("Disable search");
+		} else {
+			GlobalVariables.buttonSearch.setText("Enable search");
+		}		
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(GlobalVariables.buttonSaveEdit);
 		buttonPanel.add(GlobalVariables.buttonSearch);
@@ -91,12 +100,13 @@ public class NoteBook {
 		// Add textpane and searchPane
 		GlobalVariables.textDoc = new DefaultStyledDocument();
         GlobalVariables.textPane = new JTextPane(GlobalVariables.textDoc);
+		GlobalVariables.textPane.setBackground(GlobalVariables.textDisplayColor);
 		GlobalVariables.style = CreateStyles.CreateStyles(GlobalVariables.textDoc);
 		GlobalVariables.textPane.setPreferredSize(new Dimension(800, 100));
 		JScrollPane textScrollPane = new JScrollPane(GlobalVariables.textPane);
         textScrollPane.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        textScrollPane.setPreferredSize(new Dimension(250, 155));
+        textScrollPane.setPreferredSize(new Dimension(800, 300));
         textScrollPane.setMinimumSize(new Dimension(10, 10));
 		
 		DefaultStyledDocument searchDoc = new DefaultStyledDocument();
@@ -120,7 +130,7 @@ public class NoteBook {
 		// Add panels to GlobalVariables.frame
 	    GlobalVariables.frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
 		GlobalVariables.frame.getContentPane().add(textScrollPane, BorderLayout.CENTER);
-		GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 
+		//GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 
 		GlobalVariables.frame.getContentPane().add(GlobalVariables.messagePane, BorderLayout.PAGE_END);
 		
 		
@@ -131,11 +141,17 @@ public class NoteBook {
 		 If didn't add in the beginning, in the default layout (not maximum window), set the search panel back,
 		 the search panel will take all the window and leave textpanel no space to display.
 		*/ 
-		GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane); 
-		GlobalVariables.frame.invalidate();
-		GlobalVariables.frame.validate();
+		// GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane); 
+		// GlobalVariables.frame.invalidate();
+		//GlobalVariables.frame.validate();
 		
 		
+		// Edit/save functional switch
+		GlobalVariables.buttonSaveEdit.addActionListener(new ActionListener(){ 
+		  public void actionPerformed(ActionEvent evt) {			  
+				ButtonProcess.buttonSaveEditPress(evt);
+		  }
+		} );
 		
 		// Enable/disable search result panel, controlled by buttonSearch
 		GlobalVariables.buttonSearch.addActionListener(new ActionListener(){ 
@@ -144,27 +160,11 @@ public class NoteBook {
 		  }
 		} );
 		
-		// GlobalVariables.buttonSearch.addActionListener(new ActionListener(){ 
-		  // public void actionPerformed(ActionEvent evt) { 
-				// if (GlobalVariables.searchVisible){
-					// GlobalVariables.searchVisible = false;
-					// GlobalVariables.buttonSearch.setText("Enable search");
-					// GlobalVariables.frame.getContentPane().remove(searchScrollPane); 
-				// } else {
-					// GlobalVariables.searchVisible = true;
-					// GlobalVariables.buttonSearch.setText("Disable search");
-					// GlobalVariables.frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END); 					
-				// }
-				
-				// GlobalVariables.frame.invalidate();
-                // GlobalVariables.frame.validate();				
-			  // } 
-		// } );
 		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
-				GlobalVariables.frame.setTitle("Test");	
+				//GlobalVariables.frame.setTitle("Test");	
 				System.out.println(GlobalVariables.fileName );				
 			  } 
 		} );

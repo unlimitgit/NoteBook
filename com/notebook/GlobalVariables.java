@@ -10,12 +10,13 @@ import javax.swing.text.Style;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import java.awt.Color;
 
 
 public class GlobalVariables
 {
 	public static boolean searchVisible = false;  		// Related to search engine
-    public static boolean textEditable = true;			// The main panel editable or not
+    public static boolean textEditable = false;			// The main panel editable or not
 	public static JTextPane textPane, messagePane, searchPane;
 	public static DefaultStyledDocument textDoc, messageDoc;  
 	public static Style style;
@@ -23,6 +24,9 @@ public class GlobalVariables
 	public static JFrame frame;
 	public static String  fileName ;
 	public static JScrollPane searchScrollPane;
+	public static final Color textDisplayColor = new Color(240,240,240);
+	
+	
 	
 }
 
