@@ -100,15 +100,15 @@ public class NoteBook {
         textScrollPane.setMinimumSize(new Dimension(10, 10));
 		
 		DefaultStyledDocument searchDoc = new DefaultStyledDocument();
-        JTextPane searchPane = new JTextPane(searchDoc);
-		searchPane.setPreferredSize(new Dimension(800, 100));
-		searchPane.setBackground(customGray);
-		JScrollPane searchScrollPane = new JScrollPane(searchPane);
-        searchScrollPane.setVerticalScrollBarPolicy(
+        GlobalVariables.searchPane = new JTextPane(searchDoc);
+		GlobalVariables.searchPane.setPreferredSize(new Dimension(800, 100));
+		GlobalVariables.searchPane.setBackground(customGray);
+		GlobalVariables.searchScrollPane = new JScrollPane(GlobalVariables.searchPane);
+        GlobalVariables.searchScrollPane.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        searchScrollPane.setPreferredSize(new Dimension(250, 155));
-        searchScrollPane.setMinimumSize(new Dimension(10, 10));
-		searchPane.setEditable(false);
+        GlobalVariables.searchScrollPane.setPreferredSize(new Dimension(250, 155));
+        GlobalVariables.searchScrollPane.setMinimumSize(new Dimension(10, 10));
+		GlobalVariables.searchPane.setEditable(false);
 		
 		GlobalVariables.messageDoc = new DefaultStyledDocument();
         GlobalVariables.messagePane = new JTextPane(GlobalVariables.messageDoc);
@@ -120,35 +120,52 @@ public class NoteBook {
 		// Add panels to GlobalVariables.frame
 	    GlobalVariables.frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
 		GlobalVariables.frame.getContentPane().add(textScrollPane, BorderLayout.CENTER);
-		//GlobalVariables.frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END);
+		GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 
 		GlobalVariables.frame.getContentPane().add(GlobalVariables.messagePane, BorderLayout.PAGE_END);
+		
 		
 		GlobalVariables.frame.pack();
         GlobalVariables.frame.setVisible(true);
 		
+		/* Remove searchScrollPane later will keep the space for this pane. 
+		 If didn't add in the beginning, in the default layout (not maximum window), set the search panel back,
+		 the search panel will take all the window and leave textpanel no space to display.
+		*/ 
+		GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane); 
+		GlobalVariables.frame.invalidate();
+		GlobalVariables.frame.validate();
+		
+		
+		
 		// Enable/disable search result panel, controlled by buttonSearch
 		GlobalVariables.buttonSearch.addActionListener(new ActionListener(){ 
-		  public void actionPerformed(ActionEvent evt) { 
-				if (GlobalVariables.searchVisible){
-					GlobalVariables.searchVisible = false;
-					GlobalVariables.buttonSearch.setText("Enable search");
-					GlobalVariables.frame.getContentPane().remove(searchScrollPane); 
-				} else {
-					GlobalVariables.searchVisible = true;
-					GlobalVariables.buttonSearch.setText("Disable search");
-					GlobalVariables.frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END); 					
-				}
-				
-				GlobalVariables.frame.invalidate();
-                GlobalVariables.frame.validate();				
-			  } 
+		  public void actionPerformed(ActionEvent evt) {			  
+				ButtonProcess.buttonSearchPress(evt);
+		  }
 		} );
+		
+		// GlobalVariables.buttonSearch.addActionListener(new ActionListener(){ 
+		  // public void actionPerformed(ActionEvent evt) { 
+				// if (GlobalVariables.searchVisible){
+					// GlobalVariables.searchVisible = false;
+					// GlobalVariables.buttonSearch.setText("Enable search");
+					// GlobalVariables.frame.getContentPane().remove(searchScrollPane); 
+				// } else {
+					// GlobalVariables.searchVisible = true;
+					// GlobalVariables.buttonSearch.setText("Disable search");
+					// GlobalVariables.frame.getContentPane().add(searchScrollPane, BorderLayout.LINE_END); 					
+				// }
+				
+				// GlobalVariables.frame.invalidate();
+                // GlobalVariables.frame.validate();				
+			  // } 
+		// } );
 		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 				GlobalVariables.frame.setTitle("Test");	
-				//System.out.println(GlobalVariables.a );				
+				System.out.println(GlobalVariables.fileName );				
 			  } 
 		} );
 		

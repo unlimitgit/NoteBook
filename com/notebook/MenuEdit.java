@@ -72,12 +72,14 @@ public class MenuEdit{
 		// Initial parameters
 		GlobalVariables.searchVisible = false; 
 		GlobalVariables.textEditable = false;
+		GlobalVariables.textPane.setEditable(false);
 		GlobalVariables.buttonSaveEdit.setText("Edit");
 				
 		// Open files		
 		FileDialog fd = new FileDialog(GlobalVariables.frame, "Open", FileDialog.LOAD);  
         fd.setVisible(true);  
-        String strFile = fd.getDirectory() + fd.getFile(); 		
+        String strFile = fd.getDirectory() + fd.getFile(); 
+		GlobalVariables.fileName = strFile; 
 		String line = null;
 		EditDisplay.ProcResult result = new EditDisplay.ProcResult();
         if (strFile != null) {  
