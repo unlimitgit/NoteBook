@@ -11,6 +11,8 @@ import javax.swing.text.DefaultStyledDocument;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 
 public class GlobalVariables
@@ -25,6 +27,8 @@ public class GlobalVariables
 	public static String  fileName ;
 	public static JScrollPane searchScrollPane;
 	public static final Color textDisplayColor = new Color(240,240,240);
+	public static JLabel searchLabel = new JLabel("Enter here to search: ");
+	public static JTextField searchKeyWord ;
 	
 	
 	

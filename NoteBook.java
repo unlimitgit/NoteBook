@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -96,6 +97,13 @@ public class NoteBook {
 		buttonPanel.add(buttonTest);
 		buttonTest.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
+		buttonPanel.add(GlobalVariables.searchLabel);
+		GlobalVariables.searchLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
+		GlobalVariables.searchKeyWord = new JTextField("Test");
+		buttonPanel.add(GlobalVariables.searchKeyWord);
+		GlobalVariables.searchKeyWord.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
 		
 		// Add textpane and searchPane
 		GlobalVariables.textDoc = new DefaultStyledDocument();
@@ -168,6 +176,14 @@ public class NoteBook {
 				System.out.println(GlobalVariables.fileName );				
 			  } 
 		} );
+		
+		// searchKeyWord extract listener (extract the string when press enter key)
+		GlobalVariables.searchKeyWord.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt) { 
+				//GlobalVariables.frame.setTitle("Test");	
+				System.out.println(GlobalVariables.searchKeyWord.getText());				
+			} 
+		});
 		
 		// Extract the line string with mouse moving action and display in the message panel
 		// Refer to MessageProcess sub module
