@@ -28,6 +28,7 @@ import java.awt.FileDialog;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 
 import javax.swing.text.Utilities;
 import javax.swing.text.BadLocationException;
@@ -82,9 +83,9 @@ public class NoteBook {
 			GlobalVariables.buttonSaveEdit.setText("Edit");
 		}
 		if (GlobalVariables.searchVisible) {
-			GlobalVariables.buttonSearch.setText("Disable search");
+			GlobalVariables.buttonSearch.setText("Remove search result");
 		} else {
-			GlobalVariables.buttonSearch.setText("Enable search");
+			GlobalVariables.buttonSearch.setText("Display search result");
 		}		
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(GlobalVariables.buttonSaveEdit);
@@ -117,8 +118,8 @@ public class NoteBook {
         textScrollPane.setPreferredSize(new Dimension(800, 300));
         textScrollPane.setMinimumSize(new Dimension(10, 10));
 		
-		DefaultStyledDocument searchDoc = new DefaultStyledDocument();
-        GlobalVariables.searchPane = new JTextPane(searchDoc);
+		GlobalVariables.searchDoc = new DefaultStyledDocument();
+        GlobalVariables.searchPane = new JTextPane(GlobalVariables.searchDoc);
 		GlobalVariables.searchPane.setPreferredSize(new Dimension(800, 100));
 		GlobalVariables.searchPane.setBackground(customGray);
 		GlobalVariables.searchScrollPane = new JScrollPane(GlobalVariables.searchPane);
@@ -173,7 +174,8 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 				//GlobalVariables.frame.setTitle("Test");	
-				System.out.println(GlobalVariables.fileName );				
+				System.out.println(GlobalVariables.dirName );	
+				
 			  } 
 		} );
 		
@@ -181,7 +183,9 @@ public class NoteBook {
 		GlobalVariables.searchKeyWord.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt) { 
 				//GlobalVariables.frame.setTitle("Test");	
-				System.out.println(GlobalVariables.searchKeyWord.getText());				
+				//System.out.println(GlobalVariables.searchKeyWord.getText());
+				File file = new File(GlobalVariables.dirName);
+				SearchProcess.displayDirectoryContents(GlobalVariables.searchKeyWord.getText(), file);				
 			} 
 		});
 		

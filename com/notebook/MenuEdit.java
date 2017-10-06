@@ -76,7 +76,8 @@ public class MenuEdit{
 		fd.setFile("*.txt; *.jntk");  // Add file filter
         fd.setVisible(true);  
         String strFile = fd.getDirectory() + fd.getFile(); 
-		GlobalVariables.fileName = strFile; 
+		GlobalVariables.fileName = strFile;
+		GlobalVariables.dirName = fd.getDirectory();		
 		GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
 		EditDisplay.loadFileDisplayProc(strFile);
         

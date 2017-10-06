@@ -19,11 +19,11 @@ public class ButtonProcess{
 	public static void buttonSearchPress(ActionEvent evt) {
 		if (GlobalVariables.searchVisible){
 			GlobalVariables.searchVisible = false;
-			GlobalVariables.buttonSearch.setText("Enable search");
+			GlobalVariables.buttonSearch.setText("Display search result");
 			GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane); 
 		} else {
 			GlobalVariables.searchVisible = true;
-			GlobalVariables.buttonSearch.setText("Disable search");
+			GlobalVariables.buttonSearch.setText("Remove search result");
 			GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 					
 		}
 		
@@ -63,6 +63,9 @@ public class ButtonProcess{
 		}			
 	
 	}
+	
+	
+	
 	
 
 	
