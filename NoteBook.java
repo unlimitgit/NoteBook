@@ -24,6 +24,10 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+//import java.awt.event.KeyListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import java.awt.FileDialog;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -182,6 +186,16 @@ public class NoteBook {
 		// searchKeyWord extract listener (extract the string when press enter key)
 		GlobalVariables.searchKeyWord.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evt) { 
+				//GlobalVariables.frame.setTitle("Test");	
+				//System.out.println(GlobalVariables.searchKeyWord.getText());
+				// File file = new File(GlobalVariables.dirName);
+				// SearchProcess.displayDirectoryContents(GlobalVariables.searchKeyWord.getText(), file);				
+			} 
+		});
+		
+		// searchKeyWord key listener 
+		GlobalVariables.searchKeyWord.addKeyListener(new KeyAdapter(){
+			public void keyPressed(KeyEvent ke) { 
 				//GlobalVariables.frame.setTitle("Test");	
 				//System.out.println(GlobalVariables.searchKeyWord.getText());
 				File file = new File(GlobalVariables.dirName);
