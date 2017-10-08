@@ -105,7 +105,7 @@ public class NoteBook {
 		buttonPanel.add(GlobalVariables.searchLabel);
 		GlobalVariables.searchLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
-		GlobalVariables.searchKeyWord = new JTextField("Test");
+		GlobalVariables.searchKeyWord = new JTextField();
 		buttonPanel.add(GlobalVariables.searchKeyWord);
 		GlobalVariables.searchKeyWord.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
@@ -121,6 +121,7 @@ public class NoteBook {
                         JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         textScrollPane.setPreferredSize(new Dimension(800, 300));
         textScrollPane.setMinimumSize(new Dimension(10, 10));
+		GlobalVariables.textPane.setEditable(false);
 		
 		GlobalVariables.searchDoc = new DefaultStyledDocument();
         GlobalVariables.searchPane = new JTextPane(GlobalVariables.searchDoc);
@@ -178,7 +179,10 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 				//GlobalVariables.frame.setTitle("Test");	
-				System.out.println(GlobalVariables.dirName );	
+				System.out.println(GlobalVariables.searchFileResults.size() );	
+				for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
+					System.out.println(GlobalVariables.searchFileResults.get(i) );
+				}
 				
 			  } 
 		} );
@@ -208,6 +212,14 @@ public class NoteBook {
 		GlobalVariables.textPane.addMouseMotionListener(new MouseAdapter() {
 			public void mouseMoved(MouseEvent e) {
 				MessageProcess.textPaneMouseMove(e);
+ 
+			}
+		});
+		
+		// Refer to MessageProcess sub module
+		GlobalVariables.searchPane.addMouseMotionListener(new MouseAdapter() {
+			public void mouseMoved(MouseEvent e) {
+				MessageProcess.searchPaneMouseMove(e);
  
 			}
 		});

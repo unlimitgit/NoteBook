@@ -13,6 +13,8 @@ import javax.swing.JScrollPane;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class GlobalVariables
@@ -30,8 +32,7 @@ public class GlobalVariables
 	public static final Color textDisplayColor = new Color(240,240,240);
 	public static JLabel searchLabel = new JLabel("Enter here to search: ");
 	public static JTextField searchKeyWord ;
-	
-	
+	public static List<String> searchFileResults = new ArrayList<String>();
 	
 }
 

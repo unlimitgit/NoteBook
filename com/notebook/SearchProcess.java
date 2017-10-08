@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.awt.BorderLayout;
 import javax.swing.text.BadLocationException;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class SearchProcess
@@ -20,6 +22,8 @@ public class SearchProcess
 	public static void displayDirectoryContents(String keyWord, File dir) {
 		try {
 			GlobalVariables.searchPane.setText(null);
+			//GlobalVariables.searchFileResults.removeAll();
+			GlobalVariables.searchFileResults.clear();
 			GlobalVariables.searchVisible = true;
 			GlobalVariables.buttonSearch.setText("Remove search result");
 			GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 
@@ -41,8 +45,9 @@ public class SearchProcess
 							   // a match!
 							   //System.out.println("I found " + keyWord + " in file " +file.getName().substring(0, file.getName().lastIndexOf('.')));
 							   try {
+								   GlobalVariables.searchFileResults.add(file.getCanonicalPath());
 								   String content = file.getName().substring(0, file.getName().lastIndexOf('.'));
-								   GlobalVariables.searchDoc.insertString(0, content + "\n", null);
+								   GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), content + "\n", null);
 							   } catch (Exception e) {  
 					
 							   }
