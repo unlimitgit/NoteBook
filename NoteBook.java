@@ -97,6 +97,14 @@ public class NoteBook {
 		GlobalVariables.buttonSaveEdit.setAlignmentX(Component.LEFT_ALIGNMENT);
 		GlobalVariables.buttonSearch.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
+		GlobalVariables.buttonPrevious = new JButton("Previous");
+		buttonPanel.add(GlobalVariables.buttonPrevious);
+		GlobalVariables.buttonPrevious.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
+		GlobalVariables.buttonNext = new JButton("Next");
+		buttonPanel.add(GlobalVariables.buttonNext);
+		GlobalVariables.buttonNext.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest = new JButton("Test");
 		buttonPanel.add(buttonTest);
@@ -179,11 +187,12 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 				//GlobalVariables.frame.setTitle("Test");	
-				System.out.println(GlobalVariables.searchFileResults.size() );	
-				for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
-					System.out.println(GlobalVariables.searchFileResults.get(i) );
-				}
+				// System.out.println(GlobalVariables.searchFileResults.size() );	
+				// for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
+					// System.out.println(GlobalVariables.searchFileResults.get(i) );
+				// }
 				
+			
 			  } 
 		} );
 		
@@ -207,6 +216,8 @@ public class NoteBook {
 			} 
 		});
 		
+		
+		
 		// Extract the line string with mouse moving action and display in the message panel
 		// Refer to MessageProcess sub module
 		GlobalVariables.textPane.addMouseMotionListener(new MouseAdapter() {
@@ -223,6 +234,38 @@ public class NoteBook {
  
 			}
 		});
+		
+		// Extract the string contents, and open the website page included by '[' ']'
+		GlobalVariables.searchPane.addMouseListener(new MouseAdapter() {
+         @Override
+         public void mouseClicked(MouseEvent e) {
+            if (e.getButton() != MouseEvent.BUTTON1) {
+               return;
+            }
+            if (e.getClickCount() != 2) {
+               return;
+            }
+			try {
+				int caretPos = GlobalVariables.searchPane.getCaretPosition();
+				int rowNum = (caretPos == 0) ? 1 : 0;
+				for (int offset = caretPos; offset > 0;) {
+					offset = Utilities.getRowStart(GlobalVariables.searchPane, offset) - 1;
+					rowNum++;
+				}
+				System.out.println("Row: " + rowNum); 
+				System.out.println(GlobalVariables.searchFileResults.size());
+				if (rowNum <= GlobalVariables.searchFileResults.size()){ 
+					System.out.println(GlobalVariables.searchFileResults.get(rowNum-1));
+					GlobalVariables.fileSequences.add(GlobalVariables.searchFileResults.get(rowNum-1));
+					GlobalVariables.fileLevel = GlobalVariables.fileLevel + 1;
+					EditDisplay.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
+				}					
+				
+			} catch (BadLocationException e1) {
+               e1.printStackTrace();
+            }
+         }
+      });
 		
 		
 	}

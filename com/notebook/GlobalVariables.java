@@ -24,7 +24,7 @@ public class GlobalVariables
 	public static JTextPane textPane, messagePane, searchPane;
 	public static DefaultStyledDocument textDoc, messageDoc, searchDoc;  
 	public static Style style;
-	public static JButton buttonSaveEdit, buttonSearch;
+	public static JButton buttonSaveEdit, buttonSearch, buttonPrevious, buttonNext;
 	public static JFrame frame;
 	public static String  fileName ;
 	public static String  dirName = "./";
@@ -33,6 +33,8 @@ public class GlobalVariables
 	public static JLabel searchLabel = new JLabel("Enter here to search: ");
 	public static JTextField searchKeyWord ;
 	public static List<String> searchFileResults = new ArrayList<String>();
+	public static List<String> fileSequences = new ArrayList<String>();
+	public static int fileLevel = 0 ;
 	
 }
 
