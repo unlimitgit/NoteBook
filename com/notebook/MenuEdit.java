@@ -75,6 +75,10 @@ public class MenuEdit{
 		FileDialog fd = new FileDialog(GlobalVariables.frame, "Open", FileDialog.LOAD);
 		fd.setFile("*.txt; *.jntk");  // Add file filter
         fd.setVisible(true); 
+		GlobalVariables.searchVisible = false;
+		GlobalVariables.buttonSearch.setText("Display search result");
+		GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane);
+		GlobalVariables.frame.validate();
 		GlobalVariables.fileSequences.clear();	
         String strFile = fd.getDirectory() + fd.getFile(); 
 		GlobalVariables.fileSequences.add(strFile);
@@ -83,6 +87,7 @@ public class MenuEdit{
 		GlobalVariables.dirName = fd.getDirectory();		
 		GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
 		EditDisplay.loadFileDisplayProc(strFile);
+		
         
     } 
 	

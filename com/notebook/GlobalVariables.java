@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class GlobalVariables
 {
 	public static boolean searchVisible = false;  		// Related to search engine
+	//public static boolean searchEnable = false;  		// Is it search enable
     public static boolean textEditable = false;			// The main panel editable or not
 	public static JTextPane textPane, messagePane, searchPane;
 	public static DefaultStyledDocument textDoc, messageDoc, searchDoc;  
@@ -29,7 +30,7 @@ public class GlobalVariables
 	public static String  fileName ;
 	public static String  dirName = "./";
 	public static JScrollPane searchScrollPane;
-	public static final Color textDisplayColor = new Color(240,240,240);
+	public static final Color textDisplayColor = new Color(250,250,250);
 	public static JLabel searchLabel = new JLabel("Enter here to search: ");
 	public static JTextField searchKeyWord ;
 	public static List<String> searchFileResults = new ArrayList<String>();

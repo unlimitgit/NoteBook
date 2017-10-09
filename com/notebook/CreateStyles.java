@@ -31,23 +31,11 @@ public class CreateStyles
 		style = doc.addStyle("bold", baseStyle);
         StyleConstants.setBold(style, true);
 		StyleConstants.setForeground(style, Color.red);
- 
-        style = doc.addStyle("italic", baseStyle);
-        StyleConstants.setItalic(style, true);
- 
-        style = doc.addStyle("blue", baseStyle);
-        StyleConstants.setForeground(style, Color.blue);
- 
-        style = doc.addStyle("underline", baseStyle);
-        StyleConstants.setUnderline(style, true);
- 
-        style = doc.addStyle("green", baseStyle);
-        StyleConstants.setForeground(style, Color.green.darker());
-        StyleConstants.setUnderline(style, true);
- 
+	
+		// Used for highlight for searching with keyword
         style = doc.addStyle("highlight", baseStyle);
-        StyleConstants.setForeground(style, Color.yellow);
-        StyleConstants.setBackground(style, Color.black);
+        StyleConstants.setForeground(style, Color.white);
+        StyleConstants.setBackground(style, Color.red);
 		
 		return style;
 		

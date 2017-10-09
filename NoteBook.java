@@ -191,6 +191,7 @@ public class NoteBook {
 				// for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
 					// System.out.println(GlobalVariables.searchFileResults.get(i) );
 				// }
+				System.out.println(GlobalVariables.searchVisible);
 				
 			
 			  } 
@@ -252,13 +253,15 @@ public class NoteBook {
 					offset = Utilities.getRowStart(GlobalVariables.searchPane, offset) - 1;
 					rowNum++;
 				}
-				System.out.println("Row: " + rowNum); 
-				System.out.println(GlobalVariables.searchFileResults.size());
+				//System.out.println("Row: " + rowNum); 
+				//System.out.println(GlobalVariables.searchFileResults.size());
 				if (rowNum <= GlobalVariables.searchFileResults.size()){ 
-					System.out.println(GlobalVariables.searchFileResults.get(rowNum-1));
+					//System.out.println(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileSequences.add(GlobalVariables.searchFileResults.get(rowNum-1));
+					GlobalVariables.fileName = GlobalVariables.searchFileResults.get(rowNum-1);
 					GlobalVariables.fileLevel = GlobalVariables.fileLevel + 1;
 					EditDisplay.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
+					GlobalVariables.frame.setTitle("Notebook with Java: " +  GlobalVariables.searchFileResults.get(rowNum-1));	
 				}					
 				
 			} catch (BadLocationException e1) {
