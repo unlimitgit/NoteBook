@@ -37,6 +37,16 @@ public class CreateStyles
         StyleConstants.setForeground(style, Color.white);
         StyleConstants.setBackground(style, Color.red);
 		
+		//Title
+		style = doc.addStyle("title", baseStyle);
+		StyleConstants.setFontSize(style, 36);
+        StyleConstants.setBold(style, true);
+		StyleConstants.setForeground(style, Color.blue);
+		
+		//Hiding
+		style = doc.addStyle("hide", baseStyle);
+		StyleConstants.setFontSize(style, 0);
+		
 		return style;
 		
 	}

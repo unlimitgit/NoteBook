@@ -96,34 +96,43 @@ public class EditDisplay
 		GlobalVariables.buttonSaveEdit.setText("Edit");
 		GlobalVariables.textPane.setBackground(GlobalVariables.textDisplayColor);
 		
+		
+		
 		String line = null;
 		ProcResult result = new ProcResult();
         if (fileName != null) {  
             try {  
                 GlobalVariables.textPane.setText("");
+				
+				// Display file name in the begining
+				String fileDisp = fileName.substring(fileName.lastIndexOf('\\')+1, fileName.lastIndexOf('.'));
+				GlobalVariables.style = GlobalVariables.textDoc.getStyle("title");
+				GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), fileDisp+"\n\n", GlobalVariables.style);
+				
+				// GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "Test ", GlobalVariables.style);
+				// GlobalVariables.style = GlobalVariables.textDoc.getStyle("hide");
+				// GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "I am hiding", GlobalVariables.style);
+				// GlobalVariables.style = GlobalVariables.textDoc.getStyle("title");
+				// GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "Back\n", GlobalVariables.style);
+				
+		
+				
 				FileReader fileReader = new FileReader(fileName);
 				BufferedReader bufferedReader = new BufferedReader(fileReader); 
 				while((line = bufferedReader.readLine()) != null) {
-						// System.out.println(line.length());
-						// style = textDoc.getStyle("highlight");
-						// textDoc.insertString(textPane.getDocument().getLength(), line+"\n", style);
-						if (line.length() > 1){
+					if (line.length() > 1){
 							if (GlobalVariables.searchVisible) {
 								String str1 = line;
 								String str2 = GlobalVariables.searchKeyWord.getText();
 								int pos = str1.toLowerCase().indexOf(str2.toLowerCase());
 								while (pos != -1) {			// Find keyword
 									if (pos == 0) {			// Keyword is in the beginning
-										// System.out.println(1);
-										// System.out.println(str1.substring(0, str2.length()));
 										result = procString(str1.substring(0, str2.length()));
 										setStyle(result.returnCode);
 										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
 										str1 = str1.substring(str2.length(), str1.length());
 										pos = str1.toLowerCase().indexOf(str2.toLowerCase());
 									} else if(pos == str1.length()- str2.length()) { // Keyword is int the end
-										// System.out.println(2);
-										// System.out.println(str1.substring(0, pos));
 										result = procString(str1.substring(0, pos));
 										setStyle(result.returnCode);
 										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
@@ -152,21 +161,17 @@ public class EditDisplay
 								setStyle(result.returnCode);
 								GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
 							}
-							// result = procString(line);
-							//System.out.println(result.dispStr + "  " + result.returnCode);
+							
 						} else {
 							result.dispStr = "";
 							result.returnCode = 1;
 							setStyle(result.returnCode);
 							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
-								
-								
-					
+
 						}
-						
-						
-								
-					}   
+					} 
+
+				GlobalVariables.frame.validate();
 				bufferedReader.close();      
             } catch (Exception e) {  
                

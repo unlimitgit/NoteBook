@@ -18,6 +18,9 @@ import java.awt.FileDialog;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.awt.Color;
 
 public class MenuEdit{
 	
@@ -47,6 +50,16 @@ public class MenuEdit{
         });  
         menuFile.add(menuItemLoad);
 		
+		
+		//Save as file
+        JMenuItem menuItemSaveAs = new JMenuItem("Save as Notebook");
+        menuItemSaveAs.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {  
+               menuItemSaveAsActionPerformed(evt);  
+            }  
+        });  
+        menuFile.add(menuItemSaveAs);
+		
 		menuFile.addSeparator();
 		
 		//Exit system
@@ -67,13 +80,25 @@ public class MenuEdit{
 		return menuBar;
 	}
 	
+	private static void menuItemNewActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here: 
+		
+		// Make textPane editable		
+		GlobalVariables.textEditable = true;	
+		GlobalVariables.textPane.setEditable(true);	
+		GlobalVariables.textPane.setBackground(Color.WHITE);
+		GlobalVariables.fileName = null;	
+		GlobalVariables.buttonSaveEdit.setText("Save");		
+        
+    } 
+	
 	private static void menuItemLoadActionPerformed(ActionEvent evt) {  
         // TODO add your handling code here: 
 	
 		
 		// Open files		
 		FileDialog fd = new FileDialog(GlobalVariables.frame, "Open", FileDialog.LOAD);
-		fd.setFile("*.txt; *.jntk");  // Add file filter
+		fd.setFile("*.jntk");  // Add file filter
         fd.setVisible(true); 
 		GlobalVariables.searchVisible = false;
 		GlobalVariables.buttonSearch.setText("Display search result");
@@ -91,8 +116,23 @@ public class MenuEdit{
         
     } 
 	
-	private static void menuItemNewActionPerformed(ActionEvent evt) {  
-        // TODO add your handling code here:  
+	private static void menuItemSaveAsActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here:
+		FileDialog fd = new FileDialog(GlobalVariables.frame, "Save As", FileDialog.SAVE); 
+		fd.setFile("*.jntk");  // Add file filter		
+        fd.setVisible(true); 
+		String string1 = "file::" + fd.getFile() 
+		          + "\n" + GlobalVariables.textPane.getText();  
+		String stringfile = fd.getDirectory()+fd.getFile();  
+		BufferedWriter bWriter = null;  
+		try {  
+			bWriter = new BufferedWriter(new FileWriter(stringfile));  
+			bWriter.write(string1);   
+			bWriter.close();   
+		} catch (Exception e) {  
+			// TODO Auto-generated catch block  
+			System.out.println("Save failed");  
+		}   
         
     } 
 	

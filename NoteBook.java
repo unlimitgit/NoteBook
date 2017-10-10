@@ -183,19 +183,7 @@ public class NoteBook {
 		} );
 		
 		
-		// This button is only for temporary test, will remove in the official version.
-		buttonTest.addActionListener(new ActionListener(){ 
-		  public void actionPerformed(ActionEvent evt) { 
-				//GlobalVariables.frame.setTitle("Test");	
-				// System.out.println(GlobalVariables.searchFileResults.size() );	
-				// for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
-					// System.out.println(GlobalVariables.searchFileResults.get(i) );
-				// }
-				System.out.println(GlobalVariables.searchVisible);
-				
-			
-			  } 
-		} );
+		
 		
 		// searchKeyWord extract listener (extract the string when press enter key)
 		GlobalVariables.searchKeyWord.addActionListener(new ActionListener(){
@@ -269,6 +257,20 @@ public class NoteBook {
             }
          }
       });
+	  
+	  // This button is only for temporary test, will remove in the official version.
+		buttonTest.addActionListener(new ActionListener(){ 
+		  public void actionPerformed(ActionEvent evt) { 
+				//GlobalVariables.frame.setTitle("Test");	
+				// System.out.println(GlobalVariables.searchFileResults.size() );	
+				// for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
+					// System.out.println(GlobalVariables.searchFileResults.get(i) );
+				// }
+				System.out.println(GlobalVariables.fileName);
+				
+			
+			  } 
+		} );
 		
 		
 	}
