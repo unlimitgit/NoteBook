@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class GlobalVariables
 {
 	public static boolean searchVisible = false;  		// Related to search engine
-	//public static boolean searchEnable = false;  		// Is it search enable
     public static boolean textEditable = false;			// The main panel editable or not
 	public static JTextPane textPane, messagePane, searchPane;
 	public static DefaultStyledDocument textDoc, messageDoc, searchDoc;  
@@ -36,6 +35,8 @@ public class GlobalVariables
 	public static List<String> searchFileResults = new ArrayList<String>();
 	public static List<String> fileSequences = new ArrayList<String>();
 	public static int fileLevel = 0 ;
+	public static final String fileTitle = "File::::"; 
+	public static String[] contentsSymbol = {"", "", ""}; 	// Used to save the contents of the whole file (they are separated for three parts for easy processing)
 	
 }
 

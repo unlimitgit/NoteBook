@@ -266,7 +266,15 @@ public class NoteBook {
 				// for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
 					// System.out.println(GlobalVariables.searchFileResults.get(i) );
 				// }
-				System.out.println(GlobalVariables.fileName);
+				try {
+					String content = GlobalVariables.textPane.getDocument().getText(0, GlobalVariables.textPane.getDocument().getLength());
+					System.out.println(content);
+				} catch (BadLocationException ee) {
+					//handle exception
+				}
+				// String content = GlobalVariables.textPane.getDocument().getText(0, GlobalVariables.textPane.getDocument().getLength());
+				
+				// System.out.println(content);
 				
 			
 			  } 

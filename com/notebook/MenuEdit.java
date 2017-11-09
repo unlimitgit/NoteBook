@@ -121,7 +121,7 @@ public class MenuEdit{
 		FileDialog fd = new FileDialog(GlobalVariables.frame, "Save As", FileDialog.SAVE); 
 		fd.setFile("*.jntk");  // Add file filter		
         fd.setVisible(true); 
-		String string1 = "file::" + fd.getFile() 
+		String string1 = GlobalVariables.fileTitle + fd.getFile() 
 		          + "\n" + GlobalVariables.textPane.getText();  
 		String stringfile = fd.getDirectory()+fd.getFile();  
 		BufferedWriter bWriter = null;  
