@@ -247,7 +247,7 @@ public class NoteBook {
 					//System.out.println(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileSequences.add(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileName = GlobalVariables.searchFileResults.get(rowNum-1);
-					GlobalVariables.fileLevel = GlobalVariables.fileLevel + 1;
+					GlobalVariables.pageLevel = GlobalVariables.pageLevel + 1;
 					EditDisplay.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.frame.setTitle("Notebook with Java: " +  GlobalVariables.searchFileResults.get(rowNum-1));	
 				}					
@@ -261,20 +261,8 @@ public class NoteBook {
 	  // This button is only for temporary test, will remove in the official version.
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
-				//GlobalVariables.frame.setTitle("Test");	
-				// System.out.println(GlobalVariables.searchFileResults.size() );	
-				// for (int i=0; i < GlobalVariables.searchFileResults.size(); i++){
-					// System.out.println(GlobalVariables.searchFileResults.get(i) );
-				// }
-				try {
-					String content = GlobalVariables.textPane.getDocument().getText(0, GlobalVariables.textPane.getDocument().getLength());
-					System.out.println(content);
-				} catch (BadLocationException ee) {
-					//handle exception
-				}
-				// String content = GlobalVariables.textPane.getDocument().getText(0, GlobalVariables.textPane.getDocument().getLength());
 				
-				// System.out.println(content);
+
 				
 			
 			  } 

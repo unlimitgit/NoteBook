@@ -4,11 +4,52 @@ This is for functions reading from file and processing to string
 
 package com.notebook;
 
+import com.notebook.GlobalVariables;
+
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.util.ArrayList;
 
 public class FileStringProcess{
+	
+	//Extract string lines from the contents of page
+	public static ArrayList<String> extractLineStrings(String contents) {
+		ArrayList<String> result = new ArrayList<String>();
+		String lineSymbol = "\n";
+		String stringProc = contents;
+		String line;
+		int index = stringProc.indexOf(lineSymbol);
+		while (index != -1){
+			if (index == 0){
+				line = "";			// Empty line
+			} else {
+				line = stringProc.substring(0,index); // Extract the line contents
+			}
+			result.add(line);
+			stringProc = stringProc.substring(index+1);
+			index = stringProc.indexOf(lineSymbol);			
+		}
+		return result;
+	}
 		
+	//Extract the page list (name of root/child) from the contents of the  file
+	public static ArrayList<String> extractPageList(String contents) {
+		ArrayList<String> result = new ArrayList<String>();
+		String pageSymbol = GlobalVariables.pageTitle;
+		String stringProc = contents;
+		String line, pageName;
+		int index = stringProc.indexOf(pageSymbol);
+		while (index != -1){
+			stringProc = stringProc.substring(index);
+			line = stringProc.substring(0, stringProc.indexOf("\n"));		//Extract the line with page name
+			pageName = line.substring(pageSymbol.length(), line.lastIndexOf(".")); // Extract the page name ouot
+			result.add(pageName);
+			stringProc = stringProc.substring(stringProc.indexOf("\n"));	// Substract string for next page processing
+			index = stringProc.indexOf(pageSymbol);
+		}
+		return result;	
+	}
+	
 	
 	// Read out the contents in the file and convert to string
 	public static String readFileContents(String fileName) {
@@ -60,10 +101,6 @@ public class FileStringProcess{
 		}
 		return result;	
 	}
-	
-	
-	
-	
 
 	
 }

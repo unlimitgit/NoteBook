@@ -13,6 +13,8 @@ import javax.swing.text.Utilities;
 import javax.swing.text.BadLocationException;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import javax.accessibility.AccessibleText;
+import java.awt.Point;
 
 
 public class MessageProcess
@@ -21,10 +23,37 @@ public class MessageProcess
 	// Extract the text from Main EditDisplay panel and display in the message panel with mouse moving action.
 	
 	public static void textPaneMouseMove(MouseEvent e) {
-		/*
+
 		int offset = GlobalVariables.textPane.viewToModel(e.getPoint());			// Get mouse position
 		try {
 			GlobalVariables.messagePane.setText(null);								// Set message panel to display nothing
+			
+			
+			
+			AccessibleText accessibleText =
+                        GlobalVariables.textPane.getAccessibleContext().getAccessibleText();
+			Point p = e.getPoint();
+			int index = accessibleText.getIndexAtPoint(p);
+			int rowStart = Utilities.getRowStart(GlobalVariables.textPane, offset); 
+			int lengText = GlobalVariables.textPane.getText().length();
+			String displayContent;
+			//String displayContent = Integer.toString(index) + ":" + Integer.toString(rowStart) + ":" + GlobalVariables.textPane.getText(rowStart, index);
+			// if (index> rowStart){
+				// displayContent = displayContent = "Index:" + Integer.toString(index) + ", rowStart:" + Integer.toString(rowStart) + ", lengText:" + Integer.toString(lengText) + ", string:" + GlobalVariables.textPane.getText(rowStart, index);
+			// } else {
+				// displayContent = "Index:" + Integer.toString(index) + "rowStart:" + Integer.toString(rowStart);
+			// }
+			displayContent = GlobalVariables.textPane.getText(0, index);
+			if (displayContent.lastIndexOf("\n") != -1) {
+					displayContent = displayContent.substring(displayContent.lastIndexOf("\n") + 1);
+			}
+			
+			// String displayContent = Integer.toString(index) + ":" + Integer.toString(rowStart) + ":" + GlobalVariables.textPane.getText(0, index);
+			GlobalVariables.messageDoc.insertString(0, displayContent, null);
+			
+			
+			/*
+			
 			int rowStart = Utilities.getRowStart(GlobalVariables.textPane, offset); // Get the row of the mouse start position (related to string length)
 			int textLength = GlobalVariables.textPane.getDocument().getLength();	// Get the whole length of the text pane
 			// If the rowStart is higher than textLength, it means the mouse is moving under the real end of text
@@ -49,11 +78,13 @@ public class MessageProcess
 					GlobalVariables.messageDoc.insertString(0, displayContent, null);
 				}
 			}
+			
+			*/
 
 		} catch (BadLocationException e1) {
 	 
 		}
-		*/
+		
 	
 	}
 	

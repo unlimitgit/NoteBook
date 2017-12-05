@@ -5,6 +5,9 @@ This is for EditDisplay main functions
 package com.notebook;
 
 import com.notebook.GlobalVariables;
+import com.notebook.CreateStyles;
+import com.notebook.FileStringProcess;
+import com.notebook.SymbolProcess;
 
 import java.awt.FileDialog;
 import java.io.FileInputStream;
@@ -13,9 +16,25 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.awt.Color;
+import javax.swing.text.StyleConstants;
 
 public class EditDisplay
 {
+	
+	// Set to display mode
+	public static void setDisplayMode() {
+		GlobalVariables.textEditable = false;
+		GlobalVariables.textPane.setEditable(false);
+		GlobalVariables.buttonSaveEdit.setText("Edit");
+		GlobalVariables.textPane.setBackground(GlobalVariables.textDisplayColor);
+	}
+	
+	// Set to edit mode
+	public static void setEditMode() {
+		
+	}
 	
 	// Create class for distinguish different string format for display
 	public static class ProcResult{
@@ -87,66 +106,112 @@ public class EditDisplay
 				
 	}
 	
-	// Read out the contents in the file and convert to string
-	public static String readFileContents(String fileName) {
-		String result = new String();
-		String line = null;
-		try { 
-			FileReader fileReader = new FileReader(fileName);
-			BufferedReader bufferedReader = new BufferedReader(fileReader); 
-			while((line = bufferedReader.readLine()) != null) {
-				result = result + line + "\n";
-			}		
-		} catch (Exception e) {  
-
-		} 	
-		return result;	 
-	}
 	
-	// Separate the contents in the whole file into three parts based on the symbol for root/child page.
-	// Please note the contents will include the page symbol.
-	// Part 0: contents (without symbol line) for the designated root/child page.
-	// Part 1: contents (with symbol line) before the page symbol. It will be empty if the designated page is root page.
-	// Part 2: contents (with symbol line) for the designated root/child page.
-	// Part 3: contents (with symbol line) after the designaged page. It will be empty if the designated page is the last one in the file.
-	public static String[] separatePageContents(String[] args) {
-		String[] result = {"", "","" , ""};
-		String fileContents = new String(); 
-		String tempResult = new String(); 
-		String pageSymbol = new String();
-		String commonSymbol = new String();
-		fileContents = args[0];
-		pageSymbol = args[1];
-		commonSymbol = args[2];
-		int symbolLen = commonSymbol.length();
-		int index = fileContents.indexOf(pageSymbol);
-		if (index >= 0){
-			if (index > 0) {
-				result[1] = fileContents.substring(0, index-1);
-			}			
-			tempResult = fileContents.substring(index+symbolLen);
-			int index1 = tempResult.indexOf(commonSymbol);
-			if (index1 != -1){
-				result[2] = commonSymbol + tempResult.substring(0, index1-1);
-				result[3] = tempResult.substring(index1);
+	// Used to display the contents in the textPane
+	public static void textPaneDisplay(String contents){
+		ArrayList<String> stringLine = new ArrayList<String>();
+		stringLine =  FileStringProcess.extractLineStrings(contents);		//Separate the whole contents line by line
+		// Process contents line by line
+		GlobalVariables.InterpDispResult result_1 = new GlobalVariables.InterpDispResult();
+		GlobalVariables.InterpDispResult result_2 = new GlobalVariables.InterpDispResult();
+		ArrayList<GlobalVariables.InterpDispResult> result_3 = new ArrayList<GlobalVariables.InterpDispResult>();
+		ArrayList<GlobalVariables.InterpDispResult> result_4 = new ArrayList<GlobalVariables.InterpDispResult>();
+		for (int i=0; i<stringLine.size(); i++ ){
+			
+			// Do level 1 symbol processing. It has top priority. Also, it will exclude other symbol.
+			result_1 =  SymbolProcess.interpSymbolLevel_1(stringLine.get(i));
+			// Leve 1 symbol is found.
+			if (result_1.symbolFind){
+				try {
+					CreateStyles.setStyle(result_1.indexStyle);
+					GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result_1.dispContent+"\n", GlobalVariables.style);
+				} catch (Exception e) {  
+				   
+				} 				
 			} else {
-				result[2] = commonSymbol + tempResult;
+				// Leve 1 symbol is not found. Will go furhter processing. It will start level 2 processing.
+				result_2 = SymbolProcess.interpSymbolLevel_2(stringLine.get(i));
+				if (result_2.symbolFind){
+					try {
+						CreateStyles.setStyle(result_2.indexStyle);
+						if (result_2.indexStyle == 20){
+							switch (result_2.number){
+								case 1:
+									GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\u2022", GlobalVariables.style);
+									break;
+								case 2:
+									GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "    \u25b8", GlobalVariables.style);
+									break;
+								case 3:
+									GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "        \u25aa", GlobalVariables.style);
+									break;
+								default:	
+									GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "            \u2043", GlobalVariables.style);
+									break;
+							}	
+						} else if (result_2.indexStyle == 21) {
+							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), Integer.toString(result_2.number) + ", ", GlobalVariables.style); // Number the string
+						} else if (result_2.indexStyle == 22) {
+							for (int j=0; j<result_2.number; j++){
+								GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\t", GlobalVariables.style); // Tab the string
+							}
+						}
+					} catch (Exception e) {  
+					   
+					} 
+					
+				}
+				
+				// Then level 3 processing
+				result_3 = SymbolProcess.interpSymbolLevel_3(result_2.dispContent);
+				for (int k=0; k<result_3.size(); k++){
+					
+					// Level 4 processing.
+					
+					result_4 = SymbolProcess.interpSymbolLevel_4(result_3.get(k));					
+					for (int m=0; m<result_4.size(); m++){
+						try {
+							if (result_4.get(m).number == 20){
+								GlobalVariables.style = GlobalVariables.textDoc.getStyle("hide");
+								StyleConstants.setForeground(GlobalVariables.style, Color.black);
+							} else if (result_4.get(m).number == 10){
+								CreateStyles.setStyle(result_3.get(k).indexStyle);
+								StyleConstants.setForeground(GlobalVariables.style, Color.blue);
+							} else {
+								CreateStyles.setStyle(result_3.get(k).indexStyle);
+								StyleConstants.setForeground(GlobalVariables.style, Color.black);
+							}
+							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result_4.get(m).dispContent, GlobalVariables.style);
+							
+						} catch (Exception e) {  
+						}
+							 
+					}
+					
+				}
+				
+				try {
+					GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\n", GlobalVariables.style);		// Add change line 
+				} catch (Exception e) {
+				}
+				
+				
 			}
 			
-			result[0] = result[2].substring(result[2].indexOf("\n")+1);
 		}
-		return result;	
 	}
-	
 		
+	
+	
 	// Dispaly contents according to format
     public static void loadFileDisplayProc(String fileName) {
 		
-		GlobalVariables.textEditable = false;
-		GlobalVariables.textPane.setEditable(false);
-		GlobalVariables.buttonSaveEdit.setText("Edit");
-		GlobalVariables.textPane.setBackground(GlobalVariables.textDisplayColor);
+		// GlobalVariables.textEditable = false;
+		// GlobalVariables.textPane.setEditable(false);
+		// GlobalVariables.buttonSaveEdit.setText("Edit");
+		// GlobalVariables.textPane.setBackground(GlobalVariables.textDisplayColor);
 		
+		setDisplayMode();
 		
 		
 		String line = null;
@@ -163,7 +228,7 @@ public class EditDisplay
 				FileReader fileReader = new FileReader(fileName);
 				BufferedReader bufferedReader = new BufferedReader(fileReader); 
 				while((line = bufferedReader.readLine()) != null) {
-					if (line.length() > 1){
+					if (line.length() > 0){
 							if (GlobalVariables.searchVisible) {
 								String str1 = line;
 								String str2 = GlobalVariables.searchKeyWord.getText();
@@ -171,22 +236,22 @@ public class EditDisplay
 								while (pos != -1) {			// Find keyword
 									if (pos == 0) {			// Keyword is in the beginning
 										result = procString(str1.substring(0, str2.length()));
-										setStyle(result.returnCode);
+										CreateStyles.setStyle(result.returnCode);
 										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
 										str1 = str1.substring(str2.length(), str1.length());
 										pos = str1.toLowerCase().indexOf(str2.toLowerCase());
 									} else if(pos == str1.length()- str2.length()) { // Keyword is int the end
 										result = procString(str1.substring(0, pos));
-										setStyle(result.returnCode);
+										CreateStyles.setStyle(result.returnCode);
 										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
 										str1 = str2;
 										pos = -1;
 									} else {  // Keyword is in the middle
 										result = procString(str1.substring(0, pos));
-										setStyle(result.returnCode);
+										CreateStyles.setStyle(result.returnCode);
 										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
 										result = procString(str1.substring(pos, pos+str2.length()));
-										setStyle(result.returnCode);
+										CreateStyles.setStyle(result.returnCode);
 										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
 										str1 = str1.substring(pos+str2.length(), str1.length());
 										pos = str1.toLowerCase().indexOf(str2.toLowerCase());
@@ -195,20 +260,22 @@ public class EditDisplay
 								}
 								
 								result = procString(str1);
-								setStyle(result.returnCode);
+								
+								CreateStyles.setStyle(result.returnCode);
 								GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
 								
 								
 							} else {
+								
 								result = procString(line);
-								setStyle(result.returnCode);
+								CreateStyles.setStyle(result.returnCode);
 								GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
 							}
 							
 						} else {
 							result.dispStr = "";
 							result.returnCode = 1;
-							setStyle(result.returnCode);
+							CreateStyles.setStyle(result.returnCode);
 							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
 
 						}
@@ -222,29 +289,8 @@ public class EditDisplay
         }  
 			
 	}
+
 	
-	private static void contentDisplayProc(String content){
-		
-	}
-	
-	private static void setStyle(int styleCode){
-		switch (styleCode){
-			case 1:	
-				GlobalVariables.style = GlobalVariables.textDoc.getStyle("base");
-				break;
-			case 2:	
-				GlobalVariables.style = GlobalVariables.textDoc.getStyle("bold");
-				break;
-			case 4:	
-				GlobalVariables.style = GlobalVariables.textDoc.getStyle("highlight");
-				break;
-			default:	
-				GlobalVariables.style = GlobalVariables.textDoc.getStyle("base");
-				break;
-			
-			
-		}
-	}
 	
 	// Save the contents in the EditDisplay Panel into file
 	public static void saveTextPaneProc(String fileName, String content) {

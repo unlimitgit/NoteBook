@@ -5,7 +5,9 @@ This is for menu creation and processing
 package com.notebook;
 
 import com.notebook.GlobalVariables;
+import com.notebook.FileStringProcess;
 import com.notebook.EditDisplay;
+
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -21,6 +23,8 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.awt.Color;
+
+
 
 public class MenuEdit{
 	
@@ -92,26 +96,47 @@ public class MenuEdit{
         
     } 
 	
+	// Load new notebook file. 
+	// By default, when loading notebook file, it will goes to display mode (the other one is edit).
+	// The search window is non visible.
 	private static void menuItemLoadActionPerformed(ActionEvent evt) {  
-        // TODO add your handling code here: 
-	
 		
 		// Open files		
 		FileDialog fd = new FileDialog(GlobalVariables.frame, "Open", FileDialog.LOAD);
 		fd.setFile("*.jntk");  // Add file filter
         fd.setVisible(true); 
+		
+		// Goes to default status
 		GlobalVariables.searchVisible = false;
 		GlobalVariables.buttonSearch.setText("Display search result");
 		GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane);
 		GlobalVariables.frame.validate();
+		
+		// Clear file search result
 		GlobalVariables.fileSequences.clear();	
+		
+		// Save loaded file information
         String strFile = fd.getDirectory() + fd.getFile(); 
 		GlobalVariables.fileSequences.add(strFile);
-		GlobalVariables.fileLevel = 1;
+		GlobalVariables.pageLevel = 0;	// root page
 		GlobalVariables.fileName = strFile;
+		GlobalVariables.pageSymbol = GlobalVariables.pageTitle + 
+			strFile.substring(strFile.lastIndexOf('\\')+1);
 		GlobalVariables.dirName = fd.getDirectory();		
 		GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
-		EditDisplay.loadFileDisplayProc(strFile);
+		
+		String contents = FileStringProcess.readFileContents(strFile); // Read out the contents in the loaded file
+		String[] tempStr = {contents, GlobalVariables.pageSymbol, GlobalVariables.pageTitle};
+		GlobalVariables.contentsSperate = FileStringProcess.separatePageContents(tempStr);
+		GlobalVariables.pageList = FileStringProcess.extractPageList(contents);
+		
+		String dispContents = GlobalVariables.contentsSperate[0];
+		EditDisplay.setDisplayMode();
+		GlobalVariables.textPane.setText("");
+		EditDisplay.textPaneDisplay(dispContents);
+				
+		
+		//EditDisplay.loadFileDisplayProc(strFile);
 		
         
     } 
@@ -121,7 +146,7 @@ public class MenuEdit{
 		FileDialog fd = new FileDialog(GlobalVariables.frame, "Save As", FileDialog.SAVE); 
 		fd.setFile("*.jntk");  // Add file filter		
         fd.setVisible(true); 
-		String string1 = GlobalVariables.fileTitle + fd.getFile() 
+		String string1 = GlobalVariables.pageTitle + fd.getFile() 
 		          + "\n" + GlobalVariables.textPane.getText();  
 		String stringfile = fd.getDirectory()+fd.getFile();  
 		BufferedWriter bWriter = null;  
