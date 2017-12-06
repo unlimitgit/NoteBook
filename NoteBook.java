@@ -262,7 +262,9 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 				
-
+				for (int i=0; i<GlobalVariables.pageList.size(); i++ ){
+					System.out.println(GlobalVariables.pageList.get(i));
+				}
 				
 			
 			  } 

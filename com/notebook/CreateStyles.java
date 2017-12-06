@@ -24,38 +24,47 @@ public class CreateStyles
         StyleConstants.setFontSize(baseStyle, 18);
         StyleConstants.setFirstLineIndent(baseStyle, 20f);
         StyleConstants.setLeftIndent(baseStyle, 10f);
-		StyleConstants.setForeground(baseStyle, Color.black);
+		
  
         style = doc.addStyle("base", baseStyle);
+		StyleConstants.setForeground(style, Color.black);
 		
 		
 		style = doc.addStyle("header_1", baseStyle);
 		StyleConstants.setFontSize(style, 42);
 		StyleConstants.setBold(style, true);
+		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("header_2", baseStyle);
 		StyleConstants.setFontSize(style, 36);
 		StyleConstants.setBold(style, true);
+		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("header_3", baseStyle);
 		StyleConstants.setFontSize(style, 30);
 		StyleConstants.setBold(style, true);
+		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("inlineheader", baseStyle);
 		StyleConstants.setFontSize(style, 32);
 		StyleConstants.setBold(style, true);
+		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("bold", baseStyle);
         StyleConstants.setBold(style, true);
+		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("italic", baseStyle);
         StyleConstants.setItalic(style, true);
+		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("smalltext", baseStyle);
         StyleConstants.setFontSize(style, 12);
+		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("strikeout", baseStyle);
         StyleConstants.setStrikeThrough(style, true);
+		StyleConstants.setForeground(style, Color.black);
 	
 		// Used for highlight for searching with keyword
         style = doc.addStyle("highlight", baseStyle);
@@ -65,6 +74,7 @@ public class CreateStyles
 		// Bullet
 		style = doc.addStyle("bullet", baseStyle);
 		StyleConstants.setFontSize(style, 36);
+		StyleConstants.setForeground(style, Color.black);
 		
 		//Title
 		style = doc.addStyle("title", baseStyle);

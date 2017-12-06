@@ -172,14 +172,16 @@ public class EditDisplay
 					for (int m=0; m<result_4.size(); m++){
 						try {
 							if (result_4.get(m).number == 20){
-								GlobalVariables.style = GlobalVariables.textDoc.getStyle("hide");
-								StyleConstants.setForeground(GlobalVariables.style, Color.black);
+								//GlobalVariables.style = GlobalVariables.textDoc.getStyle("hide");
+								CreateStyles.setStyle(result_3.get(k).indexStyle);
+								StyleConstants.setForeground(GlobalVariables.style, Color.red);
 							} else if (result_4.get(m).number == 10){
 								CreateStyles.setStyle(result_3.get(k).indexStyle);
 								StyleConstants.setForeground(GlobalVariables.style, Color.blue);
 							} else {
 								CreateStyles.setStyle(result_3.get(k).indexStyle);
 								StyleConstants.setForeground(GlobalVariables.style, Color.black);
+								
 							}
 							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result_4.get(m).dispContent, GlobalVariables.style);
 							
