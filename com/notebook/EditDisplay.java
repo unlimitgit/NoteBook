@@ -106,6 +106,17 @@ public class EditDisplay
 				
 	}
 	
+	// Used to initial the display in textPane
+	public static void textPaneTitleDisplay(String contents){
+		setDisplayMode();
+		GlobalVariables.textPane.setText("");   //Clear all the contents
+		try {
+			CreateStyles.setStyle(100);
+			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents, GlobalVariables.style);
+		} catch (Exception e) {  
+				   
+		}
+	}
 	
 	// Used to display the contents in the textPane
 	public static void textPaneDisplay(String contents){

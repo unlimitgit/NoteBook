@@ -38,7 +38,8 @@ public class GlobalVariables
 	public static String[] contentsSperate = new String[4];
 	public static int pageLevel = 0 ;  // 0, root page; others, child page.
 	public static final String pageTitle = "PAGE::::";  // The string add before page name to represent the beginning of one page
-	public static String pageSymbol = "PAGE::::";    // The first line of one page. Root page: pageTitle + filename (***.jntk); Child page: pageTitle + ***.subjntk
+	public static String pageSymbol = "PAGE::::Home";    // The first line of one page. Root page: pageTitle + Home; Child page: pageTitle + ***
+	public static String homeSymbol = "Home";
 	public static final int columns_1 = 2,  rows_1 = 3, rows_2 = 3, columns_3 = 2, rows_3 = 5, columns_4 = 2, rows_4 = 1; // It coresponds to the dimension of symbols
 	public static String[][] symbolArray_1 = new String[][]{{"= ", " ="}, {"== ", " =="}, {"=== ", " ==="}};
 	public static String[] symbolArray_2 = new String[]{"*","#",":"};

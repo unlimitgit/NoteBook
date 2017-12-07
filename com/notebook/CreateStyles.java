@@ -78,7 +78,7 @@ public class CreateStyles
 		
 		//Title
 		style = doc.addStyle("title", baseStyle);
-		StyleConstants.setFontSize(style, 36);
+		StyleConstants.setFontSize(style, 52);
         StyleConstants.setBold(style, true);
 		StyleConstants.setForeground(style, Color.blue);
 		
@@ -92,6 +92,9 @@ public class CreateStyles
 	
 	public static void setStyle(int styleCode){
 		switch (styleCode){
+			case 100:	
+				GlobalVariables.style = GlobalVariables.textDoc.getStyle("title");
+				break;
 			case 10:	
 				GlobalVariables.style = GlobalVariables.textDoc.getStyle("header_1");
 				break;
