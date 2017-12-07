@@ -248,7 +248,7 @@ public class NoteBook {
 					GlobalVariables.fileSequences.add(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileName = GlobalVariables.searchFileResults.get(rowNum-1);
 					GlobalVariables.pageLevel = GlobalVariables.pageLevel + 1;
-					EditDisplay.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
+					//EditDisplay.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.frame.setTitle("Notebook with Java: " +  GlobalVariables.searchFileResults.get(rowNum-1));	
 				}					
 				

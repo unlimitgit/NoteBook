@@ -38,7 +38,7 @@ public class ButtonProcess{
 			try {
 				String content = GlobalVariables.textPane.getDocument().getText(0, GlobalVariables.textPane.getDocument().getLength());
 				EditDisplay.saveTextPaneProc(GlobalVariables.fileName, content);
-				EditDisplay.loadFileDisplayProc(GlobalVariables.fileName);
+				// EditDisplay.loadFileDisplayProc(GlobalVariables.fileName);
 			} catch (BadLocationException ee) {
 				//handle exception
 			}	

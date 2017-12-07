@@ -36,53 +36,7 @@ public class EditDisplay
 		
 	}
 	
-	// Create class for distinguish different string format for display
-	public static class ProcResult{
-		public int returnCode;
-		public String dispStr;    
-	}
 	
-	// Process string based on special characteristics
-	public static ProcResult procString(String content) {
-		ProcResult result = new ProcResult();
-		result.dispStr = content;
-		
-		
-		if (GlobalVariables.searchVisible) {
-			if (content.toLowerCase().equals(GlobalVariables.searchKeyWord.getText().toLowerCase())) {
-				result.returnCode = 4;
-			} else {
-				result.returnCode = 1;
-			}
-		} else {
-			if (content.substring(0,1).compareTo("[") == 0){
-				result.returnCode = 2;
-				result.dispStr = removeCharAt(result.dispStr,"[");
-				result.dispStr = removeCharAt(result.dispStr,"]");
-			} else {
-				result.returnCode = 1;
-			}
-		}
-		
-		return result;
-	
-	}
-	
-	// After locating the special characteritics (used for different )
-	private static String removeCharAt(String s, String h) {
-		int index = s.indexOf(h);
-		String result = s;
-		while (index != -1){
-			if (index != (result.length()-1)){
-				result = result.substring(0,index) + result.substring(index+1);
-			} else {
-				result = result.substring(0,index);
-			}
-		index = result.indexOf(h);
-		}	
-		return result;			
-	}
-   
     // Load the raw file format for editing purpose
     public static String extractFileProc(String fileName) {
 		String line = null;
@@ -214,95 +168,6 @@ public class EditDisplay
 		}
 	}
 		
-	
-	
-	// Dispaly contents according to format
-    public static void loadFileDisplayProc(String fileName) {
-		
-		// GlobalVariables.textEditable = false;
-		// GlobalVariables.textPane.setEditable(false);
-		// GlobalVariables.buttonSaveEdit.setText("Edit");
-		// GlobalVariables.textPane.setBackground(GlobalVariables.textDisplayColor);
-		
-		setDisplayMode();
-		
-		
-		String line = null;
-		ProcResult result = new ProcResult();
-        if (fileName != null) {  
-            try {  
-                GlobalVariables.textPane.setText("");
-				
-				// Display file name in the begining
-				String fileDisp = fileName.substring(fileName.lastIndexOf('\\')+1, fileName.lastIndexOf('.'));
-				GlobalVariables.style = GlobalVariables.textDoc.getStyle("title");
-				GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), fileDisp+"\n\n", GlobalVariables.style);
-				
-				FileReader fileReader = new FileReader(fileName);
-				BufferedReader bufferedReader = new BufferedReader(fileReader); 
-				while((line = bufferedReader.readLine()) != null) {
-					if (line.length() > 0){
-							if (GlobalVariables.searchVisible) {
-								String str1 = line;
-								String str2 = GlobalVariables.searchKeyWord.getText();
-								int pos = str1.toLowerCase().indexOf(str2.toLowerCase());
-								while (pos != -1) {			// Find keyword
-									if (pos == 0) {			// Keyword is in the beginning
-										result = procString(str1.substring(0, str2.length()));
-										CreateStyles.setStyle(result.returnCode);
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
-										str1 = str1.substring(str2.length(), str1.length());
-										pos = str1.toLowerCase().indexOf(str2.toLowerCase());
-									} else if(pos == str1.length()- str2.length()) { // Keyword is int the end
-										result = procString(str1.substring(0, pos));
-										CreateStyles.setStyle(result.returnCode);
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
-										str1 = str2;
-										pos = -1;
-									} else {  // Keyword is in the middle
-										result = procString(str1.substring(0, pos));
-										CreateStyles.setStyle(result.returnCode);
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
-										result = procString(str1.substring(pos, pos+str2.length()));
-										CreateStyles.setStyle(result.returnCode);
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr, GlobalVariables.style);
-										str1 = str1.substring(pos+str2.length(), str1.length());
-										pos = str1.toLowerCase().indexOf(str2.toLowerCase());
-									}
-									
-								}
-								
-								result = procString(str1);
-								
-								CreateStyles.setStyle(result.returnCode);
-								GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
-								
-								
-							} else {
-								
-								result = procString(line);
-								CreateStyles.setStyle(result.returnCode);
-								GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
-							}
-							
-						} else {
-							result.dispStr = "";
-							result.returnCode = 1;
-							CreateStyles.setStyle(result.returnCode);
-							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result.dispStr+"\n", GlobalVariables.style);
-
-						}
-					} 
-
-				GlobalVariables.frame.validate();
-				bufferedReader.close();      
-            } catch (Exception e) {  
-               
-            }  
-        }  
-			
-	}
-
 	
 	
 	// Save the contents in the EditDisplay Panel into file
