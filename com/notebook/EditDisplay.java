@@ -37,29 +37,6 @@ public class EditDisplay
 	}
 	
 	
-    // Load the raw file format for editing purpose
-    public static String extractFileProc(String fileName) {
-		String line = null;
-		String content = "";
-		if (fileName != null) {  
-			try {  
-				GlobalVariables.textPane.setText("");
-				FileReader fileReader = new FileReader(fileName);
-				BufferedReader bufferedReader = new BufferedReader(fileReader); 
-				while((line = bufferedReader.readLine()) != null) {
-					content = content + line + "\n";							
-				}   
-				// GlobalVariables.style = GlobalVariables.textDoc.getStyle("base");
-				// GlobalVariables.textDoc.insertString(0, content, GlobalVariables.style);					
-				bufferedReader.close();      
-			} catch (Exception e) {  
-				System.out.println("open fail");  
-			}  
-		}
-		return content;
-				
-	}
-	
 	// Used to initial the display in textPane
 	public static void textPaneTitleDisplay(String contents){
 		setDisplayMode();
@@ -137,10 +114,14 @@ public class EditDisplay
 					for (int m=0; m<result_4.size(); m++){
 						try {
 							if (result_4.get(m).number == 20){
-								//GlobalVariables.style = GlobalVariables.textDoc.getStyle("hide");
+								GlobalVariables.style = GlobalVariables.textDoc.getStyle("hide");
+								
+							} else if (result_4.get(m).number == 21) {
 								CreateStyles.setStyle(result_3.get(k).indexStyle);
 								StyleConstants.setForeground(GlobalVariables.style, Color.red);
-							} else if (result_4.get(m).number == 10){
+								
+								
+							}else if (result_4.get(m).number == 10){
 								CreateStyles.setStyle(result_3.get(k).indexStyle);
 								StyleConstants.setForeground(GlobalVariables.style, Color.blue);
 							} else {

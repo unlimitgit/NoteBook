@@ -34,34 +34,7 @@ public class ButtonProcess{
 	
 	// Edit/save functional switch
 	public static void buttonSaveEditPress(ActionEvent evt) {
-		if (GlobalVariables.textEditable){
-			try {
-				String content = GlobalVariables.textPane.getDocument().getText(0, GlobalVariables.textPane.getDocument().getLength());
-				EditDisplay.saveTextPaneProc(GlobalVariables.fileName, content);
-				// EditDisplay.loadFileDisplayProc(GlobalVariables.fileName);
-			} catch (BadLocationException ee) {
-				//handle exception
-			}	
-			
-			
-		} else {
-			GlobalVariables.textEditable = true;
-			GlobalVariables.buttonSaveEdit.setText("Save");
-			GlobalVariables.textPane.setEditable(true);	
-			GlobalVariables.textPane.setBackground(Color.WHITE);
-			String content = EditDisplay.extractFileProc(GlobalVariables.fileName);	
-			if (content != "") {
-				try {  
-					GlobalVariables.style = GlobalVariables.textDoc.getStyle("base");
-					GlobalVariables.textDoc.insertString(0, content, GlobalVariables.style);						
-					     
-				} catch (Exception e) {  
-					
-				}  
-			}
-			
-		}			
-	
+		
 	}
 	
 	

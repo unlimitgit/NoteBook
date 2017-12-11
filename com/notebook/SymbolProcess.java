@@ -12,6 +12,63 @@ public class SymbolProcess{
 	
 	static int lineNum = 0; // Purely for # symbol. The line with # must be continous. If not, need to be reset.
 	
+	// Link string processing, to check whether it includes "|"
+	public static ArrayList<String> linkNameDisplayProc(String contents){
+		ArrayList<String> result = new ArrayList<String>();
+		String strProc = contents;
+		String temp1, temp2;
+		int index1 = strProc.indexOf("|");
+		int index2 = strProc.lastIndexOf("|");
+		if (index1 != -1){	// "|" Exisitng
+			result.add(simplifyWhitespace(strProc.substring(0,index1).trim())); 
+			result.add(simplifyWhitespace(strProc.substring(index2+1).trim())); 			
+		} else {
+			result.add(simplifyWhitespace(strProc));
+		}
+		return result;
+	}
+	
+	
+	// Replace multiple continous whitespace (between different words) with one only
+	public static String simplifyWhitespace(String contents){
+		String result = contents;
+		String stringProc = contents;
+		int index = stringProc.indexOf("  ");
+		while (index > 0 ){
+		  stringProc = stringProc.substring(0,index) + stringProc.substring(index+2);
+		  index = stringProc.indexOf("  ");
+		}
+		result = stringProc;
+		return result;
+	}
+	
+	// Used to detect whether the link for the page is existing or not
+	// Please note that the link could be webpage (start with http or https), or the link of image (start with image::::).
+	// Above these two links, it is always assuming they are existing. The last one is the link of internal page.
+	public static Boolean linkExisting(String contents){
+		Boolean result = false;
+		int k = contents.length();
+		if (k > GlobalVariables.imageSymbol.length()) {
+			if (contents.substring(0,GlobalVariables.webSymbol.length()).equals(GlobalVariables.webSymbol))  {				
+				result = true;
+			} else if (contents.substring(0,GlobalVariables.imageSymbol.length()).equals(GlobalVariables.imageSymbol)) {
+				result = true;
+			} else {
+				result = GlobalVariables.pageList.contains(contents);
+			}				
+		} else if (k > GlobalVariables.webSymbol.length()) {
+			if (contents.substring(0,GlobalVariables.webSymbol.length()).equals(GlobalVariables.webSymbol)) {
+				result = true;
+			} else {
+				result = GlobalVariables.pageList.contains(contents);
+			}
+		} else {
+			result = GlobalVariables.pageList.contains(contents);
+		}
+		
+		return result;
+	}
+	
 	// Used to interpret the level 1 symbol, mainly for "= ", "== ", "=== "
 	public static GlobalVariables.InterpDispResult interpSymbolLevel_1(String contents) {
 		GlobalVariables.InterpDispResult result = new GlobalVariables.InterpDispResult();
@@ -119,14 +176,18 @@ public class SymbolProcess{
 	public static ArrayList<GlobalVariables.InterpDispResult> interpSymbolLevel_4(GlobalVariables.InterpDispResult contents) {
 		ArrayList<GlobalVariables.InterpDispResult> result = new ArrayList<GlobalVariables.InterpDispResult>();		
 		int index1, index2;
-		String stringProc = contents.dispContent;		
+		String stringProc = contents.dispContent;	
+		String linkString, linkName;
 		Boolean symbolExist = true;
 		Boolean symbolFind;
+		Boolean linkExist = false ;
+		ArrayList<String> linkStrs =  new ArrayList<String>();	
 		while (symbolExist){
 			GlobalVariables.InterpDispResult temp1 = new GlobalVariables.InterpDispResult();
 			GlobalVariables.InterpDispResult temp2 = new GlobalVariables.InterpDispResult();
 			GlobalVariables.InterpDispResult temp3 = new GlobalVariables.InterpDispResult();
 			GlobalVariables.InterpDispResult temp4 = new GlobalVariables.InterpDispResult();
+			GlobalVariables.InterpDispResult temp5 = new GlobalVariables.InterpDispResult();
 			symbolFind = false ;
 			for(int i = 0; i <  GlobalVariables.rows_4 ; i++){
 				if ( !symbolFind){
@@ -138,21 +199,56 @@ public class SymbolProcess{
 							temp1.dispContent = stringProc.substring(0, index1);
 							result.add(temp1);
 						}
+						
+						// For the content between "[" and "]", use *.number to distinguish it
+						linkString = stringProc.substring(index1 + 1, index2).trim(); // Get the string beteen "[" and "]"
+						linkStrs = linkNameDisplayProc(linkString);
+						
+						int k = linkStrs.size();
+						
+						if (k == 2) {
+							temp3.indexStyle = contents.indexStyle;
+							temp3.number = 10 ;
+							temp3.symbolFind = true;
+							temp3.dispContent = linkStrs.get(0);
+							linkName =  linkStrs.get(1);
+							temp5.indexStyle = contents.indexStyle;
+							temp5.number = 20 ;
+							temp5.symbolFind = true;
+							temp5.dispContent = "|" + linkStrs.get(1);							
+						}
+						else if (k == 1) {
+							temp3.indexStyle = contents.indexStyle;
+							temp3.number = 10 ;
+							temp3.symbolFind = true;
+							temp3.dispContent = linkStrs.get(0);
+							linkName =  linkStrs.get(0);							
+						} else {
+							temp3.indexStyle = contents.indexStyle;
+							temp3.number = 10 ;
+							temp3.symbolFind = true;
+							temp3.dispContent = "";
+							linkName =  "";							
+						}
+						
+						linkExist = linkExisting(linkName);
 						// Purely for symbol "[", either be hiding (if link existing) or red color (if link not existing)
 						temp2.indexStyle = contents.indexStyle;		// Keep the same styple
-						temp2.number = 20 ;							// Use this to distinguish
+						if (linkExist){
+							temp2.number = 20 ;							// Use this to distinguish
+						} else {
+							temp2.number = 21 ;	
+						}
 						temp2.symbolFind = true;
 						temp2.dispContent = GlobalVariables.symbolArray_4[i][0];							
-						result.add(temp2);						
-						// For the content between "[" and "]", use *.number to distinguish it
-						temp3.indexStyle = contents.indexStyle;
-						temp3.number = 10 ;
-						temp3.symbolFind = true;
-						temp3.dispContent = stringProc.substring(index1 + 1, index2);							
-						result.add(temp3);						
+						result.add(temp2);													
+						result.add(temp3);
+						if (k == 2) {
+							result.add(temp5);
+						}
 						// It is for "]", the same processing as "["
 						temp4.indexStyle = contents.indexStyle;
-						temp4.number = 20 ;
+						temp4.number = temp2.number ;
 						temp4.symbolFind = true;
 						temp4.dispContent = GlobalVariables.symbolArray_4[i][1];							
 						result.add(temp4);						
