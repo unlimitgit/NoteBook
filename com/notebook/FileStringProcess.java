@@ -43,7 +43,7 @@ public class FileStringProcess{
 			stringProc = stringProc.substring(index);
 			line = stringProc.substring(0, stringProc.indexOf("\n"));		//Extract the line with page name
 			//pageName = line.substring(pageSymbol.length(), line.lastIndexOf(".")); // Extract the page name out
-			pageName = line.substring(pageSymbol.length()); // Extract the page name out
+			pageName = line.substring(pageSymbol.length()).toLowerCase(); // Extract the page name out
 			result.add(pageName);
 			stringProc = stringProc.substring(stringProc.indexOf("\n"));	// Substract string for next page processing
 			index = stringProc.indexOf(pageSymbol);

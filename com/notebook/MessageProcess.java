@@ -74,6 +74,7 @@ public class MessageProcess
 			} else {				
 				GlobalVariables.textPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
+			
 			GlobalVariables.messageDoc.insertString(0, linkResult.dispContent, null);
 		} catch (BadLocationException e1) {
 	 
@@ -94,7 +95,14 @@ public class MessageProcess
 			if (index2 > -1){
 				if (index3 == -1){
 					result.symbolFind = true;
-					result.dispContent = strProc.substring(1, index2);
+					String strTemp2 = strProc.substring(1, index2);
+					int index4 = strTemp2.indexOf("|");
+					if (index4 == -1) {
+						result.dispContent = strProc.substring(1, index2);
+					} else {
+						result.dispContent = strProc.substring(index4+2, index2);
+					}
+					
 				}
 			}
 		}

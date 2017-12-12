@@ -49,21 +49,21 @@ public class SymbolProcess{
 		Boolean result = false;
 		int k = contents.length();
 		if (k > GlobalVariables.imageSymbol.length()) {
-			if (contents.substring(0,GlobalVariables.webSymbol.length()).equals(GlobalVariables.webSymbol))  {				
+			if (contents.substring(0,GlobalVariables.webSymbol.length()).toLowerCase().equals(GlobalVariables.webSymbol.toLowerCase()))  {				
 				result = true;
-			} else if (contents.substring(0,GlobalVariables.imageSymbol.length()).equals(GlobalVariables.imageSymbol)) {
+			} else if (contents.substring(0,GlobalVariables.imageSymbol.length()).toLowerCase().equals(GlobalVariables.imageSymbol.toLowerCase())) {
 				result = true;
 			} else {
-				result = GlobalVariables.pageList.contains(contents);
+				result = GlobalVariables.pageList.contains(contents.toLowerCase());
 			}				
 		} else if (k > GlobalVariables.webSymbol.length()) {
-			if (contents.substring(0,GlobalVariables.webSymbol.length()).equals(GlobalVariables.webSymbol)) {
+			if (contents.substring(0,GlobalVariables.webSymbol.length()).toLowerCase().equals(GlobalVariables.webSymbol.toLowerCase())) {
 				result = true;
 			} else {
-				result = GlobalVariables.pageList.contains(contents);
+				result = GlobalVariables.pageList.contains(contents.toLowerCase());
 			}
 		} else {
-			result = GlobalVariables.pageList.contains(contents);
+			result = GlobalVariables.pageList.contains(contents.toLowerCase());
 		}
 		
 		return result;
