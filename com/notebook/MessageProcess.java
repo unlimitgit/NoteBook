@@ -24,68 +24,75 @@ public class MessageProcess
 	
 	public static void textPaneMouseMove(MouseEvent e) {
 
-		int offset = GlobalVariables.textPane.viewToModel(e.getPoint());			// Get mouse position
+		
 		try {
 			GlobalVariables.messagePane.setText(null);								// Set message panel to display nothing
 			
 			
-			
-			AccessibleText accessibleText =
-                        GlobalVariables.textPane.getAccessibleContext().getAccessibleText();
+			// Get the text in the row to the end of the mouse
+			AccessibleText accessibleText = GlobalVariables.textPane.getAccessibleContext().getAccessibleText();
 			Point p = e.getPoint();
 			int index = accessibleText.getIndexAtPoint(p);
-			int rowStart = Utilities.getRowStart(GlobalVariables.textPane, offset); 
-			int lengText = GlobalVariables.textPane.getText().length();
-			String displayContent;
-			//String displayContent = Integer.toString(index) + ":" + Integer.toString(rowStart) + ":" + GlobalVariables.textPane.getText(rowStart, index);
-			// if (index> rowStart){
-				// displayContent = displayContent = "Index:" + Integer.toString(index) + ", rowStart:" + Integer.toString(rowStart) + ", lengText:" + Integer.toString(lengText) + ", string:" + GlobalVariables.textPane.getText(rowStart, index);
-			// } else {
-				// displayContent = "Index:" + Integer.toString(index) + "rowStart:" + Integer.toString(rowStart);
-			// }
-			displayContent = GlobalVariables.textPane.getText(0, index);
-			if (displayContent.lastIndexOf("\n") != -1) {
-					displayContent = displayContent.substring(displayContent.lastIndexOf("\n") + 1);
+			String lineKeyStr = GlobalVariables.textPane.getText(0, index);
+			if (lineKeyStr.lastIndexOf("\n") != -1) {
+					lineKeyStr = lineKeyStr.substring(lineKeyStr.lastIndexOf("\n") + 1);
 			}
 			
-			// String displayContent = Integer.toString(index) + ":" + Integer.toString(rowStart) + ":" + GlobalVariables.textPane.getText(0, index);
-			GlobalVariables.messageDoc.insertString(0, displayContent, null);
-			
-			
-			/*
-			
+			// Extract the contents in the whole line of the mouse
+			int offset = GlobalVariables.textPane.viewToModel(e.getPoint());			// Get mouse position
 			int rowStart = Utilities.getRowStart(GlobalVariables.textPane, offset); // Get the row of the mouse start position (related to string length)
 			int textLength = GlobalVariables.textPane.getDocument().getLength();	// Get the whole length of the text pane
 			// If the rowStart is higher than textLength, it means the mouse is moving under the real end of text
 			// Otherwise, the contents need be processed to get exact string of line
+			String lineContent = null;
 			if (textLength > rowStart) { 
 				String dispContent1 =  GlobalVariables.textPane.getText(0, rowStart);
-				String dispContent2 =  GlobalVariables.textPane.getText(rowStart, textLength-rowStart);
-				String displayContent = null;
+				String dispContent2 =  GlobalVariables.textPane.getText(rowStart, textLength-rowStart);				
 				int index1 = dispContent1.lastIndexOf("\n");
 				int index2 = dispContent2.indexOf("\n");
 				if ((index2 != -1) && (index1 != -1)){
-					displayContent = dispContent1.substring(index1+1) + dispContent2.substring(0, index2);
-					GlobalVariables.messageDoc.insertString(0, displayContent, null);
+					lineContent = dispContent1.substring(index1+1) + dispContent2.substring(0, index2);
+					//GlobalVariables.messageDoc.insertString(0, lineContent, null);
 				} else if (index2 != -1) {
-					displayContent = dispContent2.substring(0, index2);
-					GlobalVariables.messageDoc.insertString(0, displayContent, null);
+					lineContent = dispContent2.substring(0, index2);
+					//GlobalVariables.messageDoc.insertString(0, lineContent, null);
 				} else if (index1 != -1) {
-					displayContent = dispContent1.substring(index1+1) + dispContent2.substring(0, textLength);
-					GlobalVariables.messageDoc.insertString(0, displayContent, null);
+					lineContent = dispContent1.substring(index1+1) + dispContent2.substring(0, textLength);
+					//GlobalVariables.messageDoc.insertString(0, lineContent, null);
 				} else {
-					displayContent = dispContent2.substring(0, textLength);
-					GlobalVariables.messageDoc.insertString(0, displayContent, null);
+					lineContent = dispContent2.substring(0, textLength);
+					//GlobalVariables.messageDoc.insertString(0, lineContent, null);
 				}
 			}
 			
-			*/
-
+			String dispContent = linkMessageProc(lineKeyStr,lineContent);
+			
+		
+			GlobalVariables.messageDoc.insertString(0, dispContent, null);
 		} catch (BadLocationException e1) {
 	 
 		}
 		
 	
+	}
+	
+	// Extract string process
+	public static String linkMessageProc(String lineKeyStr, String lineContent) {
+		String result = null;
+		int index1 = lineKeyStr.lastIndexOf("[");
+		if (index1 > -1){
+			String strProc = lineContent.substring(index1);
+			String strTemp = lineKeyStr.substring(index1);
+			int index2 = strProc.indexOf("]");
+			int index3 = strTemp.indexOf("]");
+			if (index2 > -1){
+				if (index3 == -1){
+					result = strProc.substring(1, index2);
+				}
+			}
+		}
+		
+		return result;
 	}
 	
 	
