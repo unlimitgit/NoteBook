@@ -14,6 +14,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import java.awt.Component;
+import java.awt.Cursor;
 import javax.swing.JScrollPane;
 import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
@@ -262,12 +263,7 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 		  
-				System.out.println(GlobalVariables.pageSymbol);
-				
-				for (int i=0; i<GlobalVariables.pageList.size(); i++ ){
-					System.out.println(GlobalVariables.pageList.get(i));
-				}
-				
+				GlobalVariables.textPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			
 			  } 
 		} );

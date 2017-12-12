@@ -9,6 +9,7 @@ import com.notebook.GlobalVariables;
 import javax.swing.JTextPane;
 import javax.swing.text.DefaultStyledDocument;
 import java.awt.event.MouseEvent;
+import java.awt.Cursor;
 import javax.swing.text.Utilities;
 import javax.swing.text.BadLocationException;
 import java.io.File;
@@ -65,10 +66,15 @@ public class MessageProcess
 				}
 			}
 			
-			String dispContent = linkMessageProc(lineKeyStr,lineContent);
+			GlobalVariables.InterpDispResult linkResult = linkMessageProc(lineKeyStr,lineContent);
 			
-		
-			GlobalVariables.messageDoc.insertString(0, dispContent, null);
+			// Change the cursor based on finding link or not
+			if (linkResult.symbolFind){
+				GlobalVariables.textPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			} else {				
+				GlobalVariables.textPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			GlobalVariables.messageDoc.insertString(0, linkResult.dispContent, null);
 		} catch (BadLocationException e1) {
 	 
 		}
@@ -77,8 +83,8 @@ public class MessageProcess
 	}
 	
 	// Extract string process
-	public static String linkMessageProc(String lineKeyStr, String lineContent) {
-		String result = null;
+	public static GlobalVariables.InterpDispResult linkMessageProc(String lineKeyStr, String lineContent) {
+		GlobalVariables.InterpDispResult result = new GlobalVariables.InterpDispResult();
 		int index1 = lineKeyStr.lastIndexOf("[");
 		if (index1 > -1){
 			String strProc = lineContent.substring(index1);
@@ -87,7 +93,8 @@ public class MessageProcess
 			int index3 = strTemp.indexOf("]");
 			if (index2 > -1){
 				if (index3 == -1){
-					result = strProc.substring(1, index2);
+					result.symbolFind = true;
+					result.dispContent = strProc.substring(1, index2);
 				}
 			}
 		}
