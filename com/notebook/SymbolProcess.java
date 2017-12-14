@@ -54,16 +54,16 @@ public class SymbolProcess{
 			} else if (contents.substring(0,GlobalVariables.imageSymbol.length()).toLowerCase().equals(GlobalVariables.imageSymbol.toLowerCase())) {
 				result = true;
 			} else {
-				result = GlobalVariables.pageList.contains(contents.toLowerCase());
+				result = GlobalVariables.pageListLowerCase.contains(contents.toLowerCase());
 			}				
 		} else if (k > GlobalVariables.webSymbol.length()) {
 			if (contents.substring(0,GlobalVariables.webSymbol.length()).toLowerCase().equals(GlobalVariables.webSymbol.toLowerCase())) {
 				result = true;
 			} else {
-				result = GlobalVariables.pageList.contains(contents.toLowerCase());
+				result = GlobalVariables.pageListLowerCase.contains(contents.toLowerCase());
 			}
 		} else {
-			result = GlobalVariables.pageList.contains(contents.toLowerCase());
+			result = GlobalVariables.pageListLowerCase.contains(contents.toLowerCase());
 		}
 		
 		return result;

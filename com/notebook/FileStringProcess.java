@@ -42,13 +42,22 @@ public class FileStringProcess{
 		while (index != -1){
 			stringProc = stringProc.substring(index);
 			line = stringProc.substring(0, stringProc.indexOf("\n"));		//Extract the line with page name
-			//pageName = line.substring(pageSymbol.length(), line.lastIndexOf(".")); // Extract the page name out
-			pageName = line.substring(pageSymbol.length()).toLowerCase(); // Extract the page name out
+			pageName = line.substring(pageSymbol.length()); // Extract the page name out
+			//pageName = line.substring(pageSymbol.length()).toLowerCase(); // Extract the page name out
 			result.add(pageName);
 			stringProc = stringProc.substring(stringProc.indexOf("\n"));	// Substract string for next page processing
 			index = stringProc.indexOf(pageSymbol);
 		}
 		return result;	
+	}
+	
+	// Convert ArrayList String to lower case
+	public static ArrayList<String> convertArrayStringLowerCase(ArrayList<String> contents) {
+		ArrayList<String> result = new ArrayList<String>();
+		for (int i=0; i<contents.size(); i++ ){
+			result.add(contents.get(i).toLowerCase());
+		}
+		return result;		
 	}
 	
 	
@@ -68,37 +77,22 @@ public class FileStringProcess{
 		return result;	 
 	}
 	
-	// Separate the contents in the whole file into three parts based on the symbol for root/child page.
-	// Please note the contents will include the page symbol.
-	// Part 0: contents (without symbol line) for the designated root/child page.
-	// Part 1: contents (with symbol line) before the page symbol. It will be empty if the designated page is root page.
-	// Part 2: contents (with symbol line) for the designated root/child page.
-	// Part 3: contents (with symbol line) after the designaged page. It will be empty if the designated page is the last one in the file.
-	public static String[] separatePageContents(String[] args) {
-		String[] result = {"", "","" , ""};
-		String fileContents = new String(); 
-		String tempResult = new String(); 
-		String pageSymbol = new String();
-		String commonSymbol = new String();
-		fileContents = args[0];
-		pageSymbol = args[1];
-		commonSymbol = args[2];
-		int symbolLen = commonSymbol.length();
-		int index = fileContents.indexOf(pageSymbol);
-		if (index >= 0){
-			if (index > 0) {
-				result[1] = fileContents.substring(0, index-1);
-			}			
-			tempResult = fileContents.substring(index+symbolLen);
-			int index1 = tempResult.indexOf(commonSymbol);
-			if (index1 != -1){
-				result[2] = commonSymbol + tempResult.substring(0, index1-1);
-				result[3] = tempResult.substring(index1);
-			} else {
-				result[2] = commonSymbol + tempResult;
+	// Separate the contents in the whole file into parts based on page.
+	public static ArrayList<String> extractPageContents(String contents) {
+		ArrayList<String> result = new ArrayList<String>();
+		String pageSymbol = GlobalVariables.pageTitle;
+		String stringProc = contents;
+		String pageContent;
+		int index = stringProc.indexOf(pageSymbol);
+		while (index != -1){
+			stringProc = stringProc.substring(index+pageSymbol.length());	
+			index = stringProc.indexOf(pageSymbol);
+			if(index != -1) {   // Not last page
+				pageContent = stringProc.substring(stringProc.indexOf("\n")+1, index-1);	
+			} else { // Last page
+				pageContent = stringProc.substring(stringProc.indexOf("\n")+1);
 			}
-			
-			result[0] = result[2].substring(result[2].indexOf("\n")+1);
+			result.add(pageContent);
 		}
 		return result;	
 	}

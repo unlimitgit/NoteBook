@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.text.StyleConstants;
 
+
+
 public class EditDisplay
 {
 	
@@ -43,7 +45,7 @@ public class EditDisplay
 		GlobalVariables.textPane.setText("");   //Clear all the contents
 		try {
 			CreateStyles.setStyle(100);
-			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents, GlobalVariables.style);
+			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents + "\n", GlobalVariables.style);
 		} catch (Exception e) {  
 				   
 		}
@@ -149,6 +151,7 @@ public class EditDisplay
 		}
 	}
 		
+	
 	
 	
 	// Save the contents in the EditDisplay Panel into file

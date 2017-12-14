@@ -5,6 +5,7 @@ This is for message panel display and process
 package com.notebook;
 
 import com.notebook.GlobalVariables;
+import com.notebook.SymbolProcess;
 
 import javax.swing.JTextPane;
 import javax.swing.text.DefaultStyledDocument;
@@ -71,10 +72,14 @@ public class MessageProcess
 			// Change the cursor based on finding link or not
 			if (linkResult.symbolFind){
 				GlobalVariables.textPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				GlobalVariables.linkProcResult.linkFind = true;
+				GlobalVariables.linkProcResult.linkExit = SymbolProcess.linkExisting(linkResult.dispContent);
 			} else {				
 				GlobalVariables.textPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				GlobalVariables.linkProcResult.linkFind = false;
+				GlobalVariables.linkProcResult.linkExit = false;
 			}
-			
+			GlobalVariables.linkProcResult.linkName = linkResult.dispContent;
 			GlobalVariables.messageDoc.insertString(0, linkResult.dispContent, null);
 		} catch (BadLocationException e1) {
 	 

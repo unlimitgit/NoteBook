@@ -268,6 +268,28 @@ public class NoteBook {
 			  } 
 		} );
 		
+		// Mouse click process for textPane
+		GlobalVariables.textPane.addMouseListener(new MouseAdapter() {
+			 @Override
+			 public void mouseClicked(MouseEvent e) {
+				// try {
+					if (GlobalVariables.linkProcResult.linkExit) {  // If the link existing, open the page
+						int i =  GlobalVariables.pageListLowerCase.indexOf(GlobalVariables.linkProcResult.linkName.toLowerCase());
+						String dispContents = GlobalVariables.pageContents.get(i);
+						EditDisplay.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+						EditDisplay.textPaneDisplay(dispContents);
+					}
+					//GlobalVariables.messagePane.setText(null);
+					// System.out.println(GlobalVariables.linkProcResult.linkName);
+					// Style style = 	GlobalVariables.messageDoc.addStyle("base", null);
+					// StyleConstants.setBackground(style, Color.yellow);					
+					// GlobalVariables.messageDoc.insertString(0, "test", style); 
+				// } catch (BadLocationException e1) {
+	 
+				// }
+			 }
+		});
+		
 		
 	}
 	

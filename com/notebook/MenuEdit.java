@@ -125,11 +125,12 @@ public class MenuEdit{
 		GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
 		
 		String contents = FileStringProcess.readFileContents(strFile); // Read out the contents in the loaded file
-		String[] tempStr = {contents, GlobalVariables.pageSymbol, GlobalVariables.pageTitle};
-		GlobalVariables.contentsSperate = FileStringProcess.separatePageContents(tempStr);
 		GlobalVariables.pageList = FileStringProcess.extractPageList(contents);
+		GlobalVariables.pageListLowerCase = FileStringProcess.convertArrayStringLowerCase(GlobalVariables.pageList);
+		GlobalVariables.pageContents = FileStringProcess.extractPageContents(contents);
 		
-		String dispContents = GlobalVariables.contentsSperate[0];
+		
+		String dispContents = GlobalVariables.pageContents.get(0);
 		// EditDisplay.setDisplayMode();
 		// GlobalVariables.textPane.setText("");
 		EditDisplay.textPaneTitleDisplay(GlobalVariables.homeSymbol);
