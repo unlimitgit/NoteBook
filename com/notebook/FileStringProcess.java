@@ -6,11 +6,39 @@ package com.notebook;
 
 import com.notebook.GlobalVariables;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 
 public class FileStringProcess{
+	
+	//Update the contents to the notebook file.
+	public static void saveToNoteFile(){
+		String fileContents = "";		
+		for (int i=0; i<GlobalVariables.pageList.size(); i++ ){
+			fileContents = fileContents + GlobalVariables.pageTitle + GlobalVariables.pageList.get(i)
+							+ "\n" + GlobalVariables.pageContents.get(i);	
+			if (GlobalVariables.pageList.size() > 1) {
+				if (i < GlobalVariables.pageList.size()-1) {
+					fileContents = fileContents + "\n";
+				}
+			}
+		}
+		//System.out.println(fileContents);
+		BufferedWriter bWriter = null;
+		try {  
+			bWriter = new BufferedWriter(new FileWriter(new File(GlobalVariables.fileName)));  
+			bWriter.write(fileContents);  
+			bWriter.close();  
+			//              Thread.sleep(1000);  
+		} catch (Exception e) {  
+			  
+		}  
+		
+	}
 	
 	//Extract string lines from the contents of page
 	public static ArrayList<String> extractLineStrings(String contents) {
@@ -28,6 +56,9 @@ public class FileStringProcess{
 			result.add(line);
 			stringProc = stringProc.substring(index+1);
 			index = stringProc.indexOf(lineSymbol);			
+		}
+		if (!stringProc.isEmpty()){
+			result.add(stringProc);
 		}
 		return result;
 	}

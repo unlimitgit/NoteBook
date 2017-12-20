@@ -35,8 +35,9 @@ public class GlobalVariables
 	
 	public static boolean searchVisible = false;  		// Related to search engine
     public static boolean textEditable = false;			// The main panel editable or not
-	public static JTextPane textPane, messagePane, searchPane;
-	public static DefaultStyledDocument textDoc, messageDoc, searchDoc;  
+	public static JTextPane textPane,searchPane;
+	public static JTextField messageField;
+	public static DefaultStyledDocument textDoc, searchDoc;  
 	public static Style style;
 	public static JButton buttonSaveEdit, buttonSearch, buttonPrevious, buttonNext;
 	public static JFrame frame;
@@ -44,6 +45,7 @@ public class GlobalVariables
 	public static String  dirName = "./";
 	public static JScrollPane searchScrollPane;
 	public static final Color textDisplayColor = new Color(250,250,250);
+	public static final Color textEditColor = new Color(255,255,255);
 	public static JLabel searchLabel = new JLabel("Enter here to search: ");
 	public static JTextField searchKeyWord ;
 	public static List<String> searchFileResults = new ArrayList<String>();
@@ -51,10 +53,9 @@ public class GlobalVariables
 	public static ArrayList<String> pageList = new ArrayList<String>();
 	public static ArrayList<String> pageListLowerCase = new ArrayList<String>();
 	public static ArrayList<String> pageContents = new ArrayList<String>();
-	public static int pageLevel = 0 ;  // 0, root page; others, child page.
+	public static int pageNumber = 0 ;  // The page number related to pagelist.
 	public static final String pageTitle = "PAGE::::";  // The string add before page name to represent the beginning of one page
-	public static String pageSymbol = "PAGE::::Home";    // The first line of one page. Root page: pageTitle + Home; Child page: pageTitle + ***
-	public static String homeSymbol = "Home";
+	public static String pageSymbol = "Home";    // The first line of one page. Root page: pageTitle + Home; Child page: pageTitle + ***
 	public static String imageSymbol = "image::::";
 	public static String webSymbol = "http";
 	public static final int columns_1 = 2,  rows_1 = 3, rows_2 = 3, columns_3 = 2, rows_3 = 5, columns_4 = 2, rows_4 = 1; // It coresponds to the dimension of symbols
@@ -63,6 +64,7 @@ public class GlobalVariables
 	public static String[][] symbolArray_3 = new String[][]{{"<h>", "</h>"}, {"<b>", "</b>"}, {"<i>", "</i>"}, {"<s>", "</s>"}, {"<x>", "</x>"}};
 	public static String[][] symbolArray_4 = new String[][]{{"[", "]"}};
 	public static linkResult linkProcResult = new linkResult();
+    public static boolean messageEditable = false;	
 	
 }
 

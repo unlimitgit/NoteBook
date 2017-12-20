@@ -118,9 +118,8 @@ public class MenuEdit{
 		// Save loaded file information
         String strFile = fd.getDirectory() + fd.getFile(); 
 		GlobalVariables.fileSequences.add(strFile);
-		GlobalVariables.pageLevel = 0;	// root page
+		GlobalVariables.pageNumber = 0;	// Home page
 		GlobalVariables.fileName = strFile;
-		GlobalVariables.pageSymbol = GlobalVariables.pageTitle + GlobalVariables.homeSymbol;
 		GlobalVariables.dirName = fd.getDirectory();		
 		GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
 		
@@ -133,7 +132,7 @@ public class MenuEdit{
 		String dispContents = GlobalVariables.pageContents.get(0);
 		// EditDisplay.setDisplayMode();
 		// GlobalVariables.textPane.setText("");
-		EditDisplay.textPaneTitleDisplay(GlobalVariables.homeSymbol);
+		EditDisplay.textPaneTitleDisplay(GlobalVariables.pageSymbol);
 		EditDisplay.textPaneDisplay(dispContents);
 				
 		

@@ -24,7 +24,7 @@ public class CreateStyles
         StyleConstants.setFontSize(baseStyle, 18);
         StyleConstants.setFirstLineIndent(baseStyle, 20f);
         StyleConstants.setLeftIndent(baseStyle, 10f);
-		
+			
  
         style = doc.addStyle("base", baseStyle);
 		StyleConstants.setForeground(style, Color.black);

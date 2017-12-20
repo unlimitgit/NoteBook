@@ -35,7 +35,10 @@ public class EditDisplay
 	
 	// Set to edit mode
 	public static void setEditMode() {
-		
+		GlobalVariables.textEditable = true;
+		GlobalVariables.textPane.setEditable(true);
+		GlobalVariables.buttonSaveEdit.setText("Save");
+		GlobalVariables.textPane.setBackground(GlobalVariables.textEditColor);
 	}
 	
 	
@@ -152,6 +155,18 @@ public class EditDisplay
 	}
 		
 	
+	// Used to display the contents in the textPane which is in edit mode
+	public static void textPaneEdit(String contents){
+		setEditMode();
+		GlobalVariables.textPane.setText("");   //Clear all the contents
+		try {
+			CreateStyles.setStyle(0);
+			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents, GlobalVariables.style);
+		} catch (Exception e) {  
+				   
+		}
+		//GlobalVariables.textPane.setText(contents);   //Set the new contents for further edit		
+	}
 	
 	
 	// Save the contents in the EditDisplay Panel into file

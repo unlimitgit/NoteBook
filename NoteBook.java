@@ -54,7 +54,7 @@ public class NoteBook {
 	// boolean textEditable = true;			// The main panel editable or not
 	
 	// JFrame frame ;
-	// JTextPane textPane, GlobalVariables.messagePane;
+	// JTextPane textPane, GlobalVariables.messageField;
 	// DefaultStyledDocument textDoc, messageDoc;  
 	// Style style;
 	// JButton buttonSaveEdit, buttonSearch, buttonTest;
@@ -143,18 +143,17 @@ public class NoteBook {
         GlobalVariables.searchScrollPane.setMinimumSize(new Dimension(10, 10));
 		GlobalVariables.searchPane.setEditable(false);
 		
-		GlobalVariables.messageDoc = new DefaultStyledDocument();
-        GlobalVariables.messagePane = new JTextPane(GlobalVariables.messageDoc);
-		//messagePane.setPreferredSize(new Dimension(100, 100));
-		GlobalVariables.messagePane.setBackground(customGray);
-		GlobalVariables.messagePane.setEditable(false);
+        GlobalVariables.messageField = new JTextField();
+		//messageField.setPreferredSize(new Dimension(100, 100));
+		GlobalVariables.messageField.setBackground(customGray);
+		GlobalVariables.messageField.setEditable(false);
 		
 		
 		// Add panels to GlobalVariables.frame
 	    GlobalVariables.frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
 		GlobalVariables.frame.getContentPane().add(textScrollPane, BorderLayout.CENTER);
 		//GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 
-		GlobalVariables.frame.getContentPane().add(GlobalVariables.messagePane, BorderLayout.PAGE_END);
+		GlobalVariables.frame.getContentPane().add(GlobalVariables.messageField, BorderLayout.PAGE_END);
 		
 		
 		GlobalVariables.frame.pack();
@@ -248,7 +247,6 @@ public class NoteBook {
 					//System.out.println(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileSequences.add(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileName = GlobalVariables.searchFileResults.get(rowNum-1);
-					GlobalVariables.pageLevel = GlobalVariables.pageLevel + 1;
 					//EditDisplay.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.frame.setTitle("Notebook with Java: " +  GlobalVariables.searchFileResults.get(rowNum-1));	
 				}					
@@ -263,8 +261,8 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 		  
-				GlobalVariables.textPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			
+				String contents = GlobalVariables.textPane.getText();
+				System.out.println(contents);
 			  } 
 		} );
 		
@@ -272,22 +270,51 @@ public class NoteBook {
 		GlobalVariables.textPane.addMouseListener(new MouseAdapter() {
 			 @Override
 			 public void mouseClicked(MouseEvent e) {
-				// try {
-					if (GlobalVariables.linkProcResult.linkExit) {  // If the link existing, open the page
-						int i =  GlobalVariables.pageListLowerCase.indexOf(GlobalVariables.linkProcResult.linkName.toLowerCase());
-						String dispContents = GlobalVariables.pageContents.get(i);
-						EditDisplay.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
-						EditDisplay.textPaneDisplay(dispContents);
-					}
-					//GlobalVariables.messagePane.setText(null);
-					// System.out.println(GlobalVariables.linkProcResult.linkName);
-					// Style style = 	GlobalVariables.messageDoc.addStyle("base", null);
-					// StyleConstants.setBackground(style, Color.yellow);					
-					// GlobalVariables.messageDoc.insertString(0, "test", style); 
-				// } catch (BadLocationException e1) {
-	 
-				// }
+
+				if (GlobalVariables.linkProcResult.linkExit) {  // If the link existing, open the page
+					int i =  GlobalVariables.pageListLowerCase.indexOf(GlobalVariables.linkProcResult.linkName.toLowerCase());
+					GlobalVariables.pageNumber = i;
+					String dispContents = GlobalVariables.pageContents.get(i);
+					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+					EditDisplay.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+					EditDisplay.textPaneDisplay(dispContents);
+				} else if (GlobalVariables.linkProcResult.linkFind){ // If the link found but not existing
+					String dispContent = "Page '" + GlobalVariables.linkProcResult.linkName 
+											+ "' doesn't exist. Create it? (y/n):";
+					GlobalVariables.messageField.setText(dispContent);
+					GlobalVariables.messageField.setBackground(Color.yellow);
+					GlobalVariables.messageField.setEditable(true);
+					GlobalVariables.messageEditable = true;
+					GlobalVariables.messageField.requestFocus();
+					
+				} 
+
 			 }
+		});
+		
+				
+		GlobalVariables.messageField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent evt) { 
+				// Extract key input from message
+				String content = GlobalVariables.messageField.getText();
+				// Clear the contents in the message box
+				GlobalVariables.messageField.setEditable(false);
+				GlobalVariables.messageEditable = false;
+				GlobalVariables.messageField.setText(null);	
+				GlobalVariables.messageField.setBackground(customGray);	
+				// Extract the real key input
+				int index = content.indexOf("(y/n):");
+				String keyInput = content.substring(index+6);
+				if ((keyInput.toLowerCase().equals("yes")) || (keyInput.toLowerCase().equals("y"))) { // If yes
+					GlobalVariables.pageList.add(GlobalVariables.linkProcResult.linkName);
+					GlobalVariables.pageListLowerCase.add(GlobalVariables.linkProcResult.linkName.toLowerCase());
+					GlobalVariables.pageContents.add(null);
+					GlobalVariables.pageNumber = GlobalVariables.pageList.size()-1;
+					GlobalVariables.pageSymbol = GlobalVariables.linkProcResult.linkName;
+					FileStringProcess.saveToNoteFile();		
+					EditDisplay.textPaneEdit(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));					
+				} 							
+			} 
 		});
 		
 		
