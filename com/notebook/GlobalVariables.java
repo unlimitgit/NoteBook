@@ -56,8 +56,9 @@ public class GlobalVariables
 	public static int pageNumber = 0 ;  // The page number related to pagelist.
 	public static final String pageTitle = "PAGE::::";  // The string add before page name to represent the beginning of one page
 	public static String pageSymbol = "Home";    // The first line of one page. Root page: pageTitle + Home; Child page: pageTitle + ***
-	public static String imageSymbol = "image::::";
+	public static String fileSymbol = "file::::";
 	public static String webSymbol = "http";
+	public static int linkNumber = 0; // 0: Link not existing; 1: Link is existing with page; 2: link is webpage; 3: link is file
 	public static final int columns_1 = 2,  rows_1 = 3, rows_2 = 3, columns_3 = 2, rows_3 = 5, columns_4 = 2, rows_4 = 1; // It coresponds to the dimension of symbols
 	public static String[][] symbolArray_1 = new String[][]{{"= ", " ="}, {"== ", " =="}, {"=== ", " ==="}};
 	public static String[] symbolArray_2 = new String[]{"*","#",":"};
@@ -65,6 +66,7 @@ public class GlobalVariables
 	public static String[][] symbolArray_4 = new String[][]{{"[", "]"}};
 	public static linkResult linkProcResult = new linkResult();
     public static boolean messageEditable = false;	
+	public static Color customGray = new Color(230, 230, 230); 
 	
 }
 

@@ -44,6 +44,9 @@ import javax.swing.text.StyledDocument;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import java.net.URI;
+import java.io.IOException;
+
 
 
   
@@ -63,7 +66,7 @@ public class NoteBook {
 	private NoteBook()  {
 			
 		// Define its own color
-		Color customGray = new Color(230, 230, 230); 
+		
 		
 		// Create frame as main display interface
 		GlobalVariables.frame = new JFrame("Notebook with Java");
@@ -135,7 +138,7 @@ public class NoteBook {
 		GlobalVariables.searchDoc = new DefaultStyledDocument();
         GlobalVariables.searchPane = new JTextPane(GlobalVariables.searchDoc);
 		GlobalVariables.searchPane.setPreferredSize(new Dimension(800, 100));
-		GlobalVariables.searchPane.setBackground(customGray);
+		GlobalVariables.searchPane.setBackground(GlobalVariables.customGray);
 		GlobalVariables.searchScrollPane = new JScrollPane(GlobalVariables.searchPane);
         GlobalVariables.searchScrollPane.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -145,7 +148,7 @@ public class NoteBook {
 		
         GlobalVariables.messageField = new JTextField();
 		//messageField.setPreferredSize(new Dimension(100, 100));
-		GlobalVariables.messageField.setBackground(customGray);
+		GlobalVariables.messageField.setBackground(GlobalVariables.customGray);
 		GlobalVariables.messageField.setEditable(false);
 		
 		
@@ -270,14 +273,39 @@ public class NoteBook {
 		GlobalVariables.textPane.addMouseListener(new MouseAdapter() {
 			 @Override
 			 public void mouseClicked(MouseEvent e) {
-
+				System.out.println(GlobalVariables.linkProcResult.linkName);
+				System.out.println(GlobalVariables.linkNumber);
 				if (GlobalVariables.linkProcResult.linkExit) {  // If the link existing, open the page
-					int i =  GlobalVariables.pageListLowerCase.indexOf(GlobalVariables.linkProcResult.linkName.toLowerCase());
-					GlobalVariables.pageNumber = i;
-					String dispContents = GlobalVariables.pageContents.get(i);
-					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
-					EditDisplay.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
-					EditDisplay.textPaneDisplay(dispContents);
+					if (GlobalVariables.linkNumber == 2) {	//If it is webpage
+						URI uri = URI.create(GlobalVariables.linkProcResult.linkName);
+						try{
+							java.awt.Desktop.getDesktop().browse(uri);
+						}catch(IOException f2){
+						
+						}
+					} else if (GlobalVariables.linkNumber == 1) { // If it is existing page link
+						int i =  GlobalVariables.pageListLowerCase.indexOf(GlobalVariables.linkProcResult.linkName.toLowerCase());
+						GlobalVariables.pageNumber = i;
+						String dispContents = GlobalVariables.pageContents.get(i);
+						GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+						EditDisplay.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+						EditDisplay.textPaneDisplay(dispContents);
+					} else if (GlobalVariables.linkNumber == 3) {	// link is file
+					    
+						File file = new File(GlobalVariables.linkProcResult.linkName);
+						boolean exists = file.exists();
+						if (exists) {
+							try{
+								java.awt.Desktop.getDesktop().open(file);
+							}catch(IOException f3){
+							
+							}
+						} else {
+							GlobalVariables.messageField.setText("File: " + GlobalVariables.linkProcResult.linkName + " not existing. Please double check.");
+							GlobalVariables.messageField.setBackground(Color.yellow);
+						}
+						
+					}
 				} else if (GlobalVariables.linkProcResult.linkFind){ // If the link found but not existing
 					String dispContent = "Page '" + GlobalVariables.linkProcResult.linkName 
 											+ "' doesn't exist. Create it? (y/n):";
@@ -301,7 +329,7 @@ public class NoteBook {
 				GlobalVariables.messageField.setEditable(false);
 				GlobalVariables.messageEditable = false;
 				GlobalVariables.messageField.setText(null);	
-				GlobalVariables.messageField.setBackground(customGray);	
+				GlobalVariables.messageField.setBackground(GlobalVariables.customGray);	
 				// Extract the real key input
 				int index = content.indexOf("(y/n):");
 				String keyInput = content.substring(index+6);

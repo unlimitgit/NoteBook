@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class SymbolProcess{
 	
-	static int lineNum = 0; // Purely for # symbol. The line with # must be continous. If not, need to be reset.
+	static int lineNum = 0; // Purely for # symbol. The line with # must be continuous. If not, need to be reset.
 	
 	// Link string processing, to check whether it includes "|"
 	public static ArrayList<String> linkNameDisplayProc(String contents){
@@ -19,7 +19,7 @@ public class SymbolProcess{
 		String temp1, temp2;
 		int index1 = strProc.indexOf("|");
 		int index2 = strProc.lastIndexOf("|");
-		if (index1 != -1){	// "|" Exisitng
+		if (index1 != -1){	// "|" Existing
 			result.add(simplifyWhitespace(strProc.substring(0,index1).trim())); 
 			result.add(simplifyWhitespace(strProc.substring(index2+1).trim())); 			
 		} else {
@@ -29,7 +29,7 @@ public class SymbolProcess{
 	}
 	
 	
-	// Replace multiple continous whitespace (between different words) with one only
+	// Replace multiple continuous whitespace (between different words) with one only
 	public static String simplifyWhitespace(String contents){
 		String result = contents;
 		String stringProc = contents;
@@ -48,22 +48,40 @@ public class SymbolProcess{
 	public static Boolean linkExisting(String contents){
 		Boolean result = false;
 		int k = contents.length();
-		if (k > GlobalVariables.imageSymbol.length()) {
+		if (k > GlobalVariables.fileSymbol.length()) {
 			if (contents.substring(0,GlobalVariables.webSymbol.length()).toLowerCase().equals(GlobalVariables.webSymbol.toLowerCase()))  {				
 				result = true;
-			} else if (contents.substring(0,GlobalVariables.imageSymbol.length()).toLowerCase().equals(GlobalVariables.imageSymbol.toLowerCase())) {
+				GlobalVariables.linkNumber = 2;
+			} else if (contents.substring(0,GlobalVariables.fileSymbol.length()).toLowerCase().equals(GlobalVariables.fileSymbol.toLowerCase())) {
 				result = true;
+				GlobalVariables.linkNumber = 3;
 			} else {
 				result = GlobalVariables.pageListLowerCase.contains(contents.toLowerCase());
+				if (result) {
+					GlobalVariables.linkNumber = 1;
+				} else {
+					GlobalVariables.linkNumber = 0;
+				}
 			}				
 		} else if (k > GlobalVariables.webSymbol.length()) {
 			if (contents.substring(0,GlobalVariables.webSymbol.length()).toLowerCase().equals(GlobalVariables.webSymbol.toLowerCase())) {
 				result = true;
+				GlobalVariables.linkNumber = 2;
 			} else {
 				result = GlobalVariables.pageListLowerCase.contains(contents.toLowerCase());
+				if (result) {
+					GlobalVariables.linkNumber = 1;
+				} else {
+					GlobalVariables.linkNumber = 0;
+				}
 			}
 		} else {
 			result = GlobalVariables.pageListLowerCase.contains(contents.toLowerCase());
+			if (result) {
+				GlobalVariables.linkNumber = 1;
+			} else {
+				GlobalVariables.linkNumber = 0;
+			}
 		}
 		
 		return result;
@@ -201,7 +219,7 @@ public class SymbolProcess{
 						}
 						
 						// For the content between "[" and "]", use *.number to distinguish it
-						linkString = stringProc.substring(index1 + 1, index2).trim(); // Get the string beteen "[" and "]"
+						linkString = stringProc.substring(index1 + 1, index2).trim(); // Get the string between "[" and "]"
 						linkStrs = linkNameDisplayProc(linkString);
 						
 						int k = linkStrs.size();
@@ -233,7 +251,7 @@ public class SymbolProcess{
 						
 						linkExist = linkExisting(linkName);
 						// Purely for symbol "[", either be hiding (if link existing) or red color (if link not existing)
-						temp2.indexStyle = contents.indexStyle;		// Keep the same styple
+						temp2.indexStyle = contents.indexStyle;		// Keep the same style
 						if (linkExist){
 							temp2.number = 20 ;							// Use this to distinguish
 						} else {

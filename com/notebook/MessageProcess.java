@@ -68,19 +68,28 @@ public class MessageProcess
 				}
 				
 				GlobalVariables.InterpDispResult linkResult = linkMessageProc(lineKeyStr,lineContent);
+				String messageContent;
 				
 				// Change the cursor based on finding link or not
 				if (linkResult.symbolFind){
 					GlobalVariables.textPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					GlobalVariables.linkProcResult.linkFind = true;
 					GlobalVariables.linkProcResult.linkExit = SymbolProcess.linkExisting(linkResult.dispContent);
+					if (GlobalVariables.linkNumber == 3) {
+						messageContent = linkResult.dispContent.substring(GlobalVariables.fileSymbol.length());
+					} else {
+						messageContent = linkResult.dispContent;
+					}
 				} else {				
 					GlobalVariables.textPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 					GlobalVariables.linkProcResult.linkFind = false;
 					GlobalVariables.linkProcResult.linkExit = false;
+					messageContent = linkResult.dispContent;
 				}
-				GlobalVariables.linkProcResult.linkName = linkResult.dispContent;
-				GlobalVariables.messageField.setText(linkResult.dispContent);
+				
+				GlobalVariables.linkProcResult.linkName = messageContent;
+				GlobalVariables.messageField.setText(messageContent);
+				GlobalVariables.messageField.setBackground(GlobalVariables.customGray);	
 				//GlobalVariables.messageDoc.insertString(0, linkResult.dispContent, null);
 			} catch (BadLocationException e1) {
 		 
