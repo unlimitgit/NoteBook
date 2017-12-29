@@ -36,8 +36,8 @@ public class MessageProcess
 				Point p = e.getPoint();
 				int index = accessibleText.getIndexAtPoint(p);
 				String lineKeyStr = GlobalVariables.textPane.getText(0, index);
-				if (lineKeyStr.lastIndexOf("\n") != -1) {
-						lineKeyStr = lineKeyStr.substring(lineKeyStr.lastIndexOf("\n") + 1);
+				if (lineKeyStr.lastIndexOf(GlobalVariables.newline) != -1) {
+						lineKeyStr = lineKeyStr.substring(lineKeyStr.lastIndexOf(GlobalVariables.newline) + 1);
 				}
 				
 				// Extract the contents in the whole line of the mouse
@@ -50,8 +50,8 @@ public class MessageProcess
 				if (textLength > rowStart) { 
 					String dispContent1 =  GlobalVariables.textPane.getText(0, rowStart);
 					String dispContent2 =  GlobalVariables.textPane.getText(rowStart, textLength-rowStart);				
-					int index1 = dispContent1.lastIndexOf("\n");
-					int index2 = dispContent2.indexOf("\n");
+					int index1 = dispContent1.lastIndexOf(GlobalVariables.newline);
+					int index2 = dispContent2.indexOf(GlobalVariables.newline);
 					if ((index2 != -1) && (index1 != -1)){
 						lineContent = dispContent1.substring(index1+1) + dispContent2.substring(0, index2);
 						//GlobalVariables.messageDoc.insertString(0, lineContent, null);

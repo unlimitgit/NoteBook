@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.util.ArrayList;
 
+import java.nio.charset.Charset;
+
 public class FileStringProcess{
 	
 	//Update the contents to the notebook file.
@@ -20,18 +22,23 @@ public class FileStringProcess{
 		String fileContents = "";		
 		for (int i=0; i<GlobalVariables.pageList.size(); i++ ){
 			fileContents = fileContents + GlobalVariables.pageTitle + GlobalVariables.pageList.get(i)
-							+ "\n" + GlobalVariables.pageContents.get(i);	
+							+ GlobalVariables.newline + GlobalVariables.pageContents.get(i);	
 			if (GlobalVariables.pageList.size() > 1) {
 				if (i < GlobalVariables.pageList.size()-1) {
-					fileContents = fileContents + "\n";
+					fileContents = fileContents + GlobalVariables.newline;
 				}
 			}
 		}
-		//System.out.println(fileContents);
+		//System.out.println(GlobalVariables.pageContents.get(0));
+		//System.out.println("file length:" + GlobalVariables.pageContents.get(0).length());
+		for (int i = 0; i < GlobalVariables.pageContents.get(0).length(); i++){
+			//System.out.println(GlobalVariables.pageContents.get(0).codePointAt(i));
+		}
 		BufferedWriter bWriter = null;
 		try {  
 			bWriter = new BufferedWriter(new FileWriter(new File(GlobalVariables.fileName)));  
-			bWriter.write(fileContents);  
+			bWriter.write(fileContents); 
+			bWriter.flush();	
 			bWriter.close();  
 			//              Thread.sleep(1000);  
 		} catch (Exception e) {  
@@ -43,7 +50,7 @@ public class FileStringProcess{
 	//Extract string lines from the contents of page
 	public static ArrayList<String> extractLineStrings(String contents) {
 		ArrayList<String> result = new ArrayList<String>();
-		String lineSymbol = "\n";
+		String lineSymbol = GlobalVariables.newline;
 		String stringProc = contents;
 		String line;
 		int index = stringProc.indexOf(lineSymbol);
@@ -72,11 +79,11 @@ public class FileStringProcess{
 		int index = stringProc.indexOf(pageSymbol);
 		while (index != -1){
 			stringProc = stringProc.substring(index);
-			line = stringProc.substring(0, stringProc.indexOf("\n"));		//Extract the line with page name
+			line = stringProc.substring(0, stringProc.indexOf(GlobalVariables.newline));		//Extract the line with page name
 			pageName = line.substring(pageSymbol.length()); // Extract the page name out
 			//pageName = line.substring(pageSymbol.length()).toLowerCase(); // Extract the page name out
 			result.add(pageName);
-			stringProc = stringProc.substring(stringProc.indexOf("\n"));	// Substract string for next page processing
+			stringProc = stringProc.substring(stringProc.indexOf(GlobalVariables.newline));	// Substract string for next page processing
 			index = stringProc.indexOf(pageSymbol);
 		}
 		return result;	
@@ -100,7 +107,7 @@ public class FileStringProcess{
 			FileReader fileReader = new FileReader(fileName);
 			BufferedReader bufferedReader = new BufferedReader(fileReader); 
 			while((line = bufferedReader.readLine()) != null) {
-				result = result + line + "\n";
+				result = result + line + GlobalVariables.newline;
 			}		
 		} catch (Exception e) {  
 
@@ -119,9 +126,9 @@ public class FileStringProcess{
 			stringProc = stringProc.substring(index+pageSymbol.length());	
 			index = stringProc.indexOf(pageSymbol);
 			if(index != -1) {   // Not last page
-				pageContent = stringProc.substring(stringProc.indexOf("\n")+1, index-1);	
+				pageContent = stringProc.substring(stringProc.indexOf(GlobalVariables.newline)+1, index-1);	
 			} else { // Last page
-				pageContent = stringProc.substring(stringProc.indexOf("\n")+1);
+				pageContent = stringProc.substring(stringProc.indexOf(GlobalVariables.newline)+1);
 			}
 			result.add(pageContent);
 		}

@@ -264,8 +264,9 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 		  
-				String contents = GlobalVariables.textPane.getText();
-				System.out.println(contents);
+				String[] contents = GlobalVariables.textPane.getText().split("\\n");
+				System.out.println("file length:" + contents.length);
+				
 			  } 
 		} );
 		
@@ -273,8 +274,8 @@ public class NoteBook {
 		GlobalVariables.textPane.addMouseListener(new MouseAdapter() {
 			 @Override
 			 public void mouseClicked(MouseEvent e) {
-				System.out.println(GlobalVariables.linkProcResult.linkName);
-				System.out.println(GlobalVariables.linkNumber);
+				//System.out.println(GlobalVariables.linkProcResult.linkName);
+				//System.out.println(GlobalVariables.linkNumber);
 				if (GlobalVariables.linkProcResult.linkExit) {  // If the link existing, open the page
 					if (GlobalVariables.linkNumber == 2) {	//If it is webpage
 						URI uri = URI.create(GlobalVariables.linkProcResult.linkName);

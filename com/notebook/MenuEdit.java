@@ -147,7 +147,7 @@ public class MenuEdit{
 		fd.setFile("*.jntk");  // Add file filter		
         fd.setVisible(true); 
 		String string1 = GlobalVariables.pageTitle + fd.getFile() 
-		          + "\n" + GlobalVariables.textPane.getText();  
+		          + GlobalVariables.newline + GlobalVariables.textPane.getText();  
 		String stringfile = fd.getDirectory()+fd.getFile();  
 		BufferedWriter bWriter = null;  
 		try {  

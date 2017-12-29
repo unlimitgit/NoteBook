@@ -47,7 +47,7 @@ public class SearchProcess
 							   try {
 								   GlobalVariables.searchFileResults.add(file.getCanonicalPath());
 								   String content = file.getName().substring(0, file.getName().lastIndexOf('.'));
-								   GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), content + "\n", null);
+								   GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), content + GlobalVariables.newline, null);
 							   } catch (Exception e) {  
 					
 							   }

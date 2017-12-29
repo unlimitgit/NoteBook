@@ -48,7 +48,7 @@ public class EditDisplay
 		GlobalVariables.textPane.setText("");   //Clear all the contents
 		try {
 			CreateStyles.setStyle(100);
-			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents + "\n", GlobalVariables.style);
+			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents + GlobalVariables.newline, GlobalVariables.style);
 		} catch (Exception e) {  
 				   
 		}
@@ -71,7 +71,7 @@ public class EditDisplay
 			if (result_1.symbolFind){
 				try {
 					CreateStyles.setStyle(result_1.indexStyle);
-					GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result_1.dispContent+"\n", GlobalVariables.style);
+					GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result_1.dispContent+GlobalVariables.newline, GlobalVariables.style);
 				} catch (Exception e) {  
 				   
 				} 				
@@ -144,7 +144,7 @@ public class EditDisplay
 				}
 				
 				try {
-					GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\n", GlobalVariables.style);		// Add change line 
+					GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), GlobalVariables.newline, GlobalVariables.style);		// Add change line 
 				} catch (Exception e) {
 				}
 				

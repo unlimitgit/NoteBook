@@ -36,7 +36,16 @@ public class ButtonProcess{
 	// Edit/save functional switch
 	public static void buttonSaveEditPress(ActionEvent evt) {
 		if (GlobalVariables.textEditable) { // Originally in edit mode. Need save the contents and change to display mode.
-			String pageContents = GlobalVariables.textPane.getText(); // Extract the new page contents
+			String[] lines = GlobalVariables.textPane.getText().split("\\n"); // Extract the new page contents
+			String pageContents = "";
+			//System.out.println("file length:" + lines.length);
+			for(int i = 0 ; i< lines.length; i++) {
+				pageContents = pageContents + lines[i].trim();
+				//System.out.println(lines[i].length());
+				//if (i < lines.length-1) {
+					pageContents = pageContents + GlobalVariables.newline;
+				//}
+			}
 			GlobalVariables.pageContents.set(GlobalVariables.pageNumber, pageContents);
 			FileStringProcess.saveToNoteFile();
 			EditDisplay.textPaneTitleDisplay(GlobalVariables.pageSymbol);

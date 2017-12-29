@@ -27,7 +27,7 @@ public class GlobalVariables
 		String dispContent ;
 	}
 	
-	public static class linkResult{
+	public static class LinkResult{
 		public static Boolean linkFind = false;
 		public static Boolean linkExit = false;
 		public static String linkName = null ;
@@ -64,9 +64,11 @@ public class GlobalVariables
 	public static String[] symbolArray_2 = new String[]{"*","#",":"};
 	public static String[][] symbolArray_3 = new String[][]{{"<h>", "</h>"}, {"<b>", "</b>"}, {"<i>", "</i>"}, {"<s>", "</s>"}, {"<x>", "</x>"}};
 	public static String[][] symbolArray_4 = new String[][]{{"[", "]"}};
-	public static linkResult linkProcResult = new linkResult();
+	public static LinkResult linkProcResult = new LinkResult();
     public static boolean messageEditable = false;	
 	public static Color customGray = new Color(230, 230, 230); 
+	//public static String newline = System.getProperty("line.separator");
+	public static String newline = "\n";
 	
 }
 
