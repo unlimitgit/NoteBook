@@ -250,7 +250,7 @@ public class NoteBook {
 					//System.out.println(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileSequences.add(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.fileName = GlobalVariables.searchFileResults.get(rowNum-1);
-					//EditDisplay.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
+					//TextProcess.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
 					GlobalVariables.frame.setTitle("Notebook with Java: " +  GlobalVariables.searchFileResults.get(rowNum-1));	
 				}					
 				
@@ -289,8 +289,8 @@ public class NoteBook {
 						GlobalVariables.pageNumber = i;
 						String dispContents = GlobalVariables.pageContents.get(i);
 						GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
-						EditDisplay.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
-						EditDisplay.textPaneDisplay(dispContents);
+						TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+						TextProcess.textPaneDisplay(dispContents);
 					} else if (GlobalVariables.linkNumber == 3) {	// link is file
 					    
 						File file = new File(GlobalVariables.linkProcResult.linkName);
@@ -341,7 +341,7 @@ public class NoteBook {
 					GlobalVariables.pageNumber = GlobalVariables.pageList.size()-1;
 					GlobalVariables.pageSymbol = GlobalVariables.linkProcResult.linkName;
 					FileStringProcess.saveToNoteFile();		
-					EditDisplay.textPaneEdit(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));					
+					TextProcess.textPaneEdit(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));					
 				} 							
 			} 
 		});

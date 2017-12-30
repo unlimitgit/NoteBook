@@ -22,7 +22,7 @@ import java.awt.Point;
 public class MessageProcess
 {
 	
-	// Extract the text from Main EditDisplay panel and display in the message panel with mouse moving action.
+	// Extract the text from Main TextProcess panel and display in the message panel with mouse moving action.
 	
 	public static void textPaneMouseMove(MouseEvent e) {
 

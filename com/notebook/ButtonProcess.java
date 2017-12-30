@@ -48,11 +48,11 @@ public class ButtonProcess{
 			}
 			GlobalVariables.pageContents.set(GlobalVariables.pageNumber, pageContents);
 			FileStringProcess.saveToNoteFile();
-			EditDisplay.textPaneTitleDisplay(GlobalVariables.pageSymbol);
-			EditDisplay.textPaneDisplay(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));
+			TextProcess.textPaneTitleDisplay(GlobalVariables.pageSymbol);
+			TextProcess.textPaneDisplay(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));
 			
 		} else { // Originally in display mode, need switch to edit mode.
-			EditDisplay.textPaneEdit(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));
+			TextProcess.textPaneEdit(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));
 		}
 		
 	}

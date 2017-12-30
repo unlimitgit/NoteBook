@@ -33,6 +33,28 @@ public class GlobalVariables
 		public static String linkName = null ;
 	}
 	
+	public static class TableResult{
+		public int row;			// Row number of the table, include the header line
+		public int column;		// Column number of the table
+		ArrayList<String>	data;  // Temp data for table
+		String[] columnNames = {"A","B"};
+		Object[][] rowData = {{"A","B"},{"A","B"}} ;
+	}
+	
+	public static class TableImageProc{ // The parameters needed during table and image processing
+		public static String tableSepSymbol = "/";		//symbol to be used to separate elements in table
+		public static String tableKeepSymbol = "|";  // Symbol to keep the separate symbol, need to be only one character
+		public static int tableStatus = 0; // 0: empty table; 1: table only has columnName; 2: complete table
+		public static Boolean isTable = false;
+		public static Boolean isImage = false;
+		public static Boolean isTableReady = false;
+		public static String tableContents = "";
+		public static String tableFinalContents = "";
+		public static String imageFileName = "";
+		public static int imageStatus = 0; //0: real image file existing; 1: non image file existing; 2: file not exist
+		
+	}
+	
 	public static boolean searchVisible = false;  		// Related to search engine
     public static boolean textEditable = false;			// The main panel editable or not
 	public static JTextPane textPane,searchPane;
@@ -59,7 +81,8 @@ public class GlobalVariables
 	public static String fileSymbol = "file::::";
 	public static String webSymbol = "http";
 	public static int linkNumber = 0; // 0: Link not existing; 1: Link is existing with page; 2: link is webpage; 3: link is file
-	public static final int columns_1 = 2,  rows_1 = 3, rows_2 = 3, columns_3 = 2, rows_3 = 5, columns_4 = 2, rows_4 = 1; // It coresponds to the dimension of symbols
+	public static final int rows_0 = 2, columns_1 = 2,  rows_1 = 3, rows_2 = 3, columns_3 = 2, rows_3 = 5, columns_4 = 2, rows_4 = 1; // It coresponds to the dimension of symbols
+	public static String[] symbolArray_0 = new String[]{"Table::::","Image::::"};
 	public static String[][] symbolArray_1 = new String[][]{{"= ", " ="}, {"== ", " =="}, {"=== ", " ==="}};
 	public static String[] symbolArray_2 = new String[]{"*","#",":"};
 	public static String[][] symbolArray_3 = new String[][]{{"<h>", "</h>"}, {"<b>", "</b>"}, {"<i>", "</i>"}, {"<s>", "</s>"}, {"<x>", "</x>"}};
@@ -69,6 +92,8 @@ public class GlobalVariables
 	public static Color customGray = new Color(230, 230, 230); 
 	//public static String newline = System.getProperty("line.separator");
 	public static String newline = "\n";
+	public static TableResult tableResult = new TableResult();
+	public static TableImageProc tableImageProc = new TableImageProc();
 	
 }
 

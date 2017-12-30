@@ -6,7 +6,7 @@ package com.notebook;
 
 import com.notebook.GlobalVariables;
 import com.notebook.FileStringProcess;
-import com.notebook.EditDisplay;
+import com.notebook.TextProcess;
 
 
 import javax.swing.JMenuBar;
@@ -130,13 +130,13 @@ public class MenuEdit{
 		
 		
 		String dispContents = GlobalVariables.pageContents.get(0);
-		// EditDisplay.setDisplayMode();
+		// TextProcess.setDisplayMode();
 		// GlobalVariables.textPane.setText("");
-		EditDisplay.textPaneTitleDisplay(GlobalVariables.pageSymbol);
-		EditDisplay.textPaneDisplay(dispContents);
+		TextProcess.textPaneTitleDisplay(GlobalVariables.pageSymbol);
+		TextProcess.textPaneDisplay(dispContents);
 				
 		
-		//EditDisplay.loadFileDisplayProc(strFile);
+		//TextProcess.loadFileDisplayProc(strFile);
 		
         
     } 

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class SearchProcess
 {
 	
-	// Extract the text from Main EditDisplay panel and display in the message panel with mouse moving action.
+	// Extract the text from Main TextProcess panel and display in the message panel with mouse moving action.
 	public static void displayDirectoryContents(String keyWord, File dir) {
 		try {
 			GlobalVariables.searchPane.setText(null);

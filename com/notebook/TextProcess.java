@@ -1,5 +1,5 @@
 /*
-This is for EditDisplay main functions
+This is for TextProcess main functions
 */  
 
 package com.notebook;
@@ -22,7 +22,7 @@ import javax.swing.text.StyleConstants;
 
 
 
-public class EditDisplay
+public class TextProcess
 {
 	
 	// Set to display mode
@@ -169,7 +169,7 @@ public class EditDisplay
 	}
 	
 	
-	// Save the contents in the EditDisplay Panel into file
+	// Save the contents in the TextProcess Panel into file
 	public static void saveTextPaneProc(String fileName, String content) {
 		//String content = GlobalVariables.textPane.getDocument().getText(0, GlobalVariables.textPane.getDocument().getLength());
 		if (fileName != null) {
