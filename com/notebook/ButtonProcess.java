@@ -5,7 +5,7 @@ This is for buttons in the button panel. It mainly includes the button processin
 package com.notebook;
 
 import com.notebook.GlobalVariables;
-import com.notebook.EditDisplay;
+import com.notebook.TextProcess;
 import com.notebook.FileStringProcess;
 
 import java.awt.event.ActionEvent;
