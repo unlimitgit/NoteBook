@@ -1,4 +1,5 @@
 javac ./com/notebook/GlobalVariables.java
+javac ./com/notebook/TableImageProcess.java
 javac ./com/notebook/FileStringProcess.java
 javac ./com/notebook/SymbolProcess.java
 javac ./com/notebook/TextProcess.java

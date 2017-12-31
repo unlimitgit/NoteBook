@@ -36,14 +36,15 @@ public class GlobalVariables
 	public static class TableResult{
 		public int row;			// Row number of the table, include the header line
 		public int column;		// Column number of the table
-		ArrayList<String>	data;  // Temp data for table
 		String[] columnNames = {"A","B"};
 		Object[][] rowData = {{"A","B"},{"A","B"}} ;
 	}
 	
 	public static class TableImageProc{ // The parameters needed during table and image processing
+		public static ArrayList<String>	data;  // Temp data for table
 		public static String tableSepSymbol = "/";		//symbol to be used to separate elements in table
 		public static String tableKeepSymbol = "|";  // Symbol to keep the separate symbol, need to be only one character
+		public static String subSymbol = "a:::::b::::";  // Symbol to use temprary
 		public static int tableStatus = 0; // 0: empty table; 1: table only has columnName; 2: complete table
 		public static Boolean isTable = false;
 		public static Boolean isImage = false;

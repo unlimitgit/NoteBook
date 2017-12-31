@@ -4,9 +4,14 @@ This is for creating styles for documents
 
 package com.notebook;
 
+import com.notebook.GlobalVariables;
+import com.notebook.TableImageProcess;
+
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+import java.io.File;
+import javax.swing.ImageIcon;
 
 import java.awt.Color;
 
@@ -28,6 +33,25 @@ public class CreateStyles
  
         style = doc.addStyle("base", baseStyle);
 		StyleConstants.setForeground(style, Color.black);
+		
+		style = doc.addStyle("table", null);
+        StyleConstants.setComponent(style, TableImageProcess.getTableComponent());
+		
+		style = doc.addStyle("image", baseStyle);
+		StyleConstants.setAlignment(style, StyleConstants.ALIGN_CENTER);
+		File tmpDir = new File(GlobalVariables.tableImageProc.imageFileName);
+		boolean exists = tmpDir.exists();
+		if (exists) {
+			ImageIcon imageIcon = new ImageIcon(GlobalVariables.tableImageProc.imageFileName);
+			if (imageIcon != null) {
+				StyleConstants.setIcon(style, imageIcon);
+				GlobalVariables.tableImageProc.imageStatus = 0;
+			} else {
+				GlobalVariables.tableImageProc.imageStatus = 1;
+			}
+		} else {
+			GlobalVariables.tableImageProc.imageStatus = 2;
+		}
 		
 		
 		style = doc.addStyle("header_1", baseStyle);

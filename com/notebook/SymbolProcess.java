@@ -87,6 +87,36 @@ public class SymbolProcess{
 		return result;
 	}
 	
+	// Used to interpret the level 0 symbol, mainly for table and image display. They has the highest priority.
+	// For image, it only takes one line. But for table, it will take several lines string.
+	// When it hits empty line, the table input will be over.
+	public static void interpSymbolLevel_0(String contents) {
+		if (GlobalVariables.tableImageProc.isTable) {
+			if (contents.trim() == ""){
+				//isTable = false;
+				GlobalVariables.tableImageProc.tableFinalContents = GlobalVariables.tableImageProc.tableContents;
+				GlobalVariables.tableImageProc.isTableReady = true;
+			} else {
+				GlobalVariables.tableImageProc.tableContents = GlobalVariables.tableImageProc.tableContents + contents + "\n";
+			}
+			
+		} else {
+			GlobalVariables.tableImageProc.tableContents = "";
+			int index1 = contents.toLowerCase().indexOf(GlobalVariables.symbolArray_0[0].toLowerCase());
+			if (index1 != -1){
+				GlobalVariables.tableImageProc.isTable = true;
+			} else {
+				int index2 = contents.toLowerCase().indexOf(GlobalVariables.symbolArray_0[1].toLowerCase());
+				if (index2 != -1){ // Processing for image file
+					GlobalVariables.tableImageProc.isImage = true;
+					// Extract the file name
+					GlobalVariables.tableImageProc.imageFileName = contents.substring(index2+GlobalVariables.symbolArray_0[1].length());
+				}
+			}
+		}
+		
+	}
+	
 	// Used to interpret the level 1 symbol, mainly for "= ", "== ", "=== "
 	public static GlobalVariables.InterpDispResult interpSymbolLevel_1(String contents) {
 		GlobalVariables.InterpDispResult result = new GlobalVariables.InterpDispResult();
