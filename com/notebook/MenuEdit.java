@@ -12,6 +12,7 @@ import com.notebook.TextProcess;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -106,39 +107,45 @@ public class MenuEdit{
 		fd.setFile("*.jntk");  // Add file filter
         fd.setVisible(true); 
 		
-		// Goes to default status
-		GlobalVariables.searchVisible = false;
-		GlobalVariables.buttonSearch.setText("Display search result");
-		GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane);
-		GlobalVariables.frame.validate();
-		
-		// Clear file search result
-		GlobalVariables.fileSequences.clear();	
+			
 		
 		// Save loaded file information
-        String strFile = fd.getDirectory() + fd.getFile(); 
-		GlobalVariables.fileSequences.add(strFile);
-		GlobalVariables.pageNumber = 0;	// Home page
-		GlobalVariables.fileName = strFile;
-		GlobalVariables.dirName = fd.getDirectory();		
-		GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
-		
-		String contents = FileStringProcess.readFileContents(strFile); // Read out the contents in the loaded file
-		GlobalVariables.pageList = FileStringProcess.extractPageList(contents);
-		GlobalVariables.pageListLowerCase = FileStringProcess.convertArrayStringLowerCase(GlobalVariables.pageList);
-		GlobalVariables.pageContents = FileStringProcess.extractPageContents(contents);
-		
-		
-		String dispContents = GlobalVariables.pageContents.get(0);
-		// TextProcess.setDisplayMode();
-		// GlobalVariables.textPane.setText("");
-		TextProcess.textPaneTitleDisplay(GlobalVariables.pageSymbol);
-		TextProcess.textPaneDisplay(dispContents);
-				
-		
-		//TextProcess.loadFileDisplayProc(strFile);
-		
-        
+		if (fd.getFile() != null && !fd.getFile().isEmpty()) {
+			// Goes to default status
+			GlobalVariables.searchVisible = false;
+			GlobalVariables.buttonSearch.setText("Display search result");
+			GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane);
+			GlobalVariables.frame.validate();
+			// Clear file search result
+			GlobalVariables.fileSequences.clear();
+			String strFile = fd.getDirectory() + fd.getFile(); 
+			GlobalVariables.fileSequences.add(strFile);
+			GlobalVariables.pageNumber = 0;	// Home page
+			GlobalVariables.fileName = strFile;
+			GlobalVariables.dirName = fd.getDirectory();		
+			GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
+			
+			String contents = FileStringProcess.readFileContents(strFile); // Read out the contents in the loaded file
+			GlobalVariables.pageList = FileStringProcess.extractPageList(contents);
+			GlobalVariables.pageListLowerCase = FileStringProcess.convertArrayStringLowerCase(GlobalVariables.pageList);
+			GlobalVariables.pageContents = FileStringProcess.extractPageContents(contents);
+			
+			
+			String dispContents = GlobalVariables.pageContents.get(0);
+			// TextProcess.setDisplayMode();
+			// GlobalVariables.textPane.setText("");
+			TextProcess.textPaneTitleDisplay(GlobalVariables.pageSymbol);
+			TextProcess.textPaneDisplay(dispContents);
+			
+			// Try to let the scroll go to the top, failed
+			try {
+				GlobalVariables.textDoc.insertString(0, "", GlobalVariables.style);	
+			} catch (Exception e) {  
+			}
+			GlobalVariables.textScrollPane.validate();
+			GlobalVariables.textScrollPane.repaint(); 	//Refresh frame
+			GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+		}
     } 
 	
 	private static void menuItemSaveAsActionPerformed(ActionEvent evt) {  

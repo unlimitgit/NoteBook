@@ -138,9 +138,13 @@ public class MessageProcess
 			}
 			if (rowNum <= GlobalVariables.searchFileResults.size()){ 
 				File file = new File(GlobalVariables.searchFileResults.get(rowNum-1));
-				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-				GlobalVariables.messageField.setText(GlobalVariables.searchFileResults.get(rowNum-1) + "  (" + sdf.format(file.lastModified()) + ")");
-			}					
+				//SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+				//GlobalVariables.messageField.setText(GlobalVariables.searchFileResults.get(rowNum-1) + "  (" + sdf.format(file.lastModified()) + ")");
+				GlobalVariables.messageField.setText(GlobalVariables.searchFileResults.get(rowNum-1));
+				GlobalVariables.searchResultFile = GlobalVariables.searchFileResults.get(rowNum-1);
+			} else {
+				GlobalVariables.searchResultFile = "";
+			}				
 			
 		} catch (BadLocationException e1) {
 		   e1.printStackTrace();

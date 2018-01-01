@@ -60,7 +60,8 @@ public class GlobalVariables
     public static boolean textEditable = false;			// The main panel editable or not
 	public static JTextPane textPane,searchPane;
 	public static JTextField messageField;
-	public static DefaultStyledDocument textDoc, searchDoc;  
+	public static DefaultStyledDocument textDoc, searchDoc; 
+	public static JScrollPane textScrollPane;	
 	public static Style style;
 	public static JButton buttonSaveEdit, buttonSearch, buttonPrevious, buttonNext;
 	public static JFrame frame;
@@ -71,8 +72,9 @@ public class GlobalVariables
 	public static final Color textEditColor = new Color(255,255,255);
 	public static JLabel searchLabel = new JLabel("Enter here to search: ");
 	public static JTextField searchKeyWord ;
-	public static List<String> searchFileResults = new ArrayList<String>();
-	public static List<String> fileSequences = new ArrayList<String>();
+	public static ArrayList<String> searchFileResults = new ArrayList<String>();
+	public static String searchResultFile;
+	public static ArrayList<String> fileSequences = new ArrayList<String>();
 	public static ArrayList<String> pageList = new ArrayList<String>();
 	public static ArrayList<String> pageListLowerCase = new ArrayList<String>();
 	public static ArrayList<String> pageContents = new ArrayList<String>();

@@ -128,11 +128,11 @@ public class NoteBook {
 		GlobalVariables.textPane.setBackground(GlobalVariables.textDisplayColor);
 		GlobalVariables.style = CreateStyles.CreateStyles(GlobalVariables.textDoc);
 		GlobalVariables.textPane.setPreferredSize(new Dimension(800, 100));
-		JScrollPane textScrollPane = new JScrollPane(GlobalVariables.textPane);
-        textScrollPane.setVerticalScrollBarPolicy(
+		GlobalVariables.textScrollPane = new JScrollPane(GlobalVariables.textPane);
+        GlobalVariables.textScrollPane.setVerticalScrollBarPolicy(
                         JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        textScrollPane.setPreferredSize(new Dimension(800, 300));
-        textScrollPane.setMinimumSize(new Dimension(10, 10));
+        GlobalVariables.textScrollPane.setPreferredSize(new Dimension(800, 300));
+        GlobalVariables.textScrollPane.setMinimumSize(new Dimension(10, 10));
 		GlobalVariables.textPane.setEditable(false);
 		
 		GlobalVariables.searchDoc = new DefaultStyledDocument();
@@ -154,7 +154,7 @@ public class NoteBook {
 		
 		// Add panels to GlobalVariables.frame
 	    GlobalVariables.frame.getContentPane().add(buttonPanel, BorderLayout.PAGE_START);
-		GlobalVariables.frame.getContentPane().add(textScrollPane, BorderLayout.CENTER);
+		GlobalVariables.frame.getContentPane().add(GlobalVariables.textScrollPane, BorderLayout.CENTER);
 		//GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 
 		GlobalVariables.frame.getContentPane().add(GlobalVariables.messageField, BorderLayout.PAGE_END);
 		
@@ -200,11 +200,13 @@ public class NoteBook {
 		
 		// searchKeyWord key listener 
 		GlobalVariables.searchKeyWord.addKeyListener(new KeyAdapter(){
-			public void keyPressed(KeyEvent ke) { 
+			// public void keyPressed(KeyEvent ke) { 
+			public void keyReleased(KeyEvent ke) { 
 				//GlobalVariables.frame.setTitle("Test");	
 				//System.out.println(GlobalVariables.searchKeyWord.getText());
-				File file = new File(GlobalVariables.dirName);
-				SearchProcess.displayDirectoryContents(GlobalVariables.searchKeyWord.getText(), file);				
+				// File file = new File(GlobalVariables.dirName);
+				// SearchProcess.displayDirectoryContents(GlobalVariables.searchKeyWord.getText(), file);				
+				SearchProcess.searchResultDisplay(GlobalVariables.searchKeyWord.getText());
 			} 
 		});
 		
@@ -222,41 +224,24 @@ public class NoteBook {
 		// Refer to MessageProcess sub module
 		GlobalVariables.searchPane.addMouseMotionListener(new MouseAdapter() {
 			public void mouseMoved(MouseEvent e) {
-				MessageProcess.searchPaneMouseMove(e);
+				SearchProcess.searchPaneMouseMove(e);
  
 			}
 		});
 		
-		// Extract the string contents, and open the website page included by '[' ']'
+		// Open the linked file
 		GlobalVariables.searchPane.addMouseListener(new MouseAdapter() {
          @Override
          public void mouseClicked(MouseEvent e) {
-            if (e.getButton() != MouseEvent.BUTTON1) {
-               return;
-            }
-            if (e.getClickCount() != 2) {
-               return;
-            }
-			try {
-				int caretPos = GlobalVariables.searchPane.getCaretPosition();
-				int rowNum = (caretPos == 0) ? 1 : 0;
-				for (int offset = caretPos; offset > 0;) {
-					offset = Utilities.getRowStart(GlobalVariables.searchPane, offset) - 1;
-					rowNum++;
-				}
-				//System.out.println("Row: " + rowNum); 
-				//System.out.println(GlobalVariables.searchFileResults.size());
-				if (rowNum <= GlobalVariables.searchFileResults.size()){ 
-					//System.out.println(GlobalVariables.searchFileResults.get(rowNum-1));
-					GlobalVariables.fileSequences.add(GlobalVariables.searchFileResults.get(rowNum-1));
-					GlobalVariables.fileName = GlobalVariables.searchFileResults.get(rowNum-1);
-					//TextProcess.loadFileDisplayProc(GlobalVariables.searchFileResults.get(rowNum-1));
-					GlobalVariables.frame.setTitle("Notebook with Java: " +  GlobalVariables.searchFileResults.get(rowNum-1));	
-				}					
-				
-			} catch (BadLocationException e1) {
-               e1.printStackTrace();
-            }
+			if (!GlobalVariables.searchResultFile.equals("")){
+				int i =  GlobalVariables.pageList.indexOf(GlobalVariables.searchResultFile);
+				GlobalVariables.pageNumber = i;
+				String dispContents = GlobalVariables.pageContents.get(i);
+				GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+				TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+				TextProcess.textPaneDisplay(dispContents);
+				GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+			}
          }
       });
 	  
@@ -264,9 +249,17 @@ public class NoteBook {
 		buttonTest.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) { 
 		  
-				String[] contents = GlobalVariables.textPane.getText().split("\\n");
-				System.out.println("file length:" + contents.length);
+				//GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);		// Set scroll position to top
+				// System.out.println(GlobalVariables.textScrollPane.getVerticalScrollBar().getValue());
+				// GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);		// Set scroll position to top
+				// System.out.println(GlobalVariables.textScrollPane.getVerticalScrollBar().getValue());
 				
+				System.out.println(GlobalVariables.searchFileResults.size());
+				if (GlobalVariables.searchFileResults.size() > 0) {
+					for (int i = 0; i < GlobalVariables.searchFileResults.size(); i++) {
+						System.out.println(GlobalVariables.searchFileResults.get(i));
+					}
+				}
 			  } 
 		} );
 		
@@ -291,6 +284,7 @@ public class NoteBook {
 						GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
 						TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
 						TextProcess.textPaneDisplay(dispContents);
+						GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
 					} else if (GlobalVariables.linkNumber == 3) {	// link is file
 					    
 						File file = new File(GlobalVariables.linkProcResult.linkName);
