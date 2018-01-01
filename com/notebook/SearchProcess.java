@@ -16,6 +16,14 @@ import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 import javax.swing.text.Utilities;
 
+import javax.swing.text.JTextComponent;
+import javax.swing.text.Highlighter;
+import javax.swing.text.DefaultHighlighter;
+
+import java.awt.Color;
+
+import javax.swing.text.Document;
+
 
 public class SearchProcess
 {
@@ -74,69 +82,42 @@ public class SearchProcess
 		
 	}
 	
-	
-	// Extract the text from Main TextProcess panel and display in the message panel with mouse moving action.
-	public static void displayDirectoryContents(String keyWord, File dir) {
-		try {
-			GlobalVariables.searchPane.setText(null);
-			//GlobalVariables.searchFileResults.removeAll();
-			GlobalVariables.searchFileResults.clear();
-			GlobalVariables.searchVisible = true;
-			GlobalVariables.buttonSearch.setText("Remove search result");
-			GlobalVariables.frame.getContentPane().add(GlobalVariables.searchScrollPane, BorderLayout.LINE_END); 
-			GlobalVariables.frame.validate();
-			
-			File[] files = dir.listFiles();
-			for (File file : files) {
-				if (file.isDirectory()) {
-					displayDirectoryContents(keyWord, file);
-				} else {
-					if (file.getName().endsWith((".java"))) {
-						final Scanner scanner = new Scanner(file);
-						while (scanner.hasNextLine()) {
-						   final String lineFromFile = scanner.nextLine();
-						   if(containsIgnoreCase(lineFromFile,keyWord)) { 
-							  try {
-								   GlobalVariables.searchFileResults.add(file.getCanonicalPath());
-								   String content = file.getName().substring(0, file.getName().lastIndexOf('.'));
-								   GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), content + GlobalVariables.newline, null);
-							   } catch (Exception e) {  
-					
-							   }
-							   break;
-						   }
-						}
-					}
+	// Creates highlights around all occurrences of pattern in textComp
+    public static void highlight(JTextComponent textComp, String pattern) {
+        // First remove all old highlights
+        removeHighlights(textComp);
+		if(GlobalVariables.searchKeyWord.getText() != null && !GlobalVariables.searchKeyWord.getText().isEmpty()){
+			try {
+				Highlighter hilite = textComp.getHighlighter();
+				Document doc = textComp.getDocument();
+				String text = doc.getText(0, doc.getLength());
+
+				int pos = 0;
+				// Search for pattern
+				while ((pos = text.toLowerCase().indexOf(pattern.toLowerCase(), pos)) >= 0) {
+					// Create highlighter using private painter and apply around pattern
+					hilite.addHighlight(pos, pos + pattern.length(), myHighlightPainter);
+					pos += pattern.length();
 				}
+
+			} catch (BadLocationException e) {
 			}
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-	}
-	
-	public static boolean containsIgnoreCase(String src, String what) {
-		final int length = what.length();
-		if (length == 0)
-			return true; // Empty string is contained
+    }
 
-		final char firstLo = Character.toLowerCase(what.charAt(0));
-		final char firstUp = Character.toUpperCase(what.charAt(0));
-
-		for (int i = src.length() - length; i >= 0; i--) {
-			// Quick check before calling the more expensive regionMatches() method:
-			final char ch = src.charAt(i);
-			if (ch != firstLo && ch != firstUp)
-				continue;
-
-			if (src.regionMatches(true, i, what, 0, length))
-				return true;
-		}
-
-		return false;
-	}
-		
+    // Removes only our private highlights
+    public static  void removeHighlights(JTextComponent textComp) {
+        Highlighter hilite = textComp.getHighlighter();
+        Highlighter.Highlight[] hilites = hilite.getHighlights();
+        for (int i = 0; i < hilites.length; i++) {
+            if (hilites[i].getPainter() instanceof DefaultHighlighter.DefaultHighlightPainter) {
+                hilite.removeHighlight(hilites[i]);
+            }
+        }
+    }
+    // An instance of the private subclass of the default highlight painter
+    // static Highlighter.HighlightPainter myHighlightPainter = new MyHighlightPainter(Color.yellow);
+	static Highlighter.HighlightPainter myHighlightPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.yellow);
 }
 
 

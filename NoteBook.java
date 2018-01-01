@@ -202,11 +202,17 @@ public class NoteBook {
 		GlobalVariables.searchKeyWord.addKeyListener(new KeyAdapter(){
 			// public void keyPressed(KeyEvent ke) { 
 			public void keyReleased(KeyEvent ke) { 
-				//GlobalVariables.frame.setTitle("Test");	
+				//GlobalVariables.frame.setTitle("Test");
+				
 				//System.out.println(GlobalVariables.searchKeyWord.getText());
 				// File file = new File(GlobalVariables.dirName);
 				// SearchProcess.displayDirectoryContents(GlobalVariables.searchKeyWord.getText(), file);				
 				SearchProcess.searchResultDisplay(GlobalVariables.searchKeyWord.getText());
+				//if(GlobalVariables.searchKeyWord.getText() != null && !GlobalVariables.searchKeyWord.getText().isEmpty()){
+					SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
+				//} else {
+				//	SearchProcess.removeHighlights(GlobalVariables.textPane);
+				//}
 			} 
 		});
 		
@@ -240,6 +246,7 @@ public class NoteBook {
 				GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
 				TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
 				TextProcess.textPaneDisplay(dispContents);
+				SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
 				GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
 			}
          }
@@ -254,12 +261,13 @@ public class NoteBook {
 				// GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);		// Set scroll position to top
 				// System.out.println(GlobalVariables.textScrollPane.getVerticalScrollBar().getValue());
 				
-				System.out.println(GlobalVariables.searchFileResults.size());
-				if (GlobalVariables.searchFileResults.size() > 0) {
-					for (int i = 0; i < GlobalVariables.searchFileResults.size(); i++) {
-						System.out.println(GlobalVariables.searchFileResults.get(i));
-					}
-				}
+				// System.out.println(GlobalVariables.searchFileResults.size());
+				// if (GlobalVariables.searchFileResults.size() > 0) {
+					// for (int i = 0; i < GlobalVariables.searchFileResults.size(); i++) {
+						// System.out.println(GlobalVariables.searchFileResults.get(i));
+					// }
+				// }
+				SearchProcess.removeHighlights(GlobalVariables.textPane);
 			  } 
 		} );
 		
