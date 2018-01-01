@@ -126,32 +126,6 @@ public class MessageProcess
 	}
 	
 	
-	// Extract the file and get the last edit information
-	public static void searchPaneMouseMove(MouseEvent e) {
-		int caretPos = GlobalVariables.searchPane.viewToModel(e.getPoint());
-		try {
-			GlobalVariables.messageField.setText(null);	
-			int rowNum = (caretPos == 0) ? 1 : 0;
-			for (int offset = caretPos; offset > 0;) {
-				offset = Utilities.getRowStart(GlobalVariables.searchPane, offset) - 1;
-				rowNum++;
-			}
-			if (rowNum <= GlobalVariables.searchFileResults.size()){ 
-				File file = new File(GlobalVariables.searchFileResults.get(rowNum-1));
-				//SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-				//GlobalVariables.messageField.setText(GlobalVariables.searchFileResults.get(rowNum-1) + "  (" + sdf.format(file.lastModified()) + ")");
-				GlobalVariables.messageField.setText(GlobalVariables.searchFileResults.get(rowNum-1));
-				GlobalVariables.searchResultFile = GlobalVariables.searchFileResults.get(rowNum-1);
-			} else {
-				GlobalVariables.searchResultFile = "";
-			}				
-			
-		} catch (BadLocationException e1) {
-		   e1.printStackTrace();
-		}
-		
-	}
-		
 }
 
 
