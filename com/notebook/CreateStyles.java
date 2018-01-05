@@ -25,8 +25,9 @@ public class CreateStyles
 		Style style;
 		
 		Style baseStyle = doc.addStyle("base", null);
-        StyleConstants.setFontFamily(baseStyle, "Lucida Sans Unicode");
-        StyleConstants.setFontSize(baseStyle, 18);
+        //StyleConstants.setFontFamily(baseStyle, "Lucida Sans Unicode");
+		StyleConstants.setFontFamily(baseStyle, "Arial");
+        StyleConstants.setFontSize(baseStyle, 14);
         StyleConstants.setFirstLineIndent(baseStyle, 20f);
         StyleConstants.setLeftIndent(baseStyle, 10f);
 			
@@ -55,35 +56,35 @@ public class CreateStyles
 		
 		
 		style = doc.addStyle("header_1", baseStyle);
-		StyleConstants.setFontSize(style, 42);
+		StyleConstants.setFontSize(style, 32);
 		StyleConstants.setBold(style, true);
 		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("header_2", baseStyle);
-		StyleConstants.setFontSize(style, 36);
+		StyleConstants.setFontSize(style, 26);
 		StyleConstants.setBold(style, true);
 		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("header_3", baseStyle);
-		StyleConstants.setFontSize(style, 30);
+		StyleConstants.setFontSize(style, 20);
 		StyleConstants.setBold(style, true);
 		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("inlineheader", baseStyle);
-		StyleConstants.setFontSize(style, 32);
+		StyleConstants.setFontSize(style, 28);
 		StyleConstants.setBold(style, true);
 		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("bold", baseStyle);
         StyleConstants.setBold(style, true);
-		StyleConstants.setForeground(style, Color.black);
+		StyleConstants.setForeground(style, Color.blue);
 		
 		style = doc.addStyle("italic", baseStyle);
         StyleConstants.setItalic(style, true);
 		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("smalltext", baseStyle);
-        StyleConstants.setFontSize(style, 12);
+        StyleConstants.setFontSize(style, 8);
 		StyleConstants.setForeground(style, Color.black);
 		
 		style = doc.addStyle("strikeout", baseStyle);
@@ -97,12 +98,12 @@ public class CreateStyles
 		
 		// Bullet
 		style = doc.addStyle("bullet", baseStyle);
-		StyleConstants.setFontSize(style, 36);
+		StyleConstants.setFontSize(style, 10);
 		StyleConstants.setForeground(style, Color.black);
 		
 		//Title
 		style = doc.addStyle("title", baseStyle);
-		StyleConstants.setFontSize(style, 52);
+		StyleConstants.setFontSize(style, 40);
         StyleConstants.setBold(style, true);
 		StyleConstants.setForeground(style, Color.blue);
 		

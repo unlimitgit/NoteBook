@@ -63,7 +63,7 @@ public class GlobalVariables
 	public static DefaultStyledDocument textDoc, searchDoc; 
 	public static JScrollPane textScrollPane;	
 	public static Style style;
-	public static JButton buttonSaveEdit, buttonSearch, buttonPrevious, buttonNext;
+	public static JButton buttonSaveEdit, buttonSearch, buttonPrevious, buttonNext, buttonHome;
 	public static JFrame frame;
 	public static String  fileName ;
 	public static String  dirName = "./";

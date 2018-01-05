@@ -178,12 +178,16 @@ public class TextProcess
 									CreateStyles.setStyle(result_3.get(k).indexStyle);
 									StyleConstants.setForeground(GlobalVariables.style, Color.blue);
 								} else {
+									
 									CreateStyles.setStyle(result_3.get(k).indexStyle);
-									StyleConstants.setForeground(GlobalVariables.style, Color.black);
+									// if (result_3.get(k).indexStyle != 31) {
+										// StyleConstants.setForeground(GlobalVariables.style, Color.black);
+									// }
+									
 									
 								}
 								GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result_4.get(m).dispContent, GlobalVariables.style);
-								
+								StyleConstants.setForeground(GlobalVariables.style, Color.black); // Go back default color
 							} catch (Exception e) {  
 							}
 								 

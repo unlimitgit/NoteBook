@@ -109,6 +109,10 @@ public class NoteBook {
 		buttonPanel.add(GlobalVariables.buttonNext);
 		GlobalVariables.buttonNext.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
+		GlobalVariables.buttonHome = new JButton("Home");
+		buttonPanel.add(GlobalVariables.buttonHome);
+		GlobalVariables.buttonHome.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest = new JButton("Test");
 		buttonPanel.add(buttonTest);
@@ -182,6 +186,21 @@ public class NoteBook {
 		GlobalVariables.buttonSearch.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) {			  
 				ButtonProcess.buttonSearchPress(evt);
+		  }
+		} );
+		
+		
+		// Go back to home page
+		GlobalVariables.buttonHome.addActionListener(new ActionListener(){ 
+		  public void actionPerformed(ActionEvent evt) {			  
+			int i =  GlobalVariables.pageList.indexOf("Home");
+			GlobalVariables.pageNumber = i;
+			String dispContents = GlobalVariables.pageContents.get(i);
+			GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+			TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+			TextProcess.textPaneDisplay(dispContents);
+			SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
+			GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
 		  }
 		} );
 		
@@ -267,7 +286,9 @@ public class NoteBook {
 						// System.out.println(GlobalVariables.searchFileResults.get(i));
 					// }
 				// }
-				SearchProcess.removeHighlights(GlobalVariables.textPane);
+				//SearchProcess.removeHighlights(GlobalVariables.textPane);
+				GlobalVariables.textEditable = true;
+				GlobalVariables.textPane.setEditable(true);
 			  } 
 		} );
 		
