@@ -117,9 +117,9 @@ public class MenuEdit{
 			GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane);
 			GlobalVariables.frame.validate();
 			// Clear file search result
-			GlobalVariables.fileSequences.clear();
+			GlobalVariables.pageSequences.clear();
 			String strFile = fd.getDirectory() + fd.getFile(); 
-			GlobalVariables.fileSequences.add(strFile);
+			GlobalVariables.pageSequences.add("Home");
 			GlobalVariables.pageNumber = 0;	// Home page
 			GlobalVariables.fileName = strFile;
 			GlobalVariables.dirName = fd.getDirectory();		

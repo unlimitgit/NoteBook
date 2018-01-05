@@ -63,7 +63,7 @@ public class GlobalVariables
 	public static DefaultStyledDocument textDoc, searchDoc; 
 	public static JScrollPane textScrollPane;	
 	public static Style style;
-	public static JButton buttonSaveEdit, buttonSearch, buttonPrevious, buttonNext, buttonHome;
+	public static JButton buttonSaveEdit, buttonSearch, buttonPrevious, buttonNext, buttonHome, buttonUndo, buttonRedo;
 	public static JFrame frame;
 	public static String  fileName ;
 	public static String  dirName = "./";
@@ -74,7 +74,7 @@ public class GlobalVariables
 	public static JTextField searchKeyWord ;
 	public static ArrayList<String> searchFileResults = new ArrayList<String>();
 	public static String searchResultFile;
-	public static ArrayList<String> fileSequences = new ArrayList<String>();
+	public static ArrayList<String> pageSequences = new ArrayList<String>();
 	public static ArrayList<String> pageList = new ArrayList<String>();
 	public static ArrayList<String> pageListLowerCase = new ArrayList<String>();
 	public static ArrayList<String> pageContents = new ArrayList<String>();

@@ -44,8 +44,17 @@ import javax.swing.text.StyledDocument;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
 import java.net.URI;
 import java.io.IOException;
+
+import javax.swing.KeyStroke;
+import javax.swing.undo.*;
+import java.awt.Event;
+//import javax.swing.undo.CannotUndoException;
+import javax.swing.JComponent;
+import javax.swing.AbstractAction;
+import javax.swing.event.*;
 
 
 
@@ -113,6 +122,14 @@ public class NoteBook {
 		buttonPanel.add(GlobalVariables.buttonHome);
 		GlobalVariables.buttonHome.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
+		GlobalVariables.buttonUndo = new JButton("Undo");
+		buttonPanel.add(GlobalVariables.buttonUndo);
+		GlobalVariables.buttonUndo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
+		GlobalVariables.buttonRedo = new JButton("Redo");
+		buttonPanel.add(GlobalVariables.buttonRedo);
+		GlobalVariables.buttonRedo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest = new JButton("Test");
 		buttonPanel.add(buttonTest);
@@ -173,6 +190,59 @@ public class NoteBook {
 		// GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane); 
 		// GlobalVariables.frame.invalidate();
 		//GlobalVariables.frame.validate();
+		
+		// Purely for undo and redo
+		
+		 KeyStroke undoKeyStroke = KeyStroke.getKeyStroke(
+            KeyEvent.VK_Z, Event.CTRL_MASK);
+		 KeyStroke redoKeyStroke = KeyStroke.getKeyStroke(
+            KeyEvent.VK_Y, Event.CTRL_MASK);
+			
+		UndoManager undoManager = new UndoManager();
+		
+		GlobalVariables.textDoc.addUndoableEditListener(new UndoableEditListener() {
+			@Override
+			public void undoableEditHappened(UndoableEditEvent e) {
+				undoManager.addEdit(e.getEdit());
+			}
+		});
+		
+		// Add ActionListeners
+		GlobalVariables.buttonUndo.addActionListener((ActionEvent e) -> {
+			try {
+				undoManager.undo();
+			} catch (CannotUndoException cue) {}
+		});
+		GlobalVariables.buttonRedo.addActionListener((ActionEvent e) -> {
+			try {
+				undoManager.redo();
+			} catch (CannotRedoException cre) {}
+		});
+		
+		// Map undo action
+		GlobalVariables.textPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+				.put(undoKeyStroke, "undoKeyStroke");
+		GlobalVariables.textPane.getActionMap().put("undoKeyStroke", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					undoManager.undo();
+				 } catch (CannotUndoException cue) {}
+			}
+		});
+		// Map redo action
+		GlobalVariables.textPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW)
+				.put(redoKeyStroke, "redoKeyStroke");
+		GlobalVariables.textPane.getActionMap().put("redoKeyStroke", new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					undoManager.redo();
+				 } catch (CannotRedoException cre) {}
+			}
+		});
+		
+		// End for undo and redo
 		
 		
 		// Edit/save functional switch
