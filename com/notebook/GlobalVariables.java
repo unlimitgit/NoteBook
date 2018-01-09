@@ -97,6 +97,7 @@ public class GlobalVariables
 	public static String newline = "\n";
 	public static TableResult tableResult = new TableResult();
 	public static TableImageProc tableImageProc = new TableImageProc();
+	public static int searchLineLimit = 30;
 	
 }
 

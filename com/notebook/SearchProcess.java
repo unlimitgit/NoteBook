@@ -38,15 +38,22 @@ public class SearchProcess
 			GlobalVariables.frame.validate();			
 			boolean titleContain = false;
 			boolean contentContain = false;
+			String dispLine;
 			for (int i = 0; i < GlobalVariables.pageContents.size(); i++) {
 				contentContain = GlobalVariables.pageContents.get(i).toLowerCase().contains(keyWord.toLowerCase());
 				titleContain = GlobalVariables.pageList.get(i).toLowerCase().contains(keyWord.toLowerCase());
 				if (contentContain || titleContain) {
 					GlobalVariables.searchFileResults.add(GlobalVariables.pageList.get(i));
 					try {
-			
-						GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), GlobalVariables.pageList.get(i) + GlobalVariables.newline, null);
-			
+						// Process the display file name. If file name is too long, need hide certain characters to fit one line.
+						dispLine = GlobalVariables.pageList.get(i);
+						if (dispLine.length() <= GlobalVariables.searchLineLimit) {
+							GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), dispLine + GlobalVariables.newline, null);
+						} else {
+							GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), dispLine.substring(0,GlobalVariables.searchLineLimit), null);
+							GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), dispLine.substring(GlobalVariables.searchLineLimit), GlobalVariables.searchDoc.getStyle("hide"));
+							GlobalVariables.searchDoc.insertString(GlobalVariables.searchPane.getDocument().getLength(), "\u26ab\u26ab\u26ab" + GlobalVariables.newline, GlobalVariables.searchDoc.getStyle("bold"));
+						}
 					} catch (Exception e) {
 						
 					}
@@ -70,6 +77,7 @@ public class SearchProcess
 				File file = new File(GlobalVariables.searchFileResults.get(rowNum-1));
 				//SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
 				//GlobalVariables.messageField.setText(GlobalVariables.searchFileResults.get(rowNum-1) + "  (" + sdf.format(file.lastModified()) + ")");
+				
 				GlobalVariables.messageField.setText(GlobalVariables.searchFileResults.get(rowNum-1));
 				GlobalVariables.searchResultFile = GlobalVariables.searchFileResults.get(rowNum-1);
 			} else {

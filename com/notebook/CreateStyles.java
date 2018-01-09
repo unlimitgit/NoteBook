@@ -115,7 +115,26 @@ public class CreateStyles
 		
 	}
 	
-	public static void setStyle(int styleCode){
+	public static Style CreateSearchStyles(StyledDocument doc) {
+		
+		Style style;
+		
+		Style baseStyle = doc.addStyle("base", null);
+		
+		style = doc.addStyle("bold", null);
+		StyleConstants.setFontSize(style, 10);
+		StyleConstants.setBold(style, true);
+		StyleConstants.setForeground(style, Color.blue);
+       		
+		//Hiding
+		style = doc.addStyle("hide", baseStyle);
+		StyleConstants.setFontSize(style, 0);
+		
+		return style;
+		
+	}
+	
+	public static void setTextDocStyle(int styleCode){
 		switch (styleCode){
 			case 100:	
 				GlobalVariables.style = GlobalVariables.textDoc.getStyle("title");
@@ -152,7 +171,7 @@ public class CreateStyles
 				break;			
 		}
 	}
-		
+	
 		
 }
 

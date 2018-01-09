@@ -48,7 +48,7 @@ public class TextProcess
 		setDisplayMode();
 		GlobalVariables.textPane.setText("");   //Clear all the contents
 		try {
-			CreateStyles.setStyle(100);
+			CreateStyles.setTextDocStyle(100);
 			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents + GlobalVariables.newline, GlobalVariables.style);
 		} catch (Exception e) {  
 				   
@@ -73,21 +73,21 @@ public class TextProcess
 					GlobalVariables.tableImageProc.isImage = false;
 					GlobalVariables.style = CreateStyles.CreateStyles(GlobalVariables.textDoc);
 					if (GlobalVariables.tableImageProc.imageStatus == 0) {
-						//CreateStyles.setStyle(100);
+						//CreateStyles.setTextDocStyle(100);
 						try {
 							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\n",GlobalVariables.textDoc.getStyle("image"));
 						} catch (Exception e) {
 						}
 						
 					} else if(GlobalVariables.tableImageProc.imageStatus == 1) {
-						CreateStyles.setStyle(0);
+						CreateStyles.setTextDocStyle(0);
 						try {
 							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "This is not image file.\n",GlobalVariables.style);
 						} catch (Exception e) {
 						}
 						
 					} else {
-						CreateStyles.setStyle(0);
+						CreateStyles.setTextDocStyle(0);
 						try {
 							GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "File not exist.\n",GlobalVariables.style);
 						} catch (Exception e) {
@@ -118,7 +118,7 @@ public class TextProcess
 				// Leve 1 symbol is found.
 				if (result_1.symbolFind){
 					try {
-						CreateStyles.setStyle(result_1.indexStyle);
+						CreateStyles.setTextDocStyle(result_1.indexStyle);
 						GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), result_1.dispContent+GlobalVariables.newline, GlobalVariables.style);
 					} catch (Exception e) {  
 					   
@@ -128,20 +128,21 @@ public class TextProcess
 					result_2 = SymbolProcess.interpSymbolLevel_2(stringLine.get(i));
 					if (result_2.symbolFind){
 						try {
-							CreateStyles.setStyle(result_2.indexStyle);
+							CreateStyles.setTextDocStyle(result_2.indexStyle);
 							if (result_2.indexStyle == 20){
 								switch (result_2.number){
 									case 1:
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\u2022", GlobalVariables.style);
+										//GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\u2022", GlobalVariables.style);
+										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "\u23fa", GlobalVariables.style);
 										break;
 									case 2:
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "    \u25b8", GlobalVariables.style);
+										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "    \u25b0", GlobalVariables.style);
 										break;
 									case 3:
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "        \u25aa", GlobalVariables.style);
+										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "        \u25b6", GlobalVariables.style);
 										break;
 									default:	
-										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "            \u2043", GlobalVariables.style);
+										GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), "            \u25c6", GlobalVariables.style);
 										break;
 								}	
 							} else if (result_2.indexStyle == 21) {
@@ -170,16 +171,16 @@ public class TextProcess
 									GlobalVariables.style = GlobalVariables.textDoc.getStyle("hide");
 									
 								} else if (result_4.get(m).number == 21) {
-									CreateStyles.setStyle(result_3.get(k).indexStyle);
+									CreateStyles.setTextDocStyle(result_3.get(k).indexStyle);
 									StyleConstants.setForeground(GlobalVariables.style, Color.red);
 									
 									
 								}else if (result_4.get(m).number == 10){
-									CreateStyles.setStyle(result_3.get(k).indexStyle);
+									CreateStyles.setTextDocStyle(result_3.get(k).indexStyle);
 									StyleConstants.setForeground(GlobalVariables.style, Color.blue);
 								} else {
 									
-									CreateStyles.setStyle(result_3.get(k).indexStyle);
+									CreateStyles.setTextDocStyle(result_3.get(k).indexStyle);
 									// if (result_3.get(k).indexStyle != 31) {
 										// StyleConstants.setForeground(GlobalVariables.style, Color.black);
 									// }
@@ -213,7 +214,7 @@ public class TextProcess
 		setEditMode();
 		GlobalVariables.textPane.setText("");   //Clear all the contents
 		try {
-			CreateStyles.setStyle(0);
+			CreateStyles.setTextDocStyle(0);
 			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents, GlobalVariables.style);
 		} catch (Exception e) {  
 				   

@@ -166,6 +166,7 @@ public class NoteBook {
         GlobalVariables.searchScrollPane.setPreferredSize(new Dimension(250, 155));
         GlobalVariables.searchScrollPane.setMinimumSize(new Dimension(10, 10));
 		GlobalVariables.searchPane.setEditable(false);
+		CreateStyles.CreateSearchStyles(GlobalVariables.searchDoc); // create special style
 		
         GlobalVariables.messageField = new JTextField();
 		//messageField.setPreferredSize(new Dimension(100, 100));
