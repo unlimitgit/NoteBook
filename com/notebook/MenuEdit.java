@@ -120,6 +120,7 @@ public class MenuEdit{
 			GlobalVariables.pageSequences.clear();
 			String strFile = fd.getDirectory() + fd.getFile(); 
 			GlobalVariables.pageSequences.add("Home");
+			GlobalVariables.pageSeqDepth = 0;   // Home page
 			GlobalVariables.pageNumber = 0;	// Home page
 			GlobalVariables.fileName = strFile;
 			GlobalVariables.dirName = fd.getDirectory();		

@@ -74,7 +74,7 @@ public class MessageProcess
 				if (linkResult.symbolFind){
 					GlobalVariables.textPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
 					GlobalVariables.linkProcResult.linkFind = true;
-					GlobalVariables.linkProcResult.linkExit = SymbolProcess.linkExisting(linkResult.dispContent);
+					GlobalVariables.linkProcResult.linkExist = SymbolProcess.linkExisting(linkResult.dispContent);
 					if (GlobalVariables.linkNumber == 3) {
 						messageContent = linkResult.dispContent.substring(GlobalVariables.fileSymbol.length());
 					} else {
@@ -83,7 +83,7 @@ public class MessageProcess
 				} else {				
 					GlobalVariables.textPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 					GlobalVariables.linkProcResult.linkFind = false;
-					GlobalVariables.linkProcResult.linkExit = false;
+					GlobalVariables.linkProcResult.linkExist = false;
 					messageContent = linkResult.dispContent;
 				}
 				

@@ -29,7 +29,7 @@ public class GlobalVariables
 	
 	public static class LinkResult{
 		public static Boolean linkFind = false;
-		public static Boolean linkExit = false;
+		public static Boolean linkExist = false;
 		public static String linkName = null ;
 	}
 	
@@ -75,6 +75,8 @@ public class GlobalVariables
 	public static ArrayList<String> searchFileResults = new ArrayList<String>();
 	public static String searchResultFile;
 	public static ArrayList<String> pageSequences = new ArrayList<String>();
+	public static int pageSeqLimit = 20;
+	public static int pageSeqDepth = 0;
 	public static ArrayList<String> pageList = new ArrayList<String>();
 	public static ArrayList<String> pageListLowerCase = new ArrayList<String>();
 	public static ArrayList<String> pageContents = new ArrayList<String>();

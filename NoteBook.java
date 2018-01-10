@@ -358,8 +358,13 @@ public class NoteBook {
 					// }
 				// }
 				//SearchProcess.removeHighlights(GlobalVariables.textPane);
-				GlobalVariables.textEditable = true;
-				GlobalVariables.textPane.setEditable(true);
+				// GlobalVariables.textEditable = true;
+				// GlobalVariables.textPane.setEditable(true);
+				for (int i=0; i<GlobalVariables.pageSequences.size(); i++)
+				{
+					System.out.println(GlobalVariables.pageSequences.get(i));
+				}
+				
 			  } 
 		} );
 		
@@ -369,7 +374,7 @@ public class NoteBook {
 			 public void mouseClicked(MouseEvent e) {
 				//System.out.println(GlobalVariables.linkProcResult.linkName);
 				//System.out.println(GlobalVariables.linkNumber);
-				if (GlobalVariables.linkProcResult.linkExit) {  // If the link existing, open the page
+				if (GlobalVariables.linkProcResult.linkExist) {  // If the link existing, open the page
 					if (GlobalVariables.linkNumber == 2) {	//If it is webpage
 						URI uri = URI.create(GlobalVariables.linkProcResult.linkName);
 						try{
@@ -432,6 +437,7 @@ public class NoteBook {
 					GlobalVariables.pageList.add(GlobalVariables.linkProcResult.linkName);
 					GlobalVariables.pageListLowerCase.add(GlobalVariables.linkProcResult.linkName.toLowerCase());
 					GlobalVariables.pageContents.add(null);
+					GlobalVariables.linkProcResult.linkExist = true; // Set link exis
 					GlobalVariables.pageNumber = GlobalVariables.pageList.size()-1;
 					GlobalVariables.pageSymbol = GlobalVariables.linkProcResult.linkName;
 					FileStringProcess.saveToNoteFile();		
