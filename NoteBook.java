@@ -253,6 +253,7 @@ public class NoteBook {
 		  }
 		} );
 		
+				
 		// Enable/disable search result panel, controlled by buttonSearch
 		GlobalVariables.buttonSearch.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) {			  
@@ -265,6 +266,7 @@ public class NoteBook {
 		GlobalVariables.buttonHome.addActionListener(new ActionListener(){ 
 		  public void actionPerformed(ActionEvent evt) {			  
 			int i =  GlobalVariables.pageList.indexOf("Home");
+			GlobalVariables.pageSequences = FileStringProcess.pageSequenceProc(GlobalVariables.pageSequences, "Home");
 			GlobalVariables.pageNumber = i;
 			String dispContents = GlobalVariables.pageContents.get(i);
 			GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
@@ -331,16 +333,56 @@ public class NoteBook {
          public void mouseClicked(MouseEvent e) {
 			if (!GlobalVariables.searchResultFile.equals("")){
 				int i =  GlobalVariables.pageList.indexOf(GlobalVariables.searchResultFile);
-				GlobalVariables.pageNumber = i;
-				String dispContents = GlobalVariables.pageContents.get(i);
-				GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
-				TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
-				TextProcess.textPaneDisplay(dispContents);
-				SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
-				GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+				if (GlobalVariables.pageNumber != i){ // The designated page is not the opened page
+					GlobalVariables.pageNumber = i;
+					GlobalVariables.pageSequences = FileStringProcess.pageSequenceProc(GlobalVariables.pageSequences, GlobalVariables.searchResultFile);
+					String dispContents = GlobalVariables.pageContents.get(i);
+					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+					TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+					TextProcess.textPaneDisplay(dispContents);
+					SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
+					GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+				}	
 			}
          }
       });
+	  
+	  //Previous button process
+	  GlobalVariables.buttonPrevious.addActionListener(new ActionListener(){ 
+		  public void actionPerformed(ActionEvent evt) { 
+				if(GlobalVariables.pageSeqDepth > 0) {
+					String pageName = GlobalVariables.pageSequences.get(GlobalVariables.pageSeqDepth-1);
+					int i =  GlobalVariables.pageListLowerCase.indexOf(pageName.toLowerCase());
+					GlobalVariables.pageNumber = i;
+					String dispContents = GlobalVariables.pageContents.get(i);
+					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+					TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+					TextProcess.textPaneDisplay(dispContents);
+					GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+					GlobalVariables.pageSeqDepth = GlobalVariables.pageSeqDepth-1;
+				}
+				
+			  } 
+		} );
+		
+		
+		//Next button process
+	  GlobalVariables.buttonNext.addActionListener(new ActionListener(){ 
+		  public void actionPerformed(ActionEvent evt) { 
+				if(GlobalVariables.pageSeqDepth < (GlobalVariables.pageSequences.size()-1) ) {
+					String pageName = GlobalVariables.pageSequences.get(GlobalVariables.pageSeqDepth+1);
+					int i =  GlobalVariables.pageListLowerCase.indexOf(pageName.toLowerCase());
+					GlobalVariables.pageNumber = i;
+					String dispContents = GlobalVariables.pageContents.get(i);
+					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+					TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+					TextProcess.textPaneDisplay(dispContents);
+					GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+					GlobalVariables.pageSeqDepth = GlobalVariables.pageSeqDepth+1;
+				}
+				
+			  } 
+		} );
 	  
 	  // This button is only for temporary test, will remove in the official version.
 		buttonTest.addActionListener(new ActionListener(){ 
@@ -364,6 +406,7 @@ public class NoteBook {
 				{
 					System.out.println(GlobalVariables.pageSequences.get(i));
 				}
+				System.out.println(GlobalVariables.pageSequences.size() + "," + GlobalVariables.pageSeqDepth);
 				
 			  } 
 		} );
@@ -385,6 +428,7 @@ public class NoteBook {
 					} else if (GlobalVariables.linkNumber == 1) { // If it is existing page link
 						int i =  GlobalVariables.pageListLowerCase.indexOf(GlobalVariables.linkProcResult.linkName.toLowerCase());
 						GlobalVariables.pageNumber = i;
+						GlobalVariables.pageSequences = FileStringProcess.pageSequenceProc(GlobalVariables.pageSequences, GlobalVariables.linkProcResult.linkName);
 						String dispContents = GlobalVariables.pageContents.get(i);
 						GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
 						TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
@@ -438,6 +482,7 @@ public class NoteBook {
 					GlobalVariables.pageListLowerCase.add(GlobalVariables.linkProcResult.linkName.toLowerCase());
 					GlobalVariables.pageContents.add(null);
 					GlobalVariables.linkProcResult.linkExist = true; // Set link exis
+					GlobalVariables.pageSequences = FileStringProcess.pageSequenceProc(GlobalVariables.pageSequences, GlobalVariables.linkProcResult.linkName);
 					GlobalVariables.pageNumber = GlobalVariables.pageList.size()-1;
 					GlobalVariables.pageSymbol = GlobalVariables.linkProcResult.linkName;
 					FileStringProcess.saveToNoteFile();		

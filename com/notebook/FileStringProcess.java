@@ -134,6 +134,23 @@ public class FileStringProcess{
 		}
 		return result;	
 	}
+	
+	// Page sequence processing (mainly for forward and backward)
+	public static ArrayList<String> pageSequenceProc(ArrayList<String> pageList, String pageName ) {
+		ArrayList<String> result = pageList;
+		while(GlobalVariables.pageSeqDepth < (result.size()-1)){
+			result.remove(result.size()-1);
+		}
+		result.add(pageName);
+		if (result.size() > GlobalVariables.pageSeqLimit) {
+			result.remove(0);
+		} else {
+			GlobalVariables.pageSeqDepth = GlobalVariables.pageSeqDepth + 1;
+		}
+		return result;
+	}
+	
+	// Page sequence processing. Basically, it is for forward and backward functions
 
 	
 }
