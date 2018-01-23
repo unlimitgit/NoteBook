@@ -271,6 +271,7 @@ public class NoteBook {
 			String dispContents = GlobalVariables.pageContents.get(i);
 			GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
 			TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
+			GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + "Home");
 			TextProcess.textPaneDisplay(dispContents);
 			SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
 			GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
@@ -338,6 +339,7 @@ public class NoteBook {
 					GlobalVariables.pageSequences = FileStringProcess.pageSequenceProc(GlobalVariables.pageSequences, GlobalVariables.searchResultFile);
 					String dispContents = GlobalVariables.pageContents.get(i);
 					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
+					GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + GlobalVariables.pageList.get(i));
 					TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
 					TextProcess.textPaneDisplay(dispContents);
 					SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
@@ -355,6 +357,7 @@ public class NoteBook {
 					int i =  GlobalVariables.pageListLowerCase.indexOf(pageName.toLowerCase());
 					GlobalVariables.pageNumber = i;
 					String dispContents = GlobalVariables.pageContents.get(i);
+					GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + GlobalVariables.pageList.get(i));
 					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
 					TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
 					TextProcess.textPaneDisplay(dispContents);
@@ -372,6 +375,7 @@ public class NoteBook {
 				if(GlobalVariables.pageSeqDepth < (GlobalVariables.pageSequences.size()-1) ) {
 					String pageName = GlobalVariables.pageSequences.get(GlobalVariables.pageSeqDepth+1);
 					int i =  GlobalVariables.pageListLowerCase.indexOf(pageName.toLowerCase());
+					GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + GlobalVariables.pageList.get(i));
 					GlobalVariables.pageNumber = i;
 					String dispContents = GlobalVariables.pageContents.get(i);
 					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
@@ -428,6 +432,7 @@ public class NoteBook {
 					} else if (GlobalVariables.linkNumber == 1) { // If it is existing page link
 						int i =  GlobalVariables.pageListLowerCase.indexOf(GlobalVariables.linkProcResult.linkName.toLowerCase());
 						GlobalVariables.pageNumber = i;
+						GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + GlobalVariables.pageList.get(i));
 						GlobalVariables.pageSequences = FileStringProcess.pageSequenceProc(GlobalVariables.pageSequences, GlobalVariables.linkProcResult.linkName);
 						String dispContents = GlobalVariables.pageContents.get(i);
 						GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
@@ -479,6 +484,7 @@ public class NoteBook {
 				String keyInput = content.substring(index+6);
 				if ((keyInput.toLowerCase().equals("yes")) || (keyInput.toLowerCase().equals("y"))) { // If yes
 					GlobalVariables.pageList.add(GlobalVariables.linkProcResult.linkName);
+					GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + GlobalVariables.linkProcResult.linkName);
 					GlobalVariables.pageListLowerCase.add(GlobalVariables.linkProcResult.linkName.toLowerCase());
 					GlobalVariables.pageContents.add(null);
 					GlobalVariables.linkProcResult.linkExist = true; // Set link exis

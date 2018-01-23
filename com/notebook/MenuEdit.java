@@ -123,8 +123,9 @@ public class MenuEdit{
 			GlobalVariables.pageSeqDepth = 0;   // Home page
 			GlobalVariables.pageNumber = 0;	// Home page
 			GlobalVariables.fileName = strFile;
-			GlobalVariables.dirName = fd.getDirectory();		
-			GlobalVariables.frame.setTitle("Notebook with Java: " +  strFile);	
+			GlobalVariables.dirName = fd.getDirectory();	
+			GlobalVariables.frameDisplay = "Notebook with Java: " +  strFile + "--PAGE::";
+			GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + "Home");	
 			
 			String contents = FileStringProcess.readFileContents(strFile); // Read out the contents in the loaded file
 			GlobalVariables.pageList = FileStringProcess.extractPageList(contents);

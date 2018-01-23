@@ -100,7 +100,7 @@ public class GlobalVariables
 	public static TableResult tableResult = new TableResult();
 	public static TableImageProc tableImageProc = new TableImageProc();
 	public static int searchLineLimit = 30;
-	
+	public static String frameDisplay;
 }
 
 

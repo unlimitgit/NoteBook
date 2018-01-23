@@ -48,7 +48,7 @@ public class ButtonProcess{
 			}
 			GlobalVariables.pageContents.set(GlobalVariables.pageNumber, pageContents);
 			FileStringProcess.saveToNoteFile();
-			TextProcess.textPaneTitleDisplay(GlobalVariables.pageSymbol);
+			TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(GlobalVariables.pageNumber));
 			TextProcess.textPaneDisplay(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));
 			
 		} else { // Originally in display mode, need switch to edit mode.
