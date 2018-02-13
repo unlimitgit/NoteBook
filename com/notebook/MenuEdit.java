@@ -146,7 +146,8 @@ public class MenuEdit{
 			}
 			GlobalVariables.textScrollPane.validate();
 			GlobalVariables.textScrollPane.repaint(); 	//Refresh frame
-			GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+			//GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+			GlobalVariables.textPane.setCaretPosition(1);
 		}
     } 
 	

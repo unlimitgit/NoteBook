@@ -50,6 +50,7 @@ public class ButtonProcess{
 			FileStringProcess.saveToNoteFile();
 			TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(GlobalVariables.pageNumber));
 			TextProcess.textPaneDisplay(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));
+			GlobalVariables.textPane.setCaretPosition(1);
 			
 		} else { // Originally in display mode, need switch to edit mode.
 			TextProcess.textPaneEdit(GlobalVariables.pageContents.get(GlobalVariables.pageNumber));

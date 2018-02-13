@@ -274,7 +274,8 @@ public class NoteBook {
 			GlobalVariables.frame.setTitle(GlobalVariables.frameDisplay + "Home");
 			TextProcess.textPaneDisplay(dispContents);
 			SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
-			GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+			//GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+			GlobalVariables.textPane.setCaretPosition(1);
 		  }
 		} );
 		
@@ -343,7 +344,8 @@ public class NoteBook {
 					TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
 					TextProcess.textPaneDisplay(dispContents);
 					SearchProcess.highlight(GlobalVariables.textPane,GlobalVariables.searchKeyWord.getText());
-					GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+					//GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+					GlobalVariables.textPane.setCaretPosition(1);
 				}	
 			}
          }
@@ -361,7 +363,8 @@ public class NoteBook {
 					GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
 					TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
 					TextProcess.textPaneDisplay(dispContents);
-					GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+					//GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+					GlobalVariables.textPane.setCaretPosition(1);
 					GlobalVariables.pageSeqDepth = GlobalVariables.pageSeqDepth-1;
 				}
 				
@@ -438,7 +441,8 @@ public class NoteBook {
 						GlobalVariables.pageSymbol = GlobalVariables.pageList.get(i);
 						TextProcess.textPaneTitleDisplay(GlobalVariables.pageList.get(i));
 						TextProcess.textPaneDisplay(dispContents);
-						GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+						//GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
+						GlobalVariables.textPane.setCaretPosition(1);
 					} else if (GlobalVariables.linkNumber == 3) {	// link is file
 					    
 						File file = new File(GlobalVariables.linkProcResult.linkName);

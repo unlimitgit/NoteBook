@@ -216,6 +216,7 @@ public class TextProcess
 		try {
 			CreateStyles.setTextDocStyle(0);
 			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents, GlobalVariables.style);
+			GlobalVariables.textPane.setCaretPosition(1);
 		} catch (Exception e) {  
 				   
 		}
