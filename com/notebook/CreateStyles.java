@@ -166,6 +166,9 @@ public class CreateStyles
 			case 34:
 				GlobalVariables.style = GlobalVariables.textDoc.getStyle("strikeout");
 				break;
+			case 0:
+				GlobalVariables.style = GlobalVariables.textDoc.getStyle("base");
+				break;
 			default:	
 				GlobalVariables.style = GlobalVariables.textDoc.getStyle("base");
 				break;			

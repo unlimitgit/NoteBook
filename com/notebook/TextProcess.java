@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.Color;
 import javax.swing.text.StyleConstants;
+import java.awt.Cursor;
 
 
 
@@ -40,6 +41,7 @@ public class TextProcess
 		GlobalVariables.textPane.setEditable(true);
 		GlobalVariables.buttonSaveEdit.setText("Save");
 		GlobalVariables.textPane.setBackground(GlobalVariables.textEditColor);
+		GlobalVariables.textPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 	
 	
@@ -213,8 +215,9 @@ public class TextProcess
 	public static void textPaneEdit(String contents){
 		setEditMode();
 		GlobalVariables.textPane.setText("");   //Clear all the contents
+		CreateStyles.setTextDocStyle(0);
 		try {
-			CreateStyles.setTextDocStyle(0);
+			//CreateStyles.setTextDocStyle(0);
 			GlobalVariables.textDoc.insertString(GlobalVariables.textPane.getDocument().getLength(), contents, GlobalVariables.style);
 			GlobalVariables.textPane.setCaretPosition(1);
 		} catch (Exception e) {  
