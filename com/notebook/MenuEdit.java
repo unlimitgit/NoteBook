@@ -24,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.awt.Color;
+import java.io.File;
 
 
 
@@ -186,11 +187,17 @@ public class MenuEdit{
     } 
 	
 	private static void menuHelpActionPerformed(ActionEvent evt) {  
-        // TODO add your handling code here:  
-		Runtime run = Runtime.getRuntime();
+        // TODO add your handling code here: 
+		String helpFile =  "jdk150.chm";
+		File file = new File(helpFile); 
+		// try to rename the file with the same name 
+		File sameFileName = new File(helpFile); 
         try
         {
-			Runtime.getRuntime().exec("hh.exe jdk150.chm");
+			if(file.renameTo(sameFileName)){ 
+			// if the file is renamed 
+				Runtime.getRuntime().exec("hh.exe " + helpFile);
+			}
         } catch (Exception e){
         
         }
