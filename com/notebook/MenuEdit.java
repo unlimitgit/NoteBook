@@ -80,6 +80,15 @@ public class MenuEdit{
 		//Build edit menu
 		JMenu menuEdit = new JMenu("Edit");
 		menuBar.add(menuEdit);
+		
+		//Build help menu
+		JMenuItem menuHelp = new JMenuItem("Help");
+		menuHelp.addActionListener(new ActionListener() {  
+            public void  actionPerformed(ActionEvent evt) {  
+               menuHelpActionPerformed(evt);  
+            }  
+        });  
+		menuBar.add(menuHelp);
 
         		
 		return menuBar;
@@ -174,6 +183,17 @@ public class MenuEdit{
 	private static void menuItemExitActionPerformed(ActionEvent evt) {  
         // TODO add your handling code here:  
        System.exit(0);   // Exit the whole system.
+    } 
+	
+	private static void menuHelpActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here:  
+		Runtime run = Runtime.getRuntime();
+        try
+        {
+			Runtime.getRuntime().exec("hh.exe jdk150.chm");
+        } catch (Exception e){
+        
+        }
     } 
 	
 	
