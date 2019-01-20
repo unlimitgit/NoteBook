@@ -59,11 +59,12 @@ public class MenuEdit{
 		
 		//Save as file
         JMenuItem menuItemSaveAs = new JMenuItem("Save as Notebook");
-        menuItemSaveAs.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {  
-               menuItemSaveAsActionPerformed(evt);  
-            }  
-        });  
+		menuItemSaveAs.setForeground(Color.GRAY);
+        // menuItemSaveAs.addActionListener(new ActionListener() {
+            // public void actionPerformed(ActionEvent evt) {  
+               // menuItemSaveAsActionPerformed(evt);  
+            // }  
+        // });  
         menuFile.add(menuItemSaveAs);
 		
 		menuFile.addSeparator();
@@ -81,9 +82,10 @@ public class MenuEdit{
 		//Build edit menu
 		JMenu menuEdit = new JMenu("Edit");
 		menuBar.add(menuEdit);
+		menuEdit.setForeground(Color.GRAY);
 		
 		//Build help menu
-		JMenuItem menuHelp = new JMenuItem("Help");
+		JMenu menuHelp = new JMenu("Help");
 		menuHelp.addActionListener(new ActionListener() {  
             public void  actionPerformed(ActionEvent evt) {  
                menuHelpActionPerformed(evt);  
@@ -95,15 +97,29 @@ public class MenuEdit{
 		return menuBar;
 	}
 	
+	// Generate new notebook file. 
 	private static void menuItemNewActionPerformed(ActionEvent evt) {  
-        // TODO add your handling code here: 
+        // TODO add your handling code here:
+		FileDialog fd = new FileDialog(GlobalVariables.frame, "Create a new notebook", FileDialog.SAVE); 
+		fd.setFile("*.jntk");  // Add file filter		
+        fd.setVisible(true); 
+		String strFile = fd.getDirectory() + fd.getFile(); 
+		File file = new File(strFile);
+		boolean exists = file.exists();
+		// File not exist, need create an new notebook file
+		if (!exists) {
+			String fileContents = "PAGE::::Home" + GlobalVariables.newline;
+			BufferedWriter bWriter = null;
+			try {  
+				bWriter = new BufferedWriter(new FileWriter(file));  
+				bWriter.write(fileContents); 
+				bWriter.flush();	
+				bWriter.close();   
+			} catch (Exception e) {  
+			  
+			}  
+		}
 		
-		// Make textPane editable		
-		GlobalVariables.textEditable = true;	
-		GlobalVariables.textPane.setEditable(true);	
-		GlobalVariables.textPane.setBackground(Color.WHITE);
-		GlobalVariables.fileName = null;	
-		GlobalVariables.buttonSaveEdit.setText("Save");		
         
     } 
 	
@@ -203,7 +219,7 @@ public class MenuEdit{
         }
     } 
 	
-	
+
 }
 
 
