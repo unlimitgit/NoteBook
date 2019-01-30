@@ -78,6 +78,14 @@ public class MenuEdit{
         });  
         menuFile.add(menuItemExit);
 		
+		JMenuItem menuItemHelp = new JMenuItem("Help");
+        menuItemHelp.addActionListener(new ActionListener() {  
+            public void  actionPerformed(ActionEvent evt) {  
+               menuItemHelpActionPerformed(evt);  
+            }  
+        });  
+        menuFile.add(menuItemHelp);
+		
 		
 		//Build edit menu
 		JMenu menuEdit = new JMenu("Edit");
@@ -92,6 +100,15 @@ public class MenuEdit{
             }  
         });  
 		menuBar.add(menuHelp);
+		
+		//Build help menu
+		JMenu menuManual = new JMenu("Manual");
+		menuHelp.addActionListener(new ActionListener() {  
+            public void  actionPerformed(ActionEvent evt) {  
+               menuManualActionPerformed(evt);  
+            }  
+        });  
+		menuBar.add(menuManual);
 
         		
 		return menuBar;
@@ -117,7 +134,8 @@ public class MenuEdit{
 				bWriter.close();   
 			} catch (Exception e) {  
 			  
-			}  
+			} 
+			loadNewNoteBookFile(fd);
 		}
 		
         
@@ -137,7 +155,95 @@ public class MenuEdit{
 		
 		// Save loaded file information
 		if (fd.getFile() != null && !fd.getFile().isEmpty()) {
-			// Goes to default status
+			loadNewNoteBookFile(fd);
+		}
+    } 
+	
+	private static void menuItemSaveAsActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here:
+		FileDialog fd = new FileDialog(GlobalVariables.frame, "Save As", FileDialog.SAVE); 
+		fd.setFile("*.jntk");  // Add file filter		
+        fd.setVisible(true); 
+		String string1 = GlobalVariables.pageTitle + fd.getFile() 
+		          + GlobalVariables.newline + GlobalVariables.textPane.getText();  
+		String stringfile = fd.getDirectory()+fd.getFile();  
+		BufferedWriter bWriter = null;  
+		try {  
+			bWriter = new BufferedWriter(new FileWriter(stringfile));  
+			bWriter.write(string1);   
+			bWriter.close();   
+		} catch (Exception e) {  
+			// TODO Auto-generated catch block  
+			System.out.println("Save failed");  
+		}   
+        
+    } 
+	
+	private static void menuItemExitActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here:  
+       System.exit(0);   // Exit the whole system.
+    } 
+	
+	private static void menuItemHelpActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here:  
+        	String helpFile =  "help.chm";
+		File file = new File(helpFile); 
+		// try to rename the file with the same name 
+		File sameFileName = new File(helpFile); 
+                
+        try
+        {
+			if(file.renameTo(sameFileName)){ 
+			// if the file is renamed 
+				Runtime.getRuntime().exec("hh.exe " + helpFile);
+			}
+        } catch (Exception e){
+        
+        }
+    } 
+	
+	
+	
+	private static void menuHelpActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here: 
+		GlobalVariables.buttonSearch.setText("Test search result");
+		String helpFile =  "help.chm";
+		File file = new File(helpFile); 
+		// try to rename the file with the same name 
+		File sameFileName = new File(helpFile); 
+                
+        try
+        {
+			if(file.renameTo(sameFileName)){ 
+			// if the file is renamed 
+				Runtime.getRuntime().exec("hh.exe " + helpFile);
+			}
+        } catch (Exception e){
+        
+        }
+    } 
+	
+	private static void menuManualActionPerformed(ActionEvent evt) {  
+        // TODO add your handling code here: 
+		GlobalVariables.buttonSearch.setText("Test search result");
+		String helpFile =  "help.chm";
+		File file = new File(helpFile); 
+		// try to rename the file with the same name 
+		File sameFileName = new File(helpFile); 
+                
+        try
+        {
+			if(file.renameTo(sameFileName)){ 
+			// if the file is renamed 
+				Runtime.getRuntime().exec("hh.exe " + helpFile);
+			}
+        } catch (Exception e){
+        
+        }
+    }
+	
+	public static boolean loadNewNoteBookFile(FileDialog fd ){
+		// Goes to default status
 			GlobalVariables.searchVisible = false;
 			GlobalVariables.buttonSearch.setText("Display search result");
 			GlobalVariables.frame.getContentPane().remove(GlobalVariables.searchScrollPane);
@@ -174,52 +280,8 @@ public class MenuEdit{
 			GlobalVariables.textScrollPane.repaint(); 	//Refresh frame
 			//GlobalVariables.textScrollPane.getVerticalScrollBar().setValue(1);
 			GlobalVariables.textPane.setCaretPosition(1);
-		}
-    } 
-	
-	private static void menuItemSaveAsActionPerformed(ActionEvent evt) {  
-        // TODO add your handling code here:
-		FileDialog fd = new FileDialog(GlobalVariables.frame, "Save As", FileDialog.SAVE); 
-		fd.setFile("*.jntk");  // Add file filter		
-        fd.setVisible(true); 
-		String string1 = GlobalVariables.pageTitle + fd.getFile() 
-		          + GlobalVariables.newline + GlobalVariables.textPane.getText();  
-		String stringfile = fd.getDirectory()+fd.getFile();  
-		BufferedWriter bWriter = null;  
-		try {  
-			bWriter = new BufferedWriter(new FileWriter(stringfile));  
-			bWriter.write(string1);   
-			bWriter.close();   
-		} catch (Exception e) {  
-			// TODO Auto-generated catch block  
-			System.out.println("Save failed");  
-		}   
-        
-    } 
-	
-	private static void menuItemExitActionPerformed(ActionEvent evt) {  
-        // TODO add your handling code here:  
-       System.exit(0);   // Exit the whole system.
-    } 
-	
-	private static void menuHelpActionPerformed(ActionEvent evt) {  
-        // TODO add your handling code here: 
-		String helpFile =  "jdk150.chm";
-		File file = new File(helpFile); 
-		// try to rename the file with the same name 
-		File sameFileName = new File(helpFile); 
-        try
-        {
-			if(file.renameTo(sameFileName)){ 
-			// if the file is renamed 
-				Runtime.getRuntime().exec("hh.exe " + helpFile);
-			}
-        } catch (Exception e){
-        
-        }
-    } 
-	
-
+			return true;
+	}
 }
 
 

@@ -132,8 +132,9 @@ public class NoteBook {
 		
 		// This button is only for temporary test, will remove in the official version.
 		buttonTest = new JButton("Test");
-		buttonPanel.add(buttonTest);
-		buttonTest.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		//buttonPanel.add(buttonTest);
+		//buttonTest.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		//buttonTest.setForeground(Color.GRAY);
 		
 		buttonPanel.add(GlobalVariables.searchLabel);
 		GlobalVariables.searchLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -409,11 +410,11 @@ public class NoteBook {
 				//SearchProcess.removeHighlights(GlobalVariables.textPane);
 				// GlobalVariables.textEditable = true;
 				// GlobalVariables.textPane.setEditable(true);
-				for (int i=0; i<GlobalVariables.pageSequences.size(); i++)
-				{
-					System.out.println(GlobalVariables.pageSequences.get(i));
-				}
-				System.out.println(GlobalVariables.pageSequences.size() + "," + GlobalVariables.pageSeqDepth);
+				// for (int i=0; i<GlobalVariables.pageSequences.size(); i++)
+				// {
+					// System.out.println(GlobalVariables.pageSequences.get(i));
+				// }
+				// System.out.println(GlobalVariables.pageSequences.size() + "," + GlobalVariables.pageSeqDepth);
 				
 			  } 
 		} );
