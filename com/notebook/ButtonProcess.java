@@ -37,10 +37,27 @@ public class ButtonProcess{
 	public static void buttonSaveEditPress(ActionEvent evt) {
 		if (GlobalVariables.textEditable) { // Originally in edit mode. Need save the contents and change to display mode.
 			String[] lines = GlobalVariables.textPane.getText().split("\\n"); // Extract the new page contents
+			String lineContent, lineContentPre;
 			String pageContents = "";
+			int imIndex = -1;
 			//System.out.println("file length:" + lines.length);
 			for(int i = 0 ; i< lines.length; i++) {
-				pageContents = pageContents + lines[i].trim();
+				lineContent = lines[i].trim();
+				imIndex = lineContent.toLowerCase().indexOf(GlobalVariables.symbolArray_0[1].toLowerCase());
+				if (imIndex == 0){		//Has the image file displayed
+					if (i == 0) {		// Image file in the first line
+						pageContents = pageContents + "[Click here to open below image in windows default program |" + GlobalVariables.fileSymbol + lineContent.substring(GlobalVariables.symbolArray_0[1].length(),lineContent.length()) + "]";
+						pageContents = pageContents + GlobalVariables.newline;
+					} else {
+						lineContentPre = lines[i-1].trim();
+						if (lineContentPre.indexOf("[Click here to open below image in windows default program |") == -1) {
+							pageContents = pageContents + "[Click here to open below image in windows default program |" + GlobalVariables.fileSymbol + lineContent.substring(GlobalVariables.symbolArray_0[1].length(),lineContent.length()) + "]";
+							pageContents = pageContents + GlobalVariables.newline;
+						}
+					}
+				}
+				//GlobalVariables.debugDisplay.setText(Integer.toString(lineContent.toLowerCase().indexOf(GlobalVariables.symbolArray_0[1].toLowerCase())));
+				pageContents = pageContents + lineContent;
 				//System.out.println(lines[i].length());
 				//if (i < lines.length-1) {
 					pageContents = pageContents + GlobalVariables.newline;

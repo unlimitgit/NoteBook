@@ -143,6 +143,10 @@ public class NoteBook {
 		buttonPanel.add(GlobalVariables.searchKeyWord);
 		GlobalVariables.searchKeyWord.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		
+		GlobalVariables.debugDisplay = new JTextField();
+		buttonPanel.add(GlobalVariables.debugDisplay);
+		GlobalVariables.debugDisplay.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		
 		
 		// Add textpane and searchPane
 		GlobalVariables.textDoc = new DefaultStyledDocument();
@@ -447,10 +451,14 @@ public class NoteBook {
 					} else if (GlobalVariables.linkNumber == 3) {	// link is file
 					    
 						File file = new File(GlobalVariables.linkProcResult.linkName);
+						File sameFile = new File(GlobalVariables.linkProcResult.linkName);
+						GlobalVariables.debugDisplay.setText(GlobalVariables.linkProcResult.linkName);
 						boolean exists = file.exists();
 						if (exists) {
 							try{
-								java.awt.Desktop.getDesktop().open(file);
+								if(file.renameTo(sameFile)){ 
+									java.awt.Desktop.getDesktop().open(file);
+								}
 							}catch(IOException f3){
 							
 							}

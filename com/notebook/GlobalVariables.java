@@ -71,7 +71,7 @@ public class GlobalVariables
 	public static final Color textDisplayColor = new Color(250,250,250);
 	public static final Color textEditColor = new Color(255,255,255);
 	public static JLabel searchLabel = new JLabel("Enter here to search: ");
-	public static JTextField searchKeyWord ;
+	public static JTextField searchKeyWord, debugDisplay ; // debugDisplay is debug purpose
 	public static ArrayList<String> searchFileResults = new ArrayList<String>();
 	public static String searchResultFile;
 	public static ArrayList<String> pageSequences = new ArrayList<String>();

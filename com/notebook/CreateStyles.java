@@ -12,6 +12,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 import java.io.File;
 import javax.swing.ImageIcon;
+import java.awt.Image;
 
 import java.awt.Color;
 
@@ -45,8 +46,23 @@ public class CreateStyles
 		if (exists) {
 			ImageIcon imageIcon = new ImageIcon(GlobalVariables.tableImageProc.imageFileName);
 			if (imageIcon != null) {
+				
+				int x = imageIcon.getIconWidth();
+				int y = imageIcon.getIconHeight();
+				
+				if ( x > 800) {
+					y = (int) (y*800/x + 0.5);
+					x = 800; 
+					Image image = imageIcon.getImage();// transform it
+					Image newImg = image.getScaledInstance(x, y, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way 
+					imageIcon = new ImageIcon(newImg);  // transform it back
+				}
+								
+				GlobalVariables.debugDisplay.setText(Integer.toString(x) + ',' + Integer.toString(y));
+				
 				StyleConstants.setIcon(style, imageIcon);
 				GlobalVariables.tableImageProc.imageStatus = 0;
+				
 			} else {
 				GlobalVariables.tableImageProc.imageStatus = 1;
 			}
